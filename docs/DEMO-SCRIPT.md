@@ -1,24 +1,27 @@
-# Demo script — 3 minutes, human narration
+# Velum demo — approximately 3 minutes
 
-Record at 1280×720 or above. Use your own voice; replace proposed customer/problem statements with what you actually learned and contributed. Do not present synthetic fixtures as real customer data.
+Record at 1280×720 or above with your own voice. Use your own words and only describe contributions and customer insights that actually occurred.
 
-## 0:00–0:25 — problem
-“Velum is a prototype for teams paying invoices from an onchain treasury. They need spending rules, but vendor details and negotiated limits should not become public. We separate confidential invoice evaluation from a minimal authorization.”
+## 0:00–0:25 — open with the failure
+“Two invoices: $4,200 and $3,800. Both are below a $5,000 approval limit. But together they exceed the $6,000 purchase order. An invoice-by-invoice check misses that. Velum evaluates the whole payment run using private accounting rules.”
 
-## 0:25–1:15 — show the demo
-Open https://velum.aethe.me. Explain that the visible policy is synthetic and the interactive preview is ordinary server execution.
-- Evaluate the $2,400 invoice: approved.
-- Choose the $7,200 invoice: rejected for exceeding the private $5,000 cap.
-- Choose the changed-wallet invoice: rejected despite a valid amount.
-- Choose the previously-paid invoice: rejected.
-- Return to the first invoice and lower the cap to $2,000: rejected.
-Point to the minimal public receipt. Explain that detailed reasons and PO values are omitted from real workflow outputs.
+## 0:25–1:05 — demonstrate the difference
+Open https://velum.aethe.me, scroll to the batch workspace and click Evaluate batch. Show the first invoice approved, the second held against the shared budget, a changed recipient rejected, and a duplicate reference caught even with another request ID. Explain that the synthetic example approves $5,800 versus $13,800 under independent checks. Change the PO budget to $10,000 and rerun: the legitimate second invoice passes, but the duplicate and changed wallet stay held.
 
-## 1:15–2:10 — actual Chainlink execution
-Show `workflow/workflow.ts`: `handlerInTee`, `getSecret`, authenticated `HTTPClient`, `usingTheDons`, and `report`. Show an actual `bun run simulate` run with the local fixture server already running, or the existing unedited execution log and its timestamp. Explain that the simulator is not a real enclave and no production data is used. Show the approval and rejection logs listed in the manifest.
+Say explicitly that this interactive panel runs normal server-side preview code. It does not trigger CRE or send payments.
 
-## 2:10–2:40 — receiver and limits
-Show `InvoiceGate.sol` and `bun run test:contract`. Explain that the local tests reject forged callers, wrong workflow identity, altered payments, expired reports and replay. State clearly: local EVM only; the receiver does not transfer assets; network deployment and accounting integration are future work.
+## 1:05–1:35 — make privacy concrete
+Toggle Operator view → Public report. Point out that invoice references, PO details, budgets and rejection reasons disappear. The public report contains commitments and decisions. Amounts and recipients are still visible when used for payment; Velum is not a private-transfer protocol.
 
-## 2:40–3:00 — contribution and next step
-Describe your actual product/testing/design contribution and AI assistance. End with the intended customer and the next integration you would build, based on your own choice. Do not claim pending work is complete.
+## 1:35–2:20 — show actual execution
+Scroll to the execution evidence. Open the actual CRE batch log and point to the TEE-handler simulation notice and report output. Explain that the simulator is not a hardware enclave. Then show the local treasury balance moving from 20,000 to 14,200 synthetic USD.
+
+“This receipt comes from one reproducible script: it runs CRE, decodes the actual returned bytes and delivers them through a mock forwarder into local Solidity execution. It does not verify Chainlink network signatures or broadcast a network transaction.”
+
+Optionally run `bun run test:e2e` beforehand and use that fresh log. Do not wait through compilation in the video.
+
+## 2:20–2:45 — show the difficult checks
+Show the end-to-end check list: reordered/omitted reports rejected, replay rejected, a failed token transfer rolls back approval consumption, and cancellation prevents later settlement. Explain that one active batch is allowed and within-batch reservations are enforced. A production accounting source still needs exclusive reservations and reconciliation across batches.
+
+## 2:45–3:10 — contribution and next integration
+Explain why you chose this customer, describe your actual product/testing/design contribution and disclose AI assistance. Name the accounting or treasury integration you would build next. Do not claim that a customer interview, live deployment or production integration has happened unless it has.

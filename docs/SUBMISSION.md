@@ -4,37 +4,39 @@
 Velum
 
 ## Short description
-Private invoice authorization with Chainlink Confidential Workflows: check sensitive purchase-order rules inside a confidential handler, then release a minimal, payment-bound decision.
+A confidential payment gate that catches duplicate invoices and shared-budget overruns before an onchain treasury pays a contractor batch.
 
 ## Description
-Onchain treasuries need approval rules, but publishing vendor details and negotiated spending caps reveals internal business information. Velum separates private invoice evaluation from public authorization. The workflow authenticates to an invoice API, checks the invoice against a purchase-order policy inside a CRE TEE handler, and releases only the request identifier, payment commitment, approval and expiry for a DON report.
+A $4,200 invoice and a $3,800 invoice can both pass a $5,000 approval limit and still overdraw a $6,000 purchase order. Velum checks the entire payment run, including private budget commitments and resubmitted invoice identities, inside a Chainlink CRE confidential handler.
 
-The demo lets reviewers explore four synthetic scenarios and adjust a private approval limit. It labels interactive previews separately from actual recorded CRE simulations. A Solidity receiver binds each decision to a registered payment and enforces workflow authentication, expiry and one-use authorization.
+The handler retrieves an authenticated accounting snapshot and keeps invoice references, vendor IDs, purchase-order terms and rejection reasons out of its public report. The report commits to an ordered set of exact payments. A treasury validates that manifest and settles only approved entries, consuming approval and transferring tokens in one transaction. Failed transfers restore the approval.
+
+The demo makes the distinction visible: an interactive synthetic preview compares isolated checks to shared-budget decisions, a disclosure inspector shows operator versus public data, and an evidence panel shows real CRE simulation output driving actual Solidity bytecode and token balance changes in a local EVM.
 
 ## How it is made
-TypeScript with Chainlink CRE SDK 1.18.0; `handlerInTee` targets AWS Nitro in us-west-2. `runtime.getSecret` retrieves an API token inside the handler; ordinary `HTTPClient` with `TeeRuntime` fetches synthetic invoice and policy data. Deterministic rules reject vendor, currency, recipient, amount, budget, duplicate and expiry violations. `usingTheDons` and `report` handle the deliberately minimal public result. Reports use viem ABI encoding. The Solidity registry verifies forwarder and workflow identity and a chain/receiver/payment-bound commitment. A Cloudflare Worker hosts the synthetic preview, with a responsive vanilla JavaScript frontend.
+TypeScript, Chainlink CRE SDK 1.18.0 and `handlerInTee` targeting AWS Nitro in us-west-2. `getSecret` and `HTTPClient` run inside the handler. Batch policy checks snapshot freshness, consistent private PO terms, invoice identity, amount/recipient/currency matching, remaining budget and expiry. `usingTheDons` releases only the batch ID, ordered manifest and request-bound decisions for one ABI-encoded report.
 
-## Chainlink integration / prize
-Intended prize: Best Confidential Workflow. All four scenario runs completed in the actual CRE CLI. Evidence: `public/evidence.json`, `evidence/cre-*.log`, and the source at `workflow/workflow.ts`. This entry does not claim live TEE deployment, actual privacy in simulation, a deployed Sepolia receiver, or completed payments. The separate local EVM tests use a mock forwarder and are not evidence of Chainlink network settlement.
+Solidity `BatchTreasury` authenticates the forwarder and exact workflow identity, rejects incomplete/reordered/tampered reports, serializes active batches, prevents replay and atomically transfers ERC-20 test tokens. Cloudflare Workers host the preview, and vanilla JavaScript powers the responsive interface and downloadable receipts.
+
+## Chainlink integration and evidence
+Target: **Best Confidential Workflow**. The core batch decision is evaluated in a real CRE CLI confidential-workflow simulation. `scripts/batch-e2e.ts` uses the actual returned ABI bytes in a local EVM adapter. Recorded results: two approved payments totaling 5,800 synthetic USD, treasury balance 20,000 → 14,200, and 33 end-to-end checks. Original four single-invoice simulations remain available.
+
+This is simulation evidence accepted by the published prize criteria; it is not a live hardware enclave deployment. The local adapter uses a mock forwarder caller and does not verify Chainlink signatures. No network transaction or real-asset payment is claimed. Receipt hashing verifies file consistency only.
 
 ## Links
 - Demo: https://velum.aethe.me
-- Repository: https://github.com/Lawrence-eth/velum
-- Execution manifest: https://velum.aethe.me/evidence.json
-- Demo video: PENDING — user must record 2–4 minutes with their own narration, at least 720p.
+- Source: https://github.com/Lawrence-eth/velum
+- Settlement receipt: https://velum.aethe.me/settlement-evidence.json
+- CRE batch log: https://velum.aethe.me/logs/cre-batch.log
+- Video: PENDING — 2–4 minutes, human narration, at least 720p.
 
-## Current limitations
-Synthetic API only; no accounting connector, transactional shared-budget reservations, real payments or live confidential deployment. Trust in the invoice source is explicit. Full live report delivery remains unverified. Prototype is unaudited.
+## Limitations
+Synthetic accounting API; batch-local reservations only. A real source must reserve snapshots exclusively and reconcile paid invoices across batches. No production accounting integration, real token settlement, Sepolia deployment or live CRE network deployment. No audit. The treasury trusts configured token behavior and the authorized workflow/source.
 
-## AI use and prior work
-Codex generated the product proposal, implementation, UI, tests and draft documents. Public Chainlink examples informed API wiring; attribution is in README. Lawrence provided track direction/environment and authenticated CRE. Meaningful human product work is still pending and must be described truthfully before submission. Start Fresh versus Continuity registration has not been confirmed.
+## AI and prior work
+Codex generated the concept, implementation, tests, UI and drafts. Lawrence provided Chainlink direction/environment, authenticated CRE, reviewed the prototype, chose the Velum name and artistic direction, and requested the competitive upgrade. Public templates informed the CRE API wiring. No prior private project code was reused. Human customer validation and final narration remain pending. Do not embellish the contribution record.
 
-## Required before submission
-- Confirm registration track and final product/customer direction.
-- Make and document meaningful human contributions; do not replace this with an invented claim.
-- Record the required human-narrated demo; no AI voiceover.
-- Review actual evidence and limitations; select Chainlink in the dashboard.
-- Submit before September 13, 2026, 16:00 UTC. No dashboard submission has been performed.
+## Before submitting
+Confirm the registered Start Fresh/Continuity track, review the functionality and disclosure, document meaningful actual team contribution, record the human-narrated demo, select Chainlink in the dashboard and submit before **September 13, 2026, 16:00 UTC**. No dashboard submission has been performed.
 
-Rules: https://ethglobal.com/events/ethonline2026/info/details
-Prize: https://ethglobal.com/events/ethonline2026/prizes/chainlink
+[Rules](https://ethglobal.com/events/ethonline2026/info/details) · [Chainlink prize](https://ethglobal.com/events/ethonline2026/prizes/chainlink)

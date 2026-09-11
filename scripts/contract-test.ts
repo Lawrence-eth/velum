@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync('contracts/InvoiceGate.sol', 'utf8');
-const output = JSON.parse(solc.compile(JSON.stringify({ language: 'Solidity', sources: { 'InvoiceGate.sol': { content: source } }, settings: { evmVersion: 'shanghai', optimizer: { enabled: true, runs: 200 }, outputSelection: { '*': { '*': ['abi', 'evm.bytecode'] } } } })));
+const output = JSON.parse(solc.compile(JSON.stringify({ language: 'Solidity', sources: { 'InvoiceGate.sol': { content: source }, 'BatchTreasury.sol': { content: readFileSync('contracts/BatchTreasury.sol','utf8') }, 'TestToken.sol': { content: readFileSync('contracts/TestToken.sol','utf8') } }, settings: { evmVersion: 'shanghai', optimizer: { enabled: true, runs: 200 }, outputSelection: { '*': { '*': ['abi', 'evm.bytecode'] } } } })));
 const errors = output.errors?.filter((e: any) => e.severity === 'error') || [];
 assert.equal(errors.length, 0, JSON.stringify(errors));
 const contract = output.contracts['InvoiceGate.sol'].InvoiceGate;

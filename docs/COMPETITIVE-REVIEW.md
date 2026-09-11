@@ -33,3 +33,16 @@ Batch-local reservation does not implement a transactional accounting backend ac
 
 ## Implementation brief / user direction
 User: “now the project seems ok but maybe not enough to winm analyze from every aspect and make it better”. Preserve the name Velum and the restrained artistic identity. Implement the selected upgrades, test actual behavior, publish only verified claims. No win guarantee.
+
+## Verified upgrade outcome
+- Batch policy/API tests pass. The five-row fixture approves 5,800 synthetic USD versus 13,800 under independent checks.
+- A new actual CRE simulation produced a 768-byte ABI payload. The same bytes were passed to the local Solidity treasury; two token balances increased and treasury decreased by exactly 5,800 synthetic USD.
+- 33 end-to-end checks passed, including failed-transfer rollback, complete manifest validation, replay, unauthorized settlement and cancellation.
+- Browser verification covers 17 flows, including interactive budget changes, private/public views, download, receipt hash consistency and mobile overflow.
+- The analysis resulted in implemented changes, not only a redesign proposal. These results improve the demonstration; they do not imply a prize probability.
+
+## Cost and scaling assessment
+The batch handler uses one authenticated HTTP call and one report operation for up to 20 entries. EVM report processing is linear in entry count; each payment is separately settled. The 20-entry bound limits untrusted work, but no production throughput or dollar-cost claim has been measured. The EVM receipt includes execution gas for the demonstrated transfers. A production deployment needs measured total cost including report delivery, registration, storage and payment transactions.
+
+## Deliberate tradeoffs
+The owner commits the complete ordered batch before approval, preventing decision omission/reordering after evaluation. First-in-order allocation is predictable, but not fair allocation or optimal scheduling. Cancelling a batch revokes unspent approvals but cannot reverse paid transfers. Current token compatibility is standard ERC-20 behavior; fee/rebase tokens require further accounting. A private policy revision label cannot itself revoke an onchain report. These details should be explained during Q&A.
