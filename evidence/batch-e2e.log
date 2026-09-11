@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "checks": 33,
+  "paid": "5800 synthetic USD",
+  "reportSha256": "eee896b4febcd747adfbebf3cd37df46aa0006d425a75f0a256d3b2ef909ac19",
+  "environment": "Actual CRE CLI simulation followed by local EthereumJS EVM; mock forwarder caller, no Chainlink signature verification, no network transaction, no real assets."
+}

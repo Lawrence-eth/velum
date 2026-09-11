@@ -1,17 +1,19 @@
 {
   "name": "velum",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "bun test test/policy.test.ts",
+    "test": "bun test test/policy.test.ts test/batch.test.ts",
     "typecheck": "tsc --noEmit",
     "dev": "bun scripts/local-server.ts",
     "deploy": "node --no-addons node_modules/wrangler/bin/wrangler.js deploy",
     "simulate": "cre workflow simulate workflow --target staging-settings --non-interactive --trigger-index 0",
     "dev:worker": "node --no-addons node_modules/wrangler/bin/wrangler.js dev",
     "test:contract": "bun build scripts/contract-test.ts --target node --packages external --outfile artifacts/contract-test.mjs && node --no-addons artifacts/contract-test.mjs",
-    "test:browser": "node --no-addons scripts/browser-test.mjs"
+    "test:browser": "node --no-addons scripts/browser-test.mjs",
+    "test:e2e": "bun build scripts/batch-e2e.ts --target node --packages external --outfile artifacts/batch-e2e.mjs && node --no-addons artifacts/batch-e2e.mjs",
+    "simulate:batch": "cre workflow simulate batch-workflow --target staging-settings --non-interactive --trigger-index 0"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

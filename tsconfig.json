@@ -1,8 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext", "module": "ESNext", "moduleResolution": "bundler",
-    "lib": ["ESNext", "DOM"], "strict": true, "noEmit": true,
-    "skipLibCheck": true, "types": ["bun"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": [
+      "bun"
+    ]
   },
-  "include": ["src/**/*.ts", "workflow/**/*.ts", "test/policy.test.ts"]
+  "include": [
+    "src/**/*.ts",
+    "workflow/**/*.ts",
+    "test/policy.test.ts",
+    "test/batch.test.ts"
+  ]
 }
