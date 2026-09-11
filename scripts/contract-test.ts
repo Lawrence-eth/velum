@@ -20,7 +20,7 @@ const treasury = '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' as const;
 const forwarder = '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' as const;
 const attacker = '0xcccccccccccccccccccccccccccccccccccccccc' as const;
 await vm.stateManager.putAccount(Address.fromString(treasury), Account.fromAccountData({ balance: 10n ** 20n }));
-const workflowId = keccak256(toHex('veilpay-test-workflow'));
+const workflowId = keccak256(toHex('velum-test-workflow'));
 const now = Math.floor(Date.now() / 1000);
 let timestamp = now;
 const block = () => Block.fromBlockData({ header: { timestamp: BigInt(timestamp), gasLimit: 30000000n } }, { common });

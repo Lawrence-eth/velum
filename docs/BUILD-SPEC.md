@@ -1,9 +1,9 @@
-# VeilPay — private invoice authorization
+# Velum — private invoice authorization
 
 AI-assisted prototype for ETHOnline 2026, started September 11, 2026.
 
 ## Problem and working scope
-Small teams paying contractors from an onchain treasury need to enforce invoice rules without publishing supplier identifiers, purchase-order details or negotiated caps. VeilPay evaluates these details inside a CRE confidential handler and emits a minimal, request-bound authorization. Payment amounts and destinations remain public when used onchain. This is authorization infrastructure, not a private transfer protocol.
+Small teams paying contractors from an onchain treasury need to enforce invoice rules without publishing supplier identifiers, purchase-order details or negotiated caps. Velum evaluates these details inside a CRE confidential handler and emits a minimal, request-bound authorization. Payment amounts and destinations remain public when used onchain. This is authorization infrastructure, not a private transfer protocol.
 
 Working proposal selected by the assistant; user validation of the customer, problem and track is still pending. Do not describe it as user-validated.
 

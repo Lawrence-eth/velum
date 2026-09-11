@@ -1,4 +1,3 @@
-$ cre workflow simulate workflow --target staging-settings --non-interactive --trigger-index 0
 Initializing...
 Loading settings...
 Checking RPC connectivity...
@@ -8,9 +7,9 @@ Compiling workflow...
   HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb
   Binary hash: 04d81ea7b39ec5aae460771d1cdf4ce428f9eb7c310d6f3e03f118e955df6961
   Config hash: 045c855fd8f1f609fe808f28101d1e322ea5c81a9c6b82836bdbe6704cab7ba5
-2026-09-11T16:06:02Z [SIMULATION] Simulator Initialized
+2026-09-11T16:18:11Z [SIMULATION] Simulator Initialized
 
-2026-09-11T16:06:02Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
+2026-09-11T16:18:11Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
 ╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │
 │     - AWS Nitro in us-west-2                                                                       │
@@ -23,10 +22,10 @@ Compiling workflow...
 
 
 ✓ Workflow Simulation Result:
-"{\"requestId\":\"0xa128f7281175cf1b31f8442b67d76410b6dfc913dcdacc68def70bf91c17e77f\",\"commitment\":\"0x47861ed9d1eeb75824f945d106de6f95cc7cf4e2a8a248468195b45436911e43\",\"approved\":true,\"expiresAt\":1789146362,\"encodedPayload\":\"0xa128f7281175cf1b31f8442b67d76410b6dfc913dcdacc68def70bf91c17e77f47861ed9d1eeb75824f945d106de6f95cc7cf4e2a8a248468195b45436911e430000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000006aa434fa\",\"reportGenerated\":true,\"deliveryRequested\":false}"
+"{\"requestId\":\"0xc98ec55f39ef881166152e77dc1e31db191745c3373cc4906767debc0ce7873b\",\"commitment\":\"0x273f04de9d1e31634b23a98e82b4187f641a384b7f617785fd5a1d0df6e00fb9\",\"approved\":true,\"expiresAt\":1789147091,\"encodedPayload\":\"0xc98ec55f39ef881166152e77dc1e31db191745c3373cc4906767debc0ce7873b273f04de9d1e31634b23a98e82b4187f641a384b7f617785fd5a1d0df6e00fb90000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000006aa437d3\",\"reportGenerated\":true,\"deliveryRequested\":false}"
 
-2026-09-11T16:06:02Z [SIMULATION] Execution finished signal received
-2026-09-11T16:06:02Z [SIMULATION] Skipping WorkflowEngineV2
+2026-09-11T16:18:11Z [SIMULATION] Execution finished signal received
+2026-09-11T16:18:11Z [SIMULATION] Skipping WorkflowEngineV2
 
 ╭──────────────────────────────────────────────────────╮
 │ Simulation complete! Ready to deploy your workflow?  │

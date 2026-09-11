@@ -1,6 +1,6 @@
 {
   "success": true,
-  "base": "https://veilpay.aethe.me",
+  "base": "https://velum.aethe.me",
   "checks": [
     "approval",
     "over limit",

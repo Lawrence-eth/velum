@@ -1,6 +1,6 @@
 staging-settings:
   user-workflow:
-    workflow-name: veilpay-staging
+    workflow-name: velum-staging
   workflow-artifacts:
     workflow-path: ./main.ts
     config-path: ./config.staging.json

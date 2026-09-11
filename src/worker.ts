@@ -6,7 +6,7 @@ const json = (data: unknown, status = 200) => Response.json(data, { status, head
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    if (url.pathname === '/api/health' && request.method === 'GET') return json({ service: 'VeilPay', mode: 'synthetic-demo', creNetworkDeployment: false });
+    if (url.pathname === '/api/health' && request.method === 'GET') return json({ service: 'Velum', mode: 'synthetic-demo', creNetworkDeployment: false });
     if (url.pathname.startsWith('/api/private/invoice/')) {
       if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
       if (!env.INVOICE_API_TOKEN || request.headers.get('Authorization') !== `Bearer ${env.INVOICE_API_TOKEN}`) return json({ error: 'Unauthorized' }, 401);

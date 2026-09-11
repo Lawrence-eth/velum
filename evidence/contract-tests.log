@@ -1,7 +1,7 @@
 $ bun build scripts/contract-test.ts --target node --packages external --outfile artifacts/contract-test.mjs && node --no-addons artifacts/contract-test.mjs
-Bundled 3 modules in 3ms
+Bundled 3 modules in 5ms
 
-  contract-test.mjs  8.36 KB  (entry point)
+  contract-test.mjs  8.35 KB  (entry point)
 
 {
   "success": true,

@@ -1,12 +1,12 @@
-# VeilPay
+# Velum
 
 Private invoice authorization using **Chainlink CRE Confidential Workflows**. An ETHOnline 2026 prototype built September 11, 2026.
 
-**Demo:** https://veilpay.aethe.me · **[Execution evidence](public/evidence.json)** · **[Build spec](docs/BUILD-SPEC.md)** · **[Submission draft](docs/SUBMISSION.md)**
+**Demo:** https://velum.aethe.me · **[Execution evidence](public/evidence.json)** · **[Build spec](docs/BUILD-SPEC.md)** · **[Submission draft](docs/SUBMISSION.md)**
 
-![VeilPay demo](evidence/desktop.png)
+![Velum demo](evidence/desktop.png)
 
-VeilPay checks confidential invoice and purchase-order details before generating a minimal payment authorization. The same deterministic policy powers an interactive demo and a real CRE `handlerInTee` workflow. Four recorded CRE CLI simulations produce an approval and three rejections. A Solidity receiver is independently tested in a local EVM.
+Velum checks confidential invoice and purchase-order details before generating a minimal payment authorization. The same deterministic policy powers an interactive demo and a real CRE `handlerInTee` workflow. Four recorded CRE CLI simulations produce an approval and three rejections. A Solidity receiver is independently tested in a local EVM.
 
 ## What works today
 - Authenticated invoice API with synthetic vendor, invoice and purchase-order fixtures.

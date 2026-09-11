@@ -1,20 +1,20 @@
 bun test v1.4.2 (744846f84)
 
 test/policy.test.ts:
-(pass) Invoice policy > approves an invoice matching the purchase order [4.28ms]
-(pass) Invoice policy > rejects over-limit [0.60ms]
-(pass) Invoice policy > rejects wrong-recipient [0.51ms]
-(pass) Invoice policy > rejects duplicate [2.25ms]
-(pass) Invoice policy > exact approval limit is accepted, one micro-unit above is rejected [0.59ms]
-(pass) Invoice policy > rejects disabled policy, insufficient PO, unknown vendor, currency and token [1.73ms]
-(pass) Invoice policy > rejects expiry at current time and excessive lifetime [0.28ms]
-(pass) Invoice policy > does not accept negative, floating, exponent or unsafe amount encodings [1.70ms]
-(pass) Invoice policy > commitment binds chain, receiver, recipient, token, amount and expiry [3.41ms]
-(pass) Demo API > private fixture rejects missing or wrong credential [0.81ms]
-(pass) Demo API > public preview is labelled and never claims CRE execution [1.03ms]
-(pass) Demo API > read-only GET preview works with public synthetic query parameters [0.75ms]
+(pass) Invoice policy > approves an invoice matching the purchase order [11.12ms]
+(pass) Invoice policy > rejects over-limit [4.80ms]
+(pass) Invoice policy > rejects wrong-recipient [0.52ms]
+(pass) Invoice policy > rejects duplicate [0.24ms]
+(pass) Invoice policy > exact approval limit is accepted, one micro-unit above is rejected [0.45ms]
+(pass) Invoice policy > rejects disabled policy, insufficient PO, unknown vendor, currency and token [4.69ms]
+(pass) Invoice policy > rejects expiry at current time and excessive lifetime [0.27ms]
+(pass) Invoice policy > does not accept negative, floating, exponent or unsafe amount encodings [8.36ms]
+(pass) Invoice policy > commitment binds chain, receiver, recipient, token, amount and expiry [6.12ms]
+(pass) Demo API > private fixture rejects missing or wrong credential [3.06ms]
+(pass) Demo API > public preview is labelled and never claims CRE execution [0.92ms]
+(pass) Demo API > read-only GET preview works with public synthetic query parameters [2.83ms]
 
  12 pass
  0 fail
  37 expect() calls
-Ran 12 tests across 1 file. [96.00ms]
+Ran 12 tests across 1 file. [222.00ms]

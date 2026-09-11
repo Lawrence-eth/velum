@@ -1,13 +1,13 @@
 # ETHOnline submission draft — not submitted
 
 ## Title
-VeilPay
+Velum
 
 ## Short description
 Private invoice authorization with Chainlink Confidential Workflows: check sensitive purchase-order rules inside a confidential handler, then release a minimal, payment-bound decision.
 
 ## Description
-Onchain treasuries need approval rules, but publishing vendor details and negotiated spending caps reveals internal business information. VeilPay separates private invoice evaluation from public authorization. The workflow authenticates to an invoice API, checks the invoice against a purchase-order policy inside a CRE TEE handler, and releases only the request identifier, payment commitment, approval and expiry for a DON report.
+Onchain treasuries need approval rules, but publishing vendor details and negotiated spending caps reveals internal business information. Velum separates private invoice evaluation from public authorization. The workflow authenticates to an invoice API, checks the invoice against a purchase-order policy inside a CRE TEE handler, and releases only the request identifier, payment commitment, approval and expiry for a DON report.
 
 The demo lets reviewers explore four synthetic scenarios and adjust a private approval limit. It labels interactive previews separately from actual recorded CRE simulations. A Solidity receiver binds each decision to a registered payment and enforces workflow authentication, expiry and one-use authorization.
 
@@ -18,9 +18,9 @@ TypeScript with Chainlink CRE SDK 1.18.0; `handlerInTee` targets AWS Nitro in us
 Intended prize: Best Confidential Workflow. All four scenario runs completed in the actual CRE CLI. Evidence: `public/evidence.json`, `evidence/cre-*.log`, and the source at `workflow/workflow.ts`. This entry does not claim live TEE deployment, actual privacy in simulation, a deployed Sepolia receiver, or completed payments. The separate local EVM tests use a mock forwarder and are not evidence of Chainlink network settlement.
 
 ## Links
-- Demo: https://veilpay.aethe.me
-- Repository: https://github.com/Lawrence-eth/veilpay
-- Execution manifest: https://veilpay.aethe.me/evidence.json
+- Demo: https://velum.aethe.me
+- Repository: https://github.com/Lawrence-eth/velum
+- Execution manifest: https://velum.aethe.me/evidence.json
 - Demo video: PENDING — user must record 2–4 minutes with their own narration, at least 720p.
 
 ## Current limitations

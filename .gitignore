@@ -12,3 +12,4 @@ core
 core.*
 .cre_build_tmp*
 workflow/.cre_build_tmp*
+worker-configuration.d.ts

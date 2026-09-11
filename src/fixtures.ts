@@ -9,7 +9,7 @@ export function fixture(scenario: Scenario, now: number, consumer = '0x111111111
   const amount = scenario === 'over-limit' ? '7200000000' : '2400000000';
   return {
     request: {
-      id: keccak256(toHex(`veilpay-synthetic-${scenario}`)), chainId: 11155111,
+      id: keccak256(toHex(`velum-synthetic-${scenario}`)), chainId: 11155111,
       consumer: consumer as `0x${string}`,
       recipient: scenario === 'wrong-recipient' ? '0x4444444444444444444444444444444444444444' : recipient,
       token, amount, expiresAt: now + 3600,

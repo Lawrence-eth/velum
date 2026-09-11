@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "veilpay",
+      "name": "velum",
       "dependencies": {
         "@chainlink/cre-sdk": "1.18.0",
         "viem": "2.34.0",

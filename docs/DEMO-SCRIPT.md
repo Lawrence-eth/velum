@@ -3,10 +3,10 @@
 Record at 1280×720 or above. Use your own voice; replace proposed customer/problem statements with what you actually learned and contributed. Do not present synthetic fixtures as real customer data.
 
 ## 0:00–0:25 — problem
-“VeilPay is a prototype for teams paying invoices from an onchain treasury. They need spending rules, but vendor details and negotiated limits should not become public. We separate confidential invoice evaluation from a minimal authorization.”
+“Velum is a prototype for teams paying invoices from an onchain treasury. They need spending rules, but vendor details and negotiated limits should not become public. We separate confidential invoice evaluation from a minimal authorization.”
 
 ## 0:25–1:15 — show the demo
-Open https://veilpay.aethe.me. Explain that the visible policy is synthetic and the interactive preview is ordinary server execution.
+Open https://velum.aethe.me. Explain that the visible policy is synthetic and the interactive preview is ordinary server execution.
 - Evaluate the $2,400 invoice: approved.
 - Choose the $7,200 invoice: rejected for exceeding the private $5,000 cap.
 - Choose the changed-wallet invoice: rejected despite a valid amount.
