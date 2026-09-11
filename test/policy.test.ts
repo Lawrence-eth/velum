@@ -64,4 +64,11 @@ describe('Demo API', () => {
     const data = await response.json() as any;
     expect(data.approved).toBe(false); expect(data.creExecution).toBe(false); expect(data.synthetic).toBe(true);
   });
+  test('read-only GET preview works with public synthetic query parameters', async () => {
+    const response = await worker.fetch(new Request('https://example.com/api/preview?scenario=approved&limit=5000'), env);
+    const data = await response.json() as any;
+    expect(response.status).toBe(200); expect(data.approved).toBe(true); expect(data.creExecution).toBe(false);
+    const invalid = await worker.fetch(new Request('https://example.com/api/preview?scenario=approved&limit=NaN'), env);
+    expect(invalid.status).toBe(400);
+  });
 });

@@ -1,19 +1,20 @@
 bun test v1.4.2 (744846f84)
 
 test/policy.test.ts:
-(pass) Invoice policy > approves an invoice matching the purchase order [3.67ms]
-(pass) Invoice policy > rejects over-limit [0.72ms]
+(pass) Invoice policy > approves an invoice matching the purchase order [4.28ms]
+(pass) Invoice policy > rejects over-limit [0.60ms]
 (pass) Invoice policy > rejects wrong-recipient [0.51ms]
-(pass) Invoice policy > rejects duplicate [0.47ms]
-(pass) Invoice policy > exact approval limit is accepted, one micro-unit above is rejected [0.72ms]
-(pass) Invoice policy > rejects disabled policy, insufficient PO, unknown vendor, currency and token [3.70ms]
-(pass) Invoice policy > rejects expiry at current time and excessive lifetime [0.54ms]
-(pass) Invoice policy > does not accept negative, floating, exponent or unsafe amount encodings [1.94ms]
-(pass) Invoice policy > commitment binds chain, receiver, recipient, token, amount and expiry [3.55ms]
-(pass) Demo API > private fixture rejects missing or wrong credential [0.87ms]
-(pass) Demo API > public preview is labelled and never claims CRE execution [0.91ms]
+(pass) Invoice policy > rejects duplicate [2.25ms]
+(pass) Invoice policy > exact approval limit is accepted, one micro-unit above is rejected [0.59ms]
+(pass) Invoice policy > rejects disabled policy, insufficient PO, unknown vendor, currency and token [1.73ms]
+(pass) Invoice policy > rejects expiry at current time and excessive lifetime [0.28ms]
+(pass) Invoice policy > does not accept negative, floating, exponent or unsafe amount encodings [1.70ms]
+(pass) Invoice policy > commitment binds chain, receiver, recipient, token, amount and expiry [3.41ms]
+(pass) Demo API > private fixture rejects missing or wrong credential [0.81ms]
+(pass) Demo API > public preview is labelled and never claims CRE execution [1.03ms]
+(pass) Demo API > read-only GET preview works with public synthetic query parameters [0.75ms]
 
- 11 pass
+ 12 pass
  0 fail
- 33 expect() calls
-Ran 11 tests across 1 file. [102.00ms]
+ 37 expect() calls
+Ran 12 tests across 1 file. [96.00ms]

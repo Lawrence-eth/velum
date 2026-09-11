@@ -14,10 +14,12 @@ export default {
       if (!scenarios.includes(scenario)) return json({ error: 'Unknown fixture' }, 404);
       return json(fixture(scenario, Math.floor(Date.now() / 1000)));
     }
-    if (url.pathname === '/api/preview' && request.method === 'POST') {
+    if (url.pathname === '/api/preview' && (request.method === 'GET' || request.method === 'POST')) {
       // Public preview accepts only scenario choices and synthetic knobs, never real invoices.
       try {
-        const raw = await request.text();
+        const raw = request.method === 'GET'
+          ? JSON.stringify({ scenario: url.searchParams.get('scenario'), ...(url.searchParams.has('limit') ? { limit: Number(url.searchParams.get('limit')) } : {}) })
+          : await request.text();
         if (raw.length > 1024) return json({ error: 'Request too large' }, 413);
         const input = JSON.parse(raw);
         if (!scenarios.includes(input.scenario)) return json({ error: 'Unknown scenario' }, 400);

@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "base": "https://veilpay.aethe.me",
+  "checks": [
+    "approval",
+    "over limit",
+    "wrong recipient",
+    "duplicate",
+    "changed threshold",
+    "recorded evidence visible",
+    "390px mobile overflow",
+    "no page errors"
+  ]
+}

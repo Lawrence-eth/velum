@@ -20,7 +20,8 @@ $('#evaluate').addEventListener('click', async () => {
   button.disabled = true;
   document.querySelectorAll('.invoice, #limit').forEach(el => { el.disabled = true; });
   try {
-    const response = await fetch('/api/preview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scenario, limit: Number($('#limit').value) }) });
+    const query = new URLSearchParams({ scenario, limit: $('#limit').value });
+    const response = await fetch(`/api/preview?${query}`);
     if (!response.ok) throw new Error('Preview unavailable. Please try again.');
     const data = await response.json();
     $('#result').className = `result ${data.approved ? 'approved' : 'rejected'}`;
