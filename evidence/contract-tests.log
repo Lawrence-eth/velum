@@ -1,0 +1,12 @@
+$ bun build scripts/contract-test.ts --target node --packages external --outfile artifacts/contract-test.mjs && node --no-addons artifacts/contract-test.mjs
+Bundled 3 modules in 3ms
+
+  contract-test.mjs  8.36 KB  (entry point)
+
+{
+  "success": true,
+  "checks": 16,
+  "environment": "In-memory EthereumJS EVM, mock forwarder caller; not Chainlink network delivery",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "contract": "0x3c952d36207c0d52743a646e7ac2649009bd358e"
+}

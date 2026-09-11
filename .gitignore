@@ -8,3 +8,7 @@ dist/
 *.wasm
 artifacts/
 test-results/
+core
+core.*
+.cre_build_tmp*
+workflow/.cre_build_tmp*

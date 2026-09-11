@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "base": "http://127.0.0.1:8787",
+  "checks": [
+    "approval",
+    "over limit",
+    "wrong recipient",
+    "duplicate",
+    "changed threshold",
+    "recorded evidence visible",
+    "390px mobile overflow",
+    "no page errors"
+  ]
+}

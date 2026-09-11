@@ -1,0 +1,19 @@
+bun test v1.4.2 (744846f84)
+
+test/policy.test.ts:
+(pass) Invoice policy > approves an invoice matching the purchase order [3.67ms]
+(pass) Invoice policy > rejects over-limit [0.72ms]
+(pass) Invoice policy > rejects wrong-recipient [0.51ms]
+(pass) Invoice policy > rejects duplicate [0.47ms]
+(pass) Invoice policy > exact approval limit is accepted, one micro-unit above is rejected [0.72ms]
+(pass) Invoice policy > rejects disabled policy, insufficient PO, unknown vendor, currency and token [3.70ms]
+(pass) Invoice policy > rejects expiry at current time and excessive lifetime [0.54ms]
+(pass) Invoice policy > does not accept negative, floating, exponent or unsafe amount encodings [1.94ms]
+(pass) Invoice policy > commitment binds chain, receiver, recipient, token, amount and expiry [3.55ms]
+(pass) Demo API > private fixture rejects missing or wrong credential [0.87ms]
+(pass) Demo API > public preview is labelled and never claims CRE execution [0.91ms]
+
+ 11 pass
+ 0 fail
+ 33 expect() calls
+Ran 11 tests across 1 file. [102.00ms]

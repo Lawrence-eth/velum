@@ -3,7 +3,8 @@ import { z } from 'zod';
 import { bundleSchema, evaluate, encodeDecision, paymentCommitment } from '../src/policy';
 
 export const configSchema = z.object({
-  schedule: z.string(), apiUrl: z.string().url(), apiSecretId: z.string(),
+  // Javy has no browser URL global; use an explicit protocol check rather than Zod .url().
+  schedule: z.string(), apiUrl: z.string().regex(/^https?:\/\/[a-zA-Z0-9.-]+(?::[0-9]+)?\//), apiSecretId: z.string(),
   consumer: z.string().regex(/^0x[0-9a-fA-F]{40}$/),
   chainId: z.literal(11155111), deliverOnchain: z.boolean(),
 });

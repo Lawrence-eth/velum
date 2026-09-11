@@ -1,0 +1,8 @@
+{
+  "schedule": "0 */5 * * * *",
+  "apiUrl": "http://localhost:8787/api/private/invoice/wrong-recipient",
+  "apiSecretId": "INVOICE_API_TOKEN",
+  "consumer": "0x1111111111111111111111111111111111111111",
+  "chainId": 11155111,
+  "deliverOnchain": false
+}

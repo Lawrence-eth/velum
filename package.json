@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "bun test",
+    "test": "bun test test/policy.test.ts",
     "typecheck": "tsc --noEmit",
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "simulate": "cre workflow simulate workflow --target staging-settings --non-interactive --trigger-index 0"
+    "dev": "bun scripts/local-server.ts",
+    "deploy": "node --no-addons node_modules/wrangler/bin/wrangler.js deploy",
+    "simulate": "cre workflow simulate workflow --target staging-settings --non-interactive --trigger-index 0",
+    "dev:worker": "node --no-addons node_modules/wrangler/bin/wrangler.js dev",
+    "test:contract": "bun build scripts/contract-test.ts --target node --packages external --outfile artifacts/contract-test.mjs && node --no-addons artifacts/contract-test.mjs",
+    "test:browser": "node --no-addons scripts/browser-test.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",
@@ -16,11 +19,14 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "5.9.3",
-    "wrangler": "latest",
+    "@ethereumjs/common": "4.4.0",
+    "@ethereumjs/util": "9.1.0",
+    "@ethereumjs/vm": "8.1.1",
+    "@playwright/test": "1.63.0",
+    "@types/bun": "1.4.2",
     "solc": "0.8.30",
-    "ganache": "7.9.2",
-    "@playwright/test": "latest"
+    "typescript": "5.9.3",
+    "wrangler": "4.30.0",
+    "@ethereumjs/block": "5.3.0"
   }
 }
