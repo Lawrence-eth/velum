@@ -23,3 +23,6 @@ User asked: “im now on ethglobal online hackathon, https://ethglobal.com/event
 Sources: https://ethglobal.com/events/ethonline2026/prizes/chainlink ; https://ethglobal.com/events/ethonline2026/info/details ; https://docs.chain.link/cre-templates/hello-confidential-workflows ; https://docs.chain.link/cre/guides/workflow/using-evm-client/onchain-write/building-consumer-contracts
 
 Use the public Hello Confidential Workflows template as API/structure reference, with explicit attribution. Do not copy its demonstration scoring function or echo endpoint into product logic.
+
+## v0.2 extension
+The initial scope above is preserved as the original planning record. The user reviewed the prototype, chose Velum and its artistic direction, and requested a competitive upgrade. The resulting assessment and implementation brief are in `COMPETITIVE-REVIEW.md`. The current implementation adds ordered batch evaluation, within-batch budget reservation, duplicate invoice identity checks, a versioned/fresh accounting snapshot, an atomic settlement treasury, actual CRE-output-to-local-EVM evidence, a batch workspace and a disclosure inspector. Current limitations and reproducible commands are in README.

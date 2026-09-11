@@ -1,19 +1,19 @@
-# Deployment record
+# Deployment record — Velum v0.2
 
 - Public demo: https://velum.aethe.me
 - Repository: https://github.com/Lawrence-eth/velum
 - Cloudflare Worker: `velum`
-- Worker version: `99a3b6d8-2449-4649-abe0-668d0911ba27`
+- Worker version: `d151e85a-e508-4d26-9c1e-cb15eafc1e85`
 - Published and verified September 11, 2026.
-- Live browser verification: `evidence/browser-live.log`; all eight checks passed.
-- Public health endpoint returns `synthetic-demo`, `creNetworkDeployment: false`.
-- Unauthenticated private fixture route returns HTTP 401. The deployed Worker has no invoice API token or CRE credentials configured. Real CRE simulation uses the localhost synthetic fixture API.
-- Public preview is read-only GET with scenario and synthetic limit parameters. Existing zone policy blocks POST; the demo does not require a zone-policy exception.
-- Four successful CRE CLI simulation logs and 16 local EVM checks are committed. Policy/API suite: 12 tests.
-- Domain inventory updated locally in the separate `aethe.me` management repo, with the current Velum hostname.
+- Source/UI commit: `29f84d3`; local CRE-to-EVM implementation: `cfe42a7`.
+- GitHub checks passed: https://github.com/Lawrence-eth/velum/actions/runs/34624166999
+- Policy/API suite: 21 passing tests. Original receiver: 16 local EVM checks. New batch integration: 33 checks using actual CRE simulation output and local token settlement. Live browser: 17 checks.
+- Actual batch receipt: `public/settlement-evidence.json`; CRE output: `public/logs/cre-batch.log`.
 
-The broader read-only zone verifier passed mail-record, expected-worker, DNSSEC and TLS setting checks but exited on a DNS lookup error in its other-host HTTPS probes. It did not complete all unrelated-host checks. Velum's own live HTTP and browser checks passed. Existing mail, other project hosts and global security policies were not modified.
+The public Worker contains only the synthetic preview and static evidence. It has no CRE login session or invoice API secret. Unauthenticated private routes remain unavailable. Public previews use read-only GET; POST remains subject to the existing domain security policy.
 
-No ETHGlobal submission, Sepolia deployment, transfer of funds, or live CRE network deployment was performed. Human contribution and narrated video remain pending.
+Cloudflare DNS and Google DNS both returned the new hostname's IPv4 records. The VM's default resolver still failed to resolve IPv4, so live browser checks mapped the hostname to the publicly returned Cloudflare address (`104.21.32.18`) with normal TLS verification enabled. The live suite passed at the correct HTTPS hostname, including Worker API calls and all static evidence. This is documented rather than treating the local resolver problem as a completed global propagation check.
 
-Rename verification: the Velum domain passed the browser suite with Chromium resolving to the IPv4 address returned by Cloudflare public DNS, while the VM resolver still cached the new hostname. TLS verification remained enabled. Screenshots and all four CRE logs were regenerated under the new name.
+The old project Worker and old hostname were retired during the rename. The separate domain-management repo tracks the Velum hostname in commit `da5015c`. Existing mail, other project hosts and global security policies were not modified. The earlier broader zone verifier did not finish unrelated-host HTTPS probes because of a DNS lookup error.
+
+No ETHGlobal submission, live CRE network deployment or Sepolia deployment was performed. Token movements are real Solidity execution of synthetic tokens inside a local EVM; the report adapter is a mock forwarder and does not verify Chainlink signatures. No assets with monetary value moved.
