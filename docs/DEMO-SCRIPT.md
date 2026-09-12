@@ -52,7 +52,7 @@ path demonstrates settlement; it does not verify DON signatures.”
 
 ## 2:05–2:55 — Accounting remembers
 In the prepared ledger workspace click Verify Sepolia payments & reconcile. Show
-Paid states. Reload, load sample invoices, and click Evaluate & reserve this run.
+Paid states. Reload, load sample invoices, and click Review draft without reserving, then Evaluate & reserve this run.
 
 “A payment run also needs memory. This ledger keeps budget reservations across
 runs and reloads. Reconciliation reads finalized Sepolia events and checks the

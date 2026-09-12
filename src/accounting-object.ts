@@ -1,5 +1,5 @@
 import { DurableObject } from 'cloudflare:workers';
-import { emptyLedger, ledgerView, reserve, releasePreview, seedSepolia, reconcile, importInvoices, type LedgerState } from './ledger';
+import { emptyLedger, ledgerView, review, reserve, releasePreview, seedSepolia, reconcile, importInvoices, type LedgerState } from './ledger';
 import { verifySepoliaPayment } from './chain-reconciliation';
 
 export class AccountingLedger extends DurableObject<Env> {
@@ -26,7 +26,10 @@ export class AccountingLedger extends DurableObject<Env> {
     const state=this.load();
     if(action==='import'){return {ok:true,rows:importInvoices(String(input.csv||''))};}
     if(action==='reserve'){
-     const result=reserve(state,input.rows,Math.floor(Date.now()/1000),crypto.randomUUID());this.save(result.state);
+     if(input.mode==='review')return {ok:true,review:review(state,input.rows,Math.floor(Date.now()/1000))};
+     if(input.requestKey!==undefined && (typeof input.requestKey!=='string'||!/^[-a-zA-Z0-9]{16,80}$/.test(input.requestKey)))throw new Error('Invalid request key');
+     if(input.expectedRevision!==undefined && (!Number.isSafeInteger(input.expectedRevision)||Number(input.expectedRevision)<0))throw new Error('Invalid revision');
+     const result=reserve(state,input.rows,Math.floor(Date.now()/1000),typeof input.requestKey==='string'?input.requestKey:crypto.randomUUID(),typeof input.expectedRevision==='number'?input.expectedRevision:undefined);this.save(result.state);
      return {ok:true,ledger:ledgerView(result.state),result:result.result};
     }
     const next=action==='release'?releasePreview(state,String(input.run||'')):action==='seed'?seedSepolia(state,Math.floor(Date.now()/1000)):action==='reconcile'&&payment?reconcile(state,payment):null;
@@ -34,7 +37,7 @@ export class AccountingLedger extends DurableObject<Env> {
    });
   } catch(error) {
    // Avoid serializing input-bearing schema/RPC exceptions into public errors.
-   const safe=['Import 1–20 invoice rows','Only unpaid preview reservations can be released','Load the Sepolia example into an empty workspace','Payment is not finalized yet; retry later','Confirmed payment does not match a reserved invoice','Invoice already reconciled from another transaction','Expected one payment event from the configured Sepolia treasury','Demo workspace limit reached; start a new workspace'];
+   const safe=['Ledger changed since review; review this draft again','Request key already used for different invoices','Import 1–20 invoice rows','Only unpaid preview reservations can be released','Load the Sepolia example into an empty workspace','Payment is not finalized yet; retry later','Confirmed payment does not match a reserved invoice','Invoice already reconciled from another transaction','Expected one payment event from the configured Sepolia treasury','Demo workspace limit reached; start a new workspace'];
    const message=error instanceof Error?error.message:'';
    return {ok:false,error:safe.includes(message)||/^Row \d+:|^CSV columns|^CSV must|^Unclosed CSV|^Unexpected .*CSV|^Remove blank CSV/.test(message)?message:'Invalid request or chain verification unavailable; no ledger changes were saved'};
   }

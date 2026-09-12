@@ -8,7 +8,7 @@ export const demoToken = '0x6ddfba3c4633710ac948b5261ffda54d86dc354a' as const;
 export const paymentTransactions = ['0x18eb2dc63714a93fb3ae34889b0750bd189e54f521732d9b8392ebc9a8309266','0xd4e20e837f2b1e8f86feed2a5d78d414223c2d836b8354c7ac8830f31d52df07'] as const;
 export type Invoice = { invoice: string; description: string; vendor: string; purchaseOrder: string; recipient: string; amount: string };
 export type Reservation = { identity: string; invoice: string; vendor: string; purchaseOrder: string; requestId: string; recipient: string; amount: string; run: string; status: 'reserved'|'paid'|'released'; binding: 'preview'|'sepolia'; txHash?: string };
-export type LedgerState = { version: 1; revision: number; reservations: Reservation[]; runs: { id: string; createdAt: number; results: ReturnType<typeof evaluateBatch>['details'] }[]; seeded: boolean; snapshot?: { revision: number; batch: Batch } };
+export type LedgerState = { version: 1; revision: number; reservations: Reservation[]; runs: { id: string; createdAt: number; results: ReturnType<typeof evaluateBatch>['details']; inputHash?: string; isolatedAmount?: string; receipt?: PublicRunReceipt }[]; seeded: boolean; snapshot?: { revision: number; batch: Batch } };
 export const emptyLedger = (): LedgerState => ({ version: 1, revision: 0, reservations: [], runs: [], seeded: false });
 export const identity = (vendor: string, invoice: string) => JSON.stringify([vendor, invoice]);
 export function canonical(value: string) { return value.normalize('NFKC').trim().toUpperCase(); }
@@ -31,7 +31,8 @@ function remaining(state: LedgerState, vendor: string) {
  return total-state.reservations.filter(r=>r.vendor===vendor&&r.status!=='released').reduce((s,r)=>s+BigInt(r.amount),0n);
 }
 export function ledgerView(state: LedgerState) {
- return {...state,mode:'persistent-synthetic-ledger',creExecution:false,policies:[
+ const {snapshot: _privateSnapshot, ...view}=state;
+ return {...view,mode:'persistent-synthetic-ledger',creExecution:false,policies:[
   {vendor:'NORTHSTAR',purchaseOrder:'PO-2026-042',recipient:'0x2222222222222222222222222222222222222222',budget:'6000000000',available:remaining(state,'NORTHSTAR').toString(),limit:'5000000000'},
   {vendor:'ORBIT',purchaseOrder:'PO-2026-088',recipient:'0x5555555555555555555555555555555555555555',budget:'3000000000',available:remaining(state,'ORBIT').toString(),limit:'5000000000'},
  ]};
@@ -48,8 +49,11 @@ export function invoiceBatch(state: LedgerState, rows: Invoice[], now: number, r
   return {invoiceKey:row.invoice,label:row.description,bundle};
  })};
 }
-export function reserve(state: LedgerState, rawRows: unknown, now: number, run: string) {
+export function reserve(state: LedgerState, rawRows: unknown, now: number, run: string, expectedRevision?: number) {
  const rows=z.array(invoiceSchema).min(1).max(20).parse(rawRows);
+ const hash=inputHash(rows), prior=state.runs.find(r=>r.id===run);
+ if(prior){if(prior.inputHash!==hash)throw new Error('Request key already used for different invoices');const original=prior.receipt;if(!original)throw new Error('Legacy run cannot be retried');return {state,result:{approvedAmount:prior.results.filter(d=>d.approved).reduce((sum,d)=>sum+BigInt(d.amount),0n).toString(),rejectedAmount:prior.results.filter(d=>!d.approved).reduce((sum,d)=>sum+BigInt(d.amount),0n).toString(),isolatedAmount:prior.isolatedAmount!,details:prior.results,receipt:original,decisions:original.decisions,manifest:original.manifest,encodedPayload:original.encodedPayload},replayed:true};}
+ if(expectedRevision!==undefined&&state.revision!==expectedRevision)throw new Error('Ledger changed since review; review this draft again');
  if(state.runs.length>=100)throw new Error('Demo workspace limit reached; start a new workspace');
  if(state.runs.some(r=>r.id===run))throw new Error('Run already exists');
  const batch=invoiceBatch(state,rows,now,run),result=evaluateBatch(batch,now);
@@ -59,8 +63,9 @@ export function reserve(state: LedgerState, rawRows: unknown, now: number, run: 
   if(existing)d.reasons=d.reasons.map(reason=>reason==='Invoice already paid'?existing.status==='paid'?'Invoice already paid in an earlier run':'Invoice reserved in an earlier run':reason);
   if(d.approved)next.reservations.push({identity:identity(row.vendor,row.invoice),invoice:row.invoice,vendor:row.vendor,purchaseOrder:row.purchaseOrder,requestId:batch.entries[i].bundle.request.id,recipient:row.recipient,amount:units(row.amount),run,status:'reserved',binding:'preview'});
  });
- next.runs.push({id:run,createdAt:now,results:result.details});next.revision++;next.snapshot={revision:next.revision,batch};
- return {state:next,result:{...result,decisions:result.decisions.map(d=>({...d,expiresAt:d.expiresAt.toString()}))}};
+ const receipt: PublicRunReceipt={runId:run,createdAt:now,sourceRevision:state.revision,batchId:batch.batchId,manifest:result.manifest,encodedPayload:result.encodedPayload,decisions:result.decisions.map(d=>({...d,expiresAt:d.expiresAt.toString()})),mode:'policy-preview',creExecution:false};
+ next.runs.push({id:run,createdAt:now,results:result.details,inputHash:hash,isolatedAmount:result.isolatedAmount,receipt});next.revision++;next.snapshot={revision:next.revision,batch};
+ return {state:next,result:{...result,receipt,decisions:result.decisions.map(d=>({...d,expiresAt:d.expiresAt.toString()}))}};
 }
 export function releasePreview(state: LedgerState, run: string) {
  const next=structuredClone(state);const rows=next.reservations.filter(r=>r.run===run&&r.status==='reserved');
@@ -80,4 +85,16 @@ export function reconcile(state: LedgerState, payment: ConfirmedPayment) {
  if(r.status==='paid'){if(r.txHash!==payment.txHash)throw new Error('Invoice already reconciled from another transaction');return next;}
  if(r.status!=='reserved')throw new Error('Invoice is not reserved');
  r.status='paid';r.txHash=payment.txHash;next.revision++;return next;
+}
+
+export type PublicRunReceipt = { runId: string; createdAt: number; sourceRevision: number; batchId: string; manifest: string; encodedPayload: string; decisions: {requestId:string;commitment:string;approved:boolean;expiresAt:string}[]; mode:'policy-preview'; creExecution:false };
+export function inputHash(rows: unknown) { return keccak256(toHex(JSON.stringify(z.array(invoiceSchema).min(1).max(20).parse(rows)))); }
+export function review(state: LedgerState, rawRows: unknown, now: number) {
+ const rows=z.array(invoiceSchema).min(1).max(20).parse(rawRows);
+ const hash=inputHash(rows),batch=invoiceBatch(state,rows,now,`review:${state.revision}:${hash}`),result=evaluateBatch(batch,now);
+ const details=result.details.map((d,i)=>{
+  const prior=state.reservations.find(r=>r.identity===identity(rows[i].vendor,rows[i].invoice)&&r.status!=='released');
+  return {...d,reasons:d.reasons.map(reason=>reason==='Invoice already paid'&&prior?`Invoice ${prior.status==='paid'?'already paid':'reserved'} in an earlier run`:reason)};
+ });
+ return {revision:state.revision,inputHash:hash,approvedAmount:result.approvedAmount,rejectedAmount:result.rejectedAmount,details,mode:'read-only-review',creExecution:false};
 }

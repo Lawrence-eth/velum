@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import {emptyLedger,reserve,releasePreview,seedSepolia,reconcile,ledgerView,importInvoices,paymentTransactions} from '../src/ledger';
+import {emptyLedger,review,reserve,releasePreview,seedSepolia,reconcile,ledgerView,importInvoices,paymentTransactions} from '../src/ledger';
 import {parseCsv} from '../src/csv';
 import {extractPayment} from '../src/chain-reconciliation';
 import {encodeAbiParameters,encodeEventTopics,parseAbiItem} from 'viem';
@@ -51,4 +51,26 @@ test('chain verifier requires successful event from exact treasury',()=>{
  const receipt={status:'success',transactionHash:paymentTransactions[0],logs:[log]};
  expect(extractPayment(receipt).amount).toBe(r.amount);
  expect(()=>extractPayment({...receipt,status:'reverted'})).toThrow();expect(()=>extractPayment({...receipt,logs:[{...log,address:row.recipient}]})).toThrow();expect(()=>extractPayment({...receipt,logs:[log,log]})).toThrow();
+});
+
+test('idempotent reservation retries preserve original decision and ledger revision',()=>{
+ const first=reserve(emptyLedger(),[row],now,'stable-key');
+ const retry=reserve(first.state,[row],now+20,'stable-key',0);
+ expect(retry.state).toEqual(first.state);expect(retry.result).toEqual(first.result);
+ expect(()=>reserve(first.state,[{...row,amount:'1'}],now,'stable-key')).toThrow('different invoices');
+});
+test('stale review cannot reserve after another tab changes the ledger',()=>{
+ const first=reserve(emptyLedger(),[row],now,'tab-one',0);
+ expect(()=>reserve(first.state,[{...row,invoice:'NS-104',amount:'100'}],now,'tab-two',0)).toThrow('Ledger changed');
+ expect(first.state.runs.length).toBe(1);
+});
+
+
+test('read-only review does not mutate ledger and public receipt omits operator fields',()=>{
+ const state=emptyLedger(),before=JSON.stringify(state);const result=review(state,[row],now);
+ expect(result.approvedAmount).toBe('4200000000');expect(JSON.stringify(state)).toBe(before);
+ const saved=reserve(state,[row],now,'receipt-run',result.revision);
+ const encoded=JSON.stringify(saved.result.receipt);
+ for(const secret of ['NS-101','NORTHSTAR','Design','purchaseOrder','remainingPurchaseOrder','reasons','isolatedAmount'])expect(encoded).not.toContain(secret);
+ expect(ledgerView(saved.state)).not.toHaveProperty('snapshot');
 });

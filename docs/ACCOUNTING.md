@@ -76,3 +76,14 @@ Existing domain firewall rules blocked all POST methods. A scoped exception now
 allows only the five ledger POST paths on velum.aethe.me; probe protection and other
 hosts retain their existing rules. The exact expression is saved in
 `docs/ledger-firewall-expression.txt`; the previous ruleset is backed up in ignored artifacts.
+
+
+## Review, retry and receipts (audit upgrade)
+
+POST reserve with `mode: "review"` is read-only and returns the current revision.
+The UI requires review before reserving and invalidates review after edits. Reservation
+includes `expectedRevision` and a unique `requestKey`. A stale revision fails before
+writes. Repeating the same key and normalized input returns its original saved result;
+using the key with different input fails. Run receipts persist minimal public decision
+payloads, without invoice references, budgets or reasons. They are preview artifacts,
+not signed CRE reports. Legacy runs without a receipt remain readable.

@@ -27,6 +27,7 @@ try {
   await page.getByRole('button', { name: 'Evaluate batch' }).click();
   await page.getByText('3 of 5 invoices approved').waitFor();
   assert.equal(await page.locator('#batch-approved').textContent(), '$9,600');
+  await page.locator('.technical-evidence > summary').click();
   await page.getByText('✓ Receipt file integrity checked').waitFor();
   assert.equal(await page.locator('#balance-after').textContent(), '$14,200');
   await page.locator('#sepolia-proof').waitFor({ state: 'visible' });

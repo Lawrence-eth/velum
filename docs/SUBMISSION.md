@@ -11,7 +11,7 @@ A $4,200 invoice and a $3,800 invoice can both pass a $5,000 approval limit and 
 
 The handler retrieves an authenticated accounting snapshot and keeps invoice references, vendor IDs, purchase-order terms and rejection reasons out of its public report. The report commits to an ordered set of exact payments. A treasury validates that manifest and settles only approved entries, consuming approval and transferring tokens in one transaction. Failed transfers restore the approval.
 
-A persistent SQLite-backed accounting workspace accepts synthetic CSV imports and corrections, atomically reserves shared budgets across runs, and reconciles finalized Sepolia payment events. Paid invoice identities remain blocked under new request IDs after reload. A second actual CRE run reads this reconciled accounting snapshot and rejects the resubmitted batch.
+A persistent SQLite-backed accounting workspace accepts synthetic CSV imports and corrections, provides read-only review and downloadable public run receipts, rejects stale reviewed state, safely retries reservations without creating another run, atomically reserves shared budgets across runs, and reconciles finalized Sepolia payment events. Paid invoice identities remain blocked under new request IDs after reload. A second actual CRE run reads this reconciled accounting snapshot and rejects the resubmitted batch.
 
 The demo makes the distinction visible: an interactive synthetic preview compares isolated checks to shared-budget decisions, a disclosure inspector shows operator versus public data, and an evidence panel shows real CRE simulation output driving actual Solidity bytecode and token balance changes in a local EVM.
 

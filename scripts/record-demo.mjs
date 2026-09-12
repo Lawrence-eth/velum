@@ -18,7 +18,7 @@ try{
  await scene('Persistent reservations awaiting reconciliation','#ledger',10);
  await page.locator('#ledger-reconcile').click();await page.getByText('Both finalized payments reconciled.',{exact:false}).waitFor({timeout:90000});
  await scene('Finalized Sepolia payments reconciled','#ledger-history',15);
- await page.reload({waitUntil:'networkidle'});await page.getByText('Your saved workspace has been restored.').waitFor();await page.locator('#ledger-sample').click();await page.getByText('5 synthetic invoice rows imported.',{exact:false}).waitFor();await page.locator('#ledger-reserve').click();await page.getByText('$0 reserved in a new preview run.',{exact:false}).waitFor();
+ await page.reload({waitUntil:'networkidle'});await page.getByText('Your saved workspace has been restored.').waitFor();await page.locator('#ledger-sample').click();await page.getByText('5 synthetic invoice rows imported.',{exact:false}).waitFor();await page.locator('#ledger-review').click();await page.getByText('Review complete. Correct held rows or reserve the eligible invoices.').waitFor();await page.locator('#ledger-reserve').click();await page.getByText('$0 reserved in a new preview run.',{exact:false}).waitFor();
  await scene('Paid invoices cannot return in the next run','#ledger-decisions',20);
  await scene('Public source and execution evidence','#evidence',15);
 }finally{await context.close();await video.saveAs('artifacts/velum-demo-footage.webm');await browser.close();writeFileSync('artifacts/demo-cues.json',JSON.stringify({note:'Silent screen footage for human narration. Not a submission-ready video.',cues},null,2)+'\n');}

@@ -145,3 +145,16 @@ Recording: [demo script](docs/DEMO-SCRIPT.md), [judge Q&A](docs/JUDGE-QA.md).
 Customer research: [interview guide](docs/validation/INTERVIEW.md),
 [unfilled findings](docs/validation/FINDINGS.md), [human review](docs/validation/HUMAN-REVIEW.md).
 No customer validation or completed human narration is claimed.
+
+## Product-audit upgrade
+
+Imported drafts now have a read-only review before reservation. The UI sends the
+reviewed ledger revision to prevent stale-tab actions and a request key so a lost
+response can be retried without creating another run. Saved payment runs include
+downloadable public preview receipts. These receipts do not contain invoice labels,
+private budgets or reasons and are not signed CRE attestations.
+
+[Detailed product audit](docs/PRODUCT-AUDIT.md) records defects, changes, verification,
+and remaining trust/product limits. The Sepolia evidence is near the opening; older
+technical demos remain available in an expandable section. The previous silent
+recording predates the staged review UI; use the updated recording script for a new take.

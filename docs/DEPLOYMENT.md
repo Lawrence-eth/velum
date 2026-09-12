@@ -72,3 +72,11 @@ Final workspace deployment version: `4781c8ef-7c92-4551-9f1c-26da586fcd63`.
 GitHub CI passed for implementation commit `4abb937`. The original 18-check live
 browser suite also passed after the upgrade. The public ledger-to-CRE evidence URL
 returned a successful five-check record over verified HTTPS.
+
+### Product-audit upgrade
+
+Deployed Worker version `4b2cc209-17d1-464f-bc5a-db3e6ded3b4c`: read-only review,
+revision checks, idempotent reservations, public run receipts, and shorter product
+navigation. No new bindings or firewall exceptions were required. Existing saved
+workspaces remain compatible; historical runs without receipts remain readable.
+Live checks: 14 ledger checks plus 18 existing product checks passed.
