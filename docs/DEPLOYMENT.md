@@ -80,3 +80,13 @@ revision checks, idempotent reservations, public run receipts, and shorter produ
 navigation. No new bindings or firewall exceptions were required. Existing saved
 workspaces remain compatible; historical runs without receipts remain readable.
 Live checks: 14 ledger checks plus 18 existing product checks passed.
+
+### Browser contract lab
+
+Worker version `ee58f098-7854-4e1c-b3ee-2849cec13887` serves `/lab.html`, its on-demand
+Web Worker bundle, and reproducibly compiled Solidity artifacts. No new Worker
+bindings, private API routes, wallet keys or network-writing capabilities were added.
+The asset CSP adds `wasm-unsafe-eval` to allow EthereumJS's WebAssembly dependency;
+general JavaScript string evaluation is still blocked. Local tests caught a browser
+process-environment dependency and mobile overflow; deployed tests caught the stricter
+CSP, all resolved before claiming live verification.

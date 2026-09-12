@@ -77,3 +77,14 @@ and actual finalized Sepolia reconciliation. The existing 18-check live browser
 suite passed after opening the newly collapsed technical evidence section.
 Targeted unit tests cover read-only review, stale revision rejection, identical-key
 retry equivalence, different-input key rejection, and operator-field omission.
+
+## Next iteration: let the reviewer challenge the contract
+
+A separate `/lab.html` now executes nine adversarial and positive-control experiments
+against actual compiled treasury bytecode in a browser Web Worker. This addresses a
+remaining presentation gap: reviewers previously had to trust recorded contract-test
+results or reproduce a CLI environment. The new experience makes exact-payment
+binding, complete manifests, sender/workflow checks, replay behavior and transfer
+rollback directly inspectable. It does not turn browser execution into CRE execution.
+The primary CTA now opens the lab; the persistent accounting desk remains one click
+away. The EVM bundle is lazy-loaded and does not affect the main page's initial assets.

@@ -158,3 +158,15 @@ private budgets or reasons and are not signed CRE attestations.
 and remaining trust/product limits. The Sepolia evidence is near the opening; older
 technical demos remain available in an expandable section. The previous silent
 recording predates the staged review UI; use the updated recording script for a new take.
+
+## Try to break the payment gate
+
+[Live contract lab](https://velum.aethe.me/lab.html): run nine experiments against
+actual Solidity bytecode in a browser-local EVM. Change the recipient or amount,
+reorder or omit a decision, forge identity/caller, replay a report, or make a token
+transfer fail. Compare with a valid payment and download the measured result.
+
+This is fresh local execution, not a recorded outcome or CRE execution. No wallet
+or network write is involved. The main page does not load the EVM bundle. See
+[implementation and limits](docs/CONTRACT-LAB.md). CI reproduces the compiled
+artifacts from the source, and Chromium tests verify every experiment.

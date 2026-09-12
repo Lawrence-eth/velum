@@ -79,3 +79,14 @@ specific, consented finding and the decision it changed. Do not invent validatio
 - Submission description matches the final implementation and includes AI disclosure.
 - Video link opens in a private browser without requesting access.
 - Select Chainlink in the ETHGlobal submission dashboard before September 13, 16:00 UTC.
+
+## Stronger opening with the contract lab
+
+For the final recording, replace the first 25 seconds with the live contract lab:
+run “Valid payment,” then “Add one micro-unit.” Say: “This exact payment succeeds.
+Change it by one micro-unit and the treasury rejects the report. These results come
+from actual Solidity bytecode running locally in this browser. Velum binds a
+confidential batch decision to the payment the treasury is allowed to make.”
+Then move to the shared-budget case, privacy boundary, actual Sepolia receipts and
+persistent duplicate rejection. Keep the total below four minutes by shortening the
+older local-log walkthrough; the original prototype need not appear in the video.

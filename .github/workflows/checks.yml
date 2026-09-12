@@ -22,4 +22,6 @@ jobs:
       - run: bun test
       - run: bun run test:contract
       - run: bun run test:adapter
+      - run: bun run build:lab
+      - run: git diff --exit-code -- public/lab-contracts.json public/lab-worker.js
       # Authenticated CRE simulations are reproduced separately with bun run test:e2e.

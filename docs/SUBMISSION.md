@@ -45,3 +45,13 @@ Confirm the registered Start Fresh/Continuity track, review the functionality an
 [Rules](https://ethglobal.com/events/ethonline2026/info/details) · [Chainlink prize](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
 
 Sepolia transaction receipts and contract addresses: [public/sepolia-evidence.json](../public/sepolia-evidence.json). Reproduction and adapter trust boundary: [docs/SEPOLIA.md](SEPOLIA.md).
+
+## Interactive technical demonstration
+
+The live contract lab at https://velum.aethe.me/lab.html lets reviewers test nine
+conditions against freshly deployed Solidity bytecode in a browser-local EVM.
+Recipient and amount mutations, incomplete or reordered reports, forged identity,
+and replay are rejected. The valid control transfers test tokens; a failed token
+transfer restores approval and leaves balances unchanged. Every result comes from
+actual EVM calls. This complements the recorded CRE and Sepolia integration evidence;
+it does not run CRE or claim DON/TEE verification in the browser.

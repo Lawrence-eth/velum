@@ -18,7 +18,9 @@
     "demo:sepolia": "bun build scripts/sepolia-demo.ts --target node --packages external --outfile artifacts/sepolia-demo.mjs && node --no-addons artifacts/sepolia-demo.mjs",
     "types": "node --no-addons node_modules/wrangler/bin/wrangler.js types",
     "test:ledger-browser": "node --no-addons scripts/ledger-browser-test.mjs",
-    "test:ledger-cre": "bun build scripts/ledger-cre-test.ts --target node --packages external --outfile artifacts/ledger-cre-test.mjs && node --no-addons artifacts/ledger-cre-test.mjs"
+    "test:ledger-cre": "bun build scripts/ledger-cre-test.ts --target node --packages external --outfile artifacts/ledger-cre-test.mjs && node --no-addons artifacts/ledger-cre-test.mjs",
+    "build:lab": "bun build scripts/build-lab.ts --target node --packages external --outfile artifacts/build-lab.mjs && node --no-addons artifacts/build-lab.mjs && bun build src/lab-worker.ts --target browser --minify --outfile public/lab-worker.js",
+    "test:lab": "node --no-addons scripts/lab-browser-test.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

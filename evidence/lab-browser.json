@@ -1,0 +1,70 @@
+{
+  "success": true,
+  "recordedAt": "2026-09-12T10:59:30.474Z",
+  "base": "https://velum.aethe.me",
+  "mode": "Actual Solidity bytecode in browser-local EthereumJS EVM; no CRE or network execution",
+  "results": [
+    {
+      "experiment": "Valid payment",
+      "delivery": "Accepted",
+      "transfer": "Transferred",
+      "after": "$15,800"
+    },
+    {
+      "experiment": "Swap the recipient",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Add one micro-unit",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Reorder the decisions",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Hide a held invoice",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Use another workflow",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Forge the sender",
+      "delivery": "Rejected",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    },
+    {
+      "experiment": "Replay the report",
+      "delivery": "Rejected",
+      "transfer": "Transferred",
+      "after": "$15,800"
+    },
+    {
+      "experiment": "Make the token fail",
+      "delivery": "Accepted",
+      "transfer": "No transfer",
+      "after": "$20,000"
+    }
+  ],
+  "checks": [
+    "Nine actual EVM experiments",
+    "Expected token balances",
+    "Failed-transfer rollback",
+    "Download result",
+    "Mobile overflow",
+    "No page errors"
+  ]
+}
