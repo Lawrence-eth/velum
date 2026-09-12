@@ -7,7 +7,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1100 }, de
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 try {
-  await page.goto(`${base}/desk.html`, { waitUntil: 'networkidle' });
+  await page.goto(`${base}/examples.html`, { waitUntil: 'networkidle' });
   await page.getByRole('button', { name: 'Evaluate batch' }).click();
   await page.getByText('2 of 5 invoices approved').waitFor();
   assert.equal(await page.locator('#batch-approved').textContent(), '$5,800');

@@ -2,11 +2,11 @@
 
 **Give agents a task. Keep the authority.** A confidential execution gate for AI treasury agents, built for ETHOnline 2026 and the Chainlink Best Confidential Workflow track.
 
-[Live agent demo](https://velum.aethe.me) · [Agent → CRE → contract evidence](public/agent-evidence.json) · [Contract lab](https://velum.aethe.me/lab.html) · [Payment desk](https://velum.aethe.me/desk.html#ledger) · [Submission draft](docs/SUBMISSION.md)
+[Live agent demo](https://velum.aethe.me) · [Agent → CRE → contract evidence](public/agent-evidence.json) · [Contract lab](https://velum.aethe.me/lab.html) · [Payment desk](https://velum.aethe.me/desk.html#ledger) · [Evidence explorer](https://velum.aethe.me/evidence.html) · [Submission draft](docs/SUBMISSION.md)
 
 An invoice can persuade a payment agent to change a wallet. Velum treats the agent's output as a proposal: a separate accounting record and deterministic private policy decide whether that exact payment is eligible. The model cannot supply its own approval, policy, budget or invoice identity.
 
-![Velum agent execution gate](evidence/agent-live-model.png)
+![Velum agent execution gate](evidence/site-agent-desktop.png)
 
 ## Demonstrated result
 
@@ -94,3 +94,10 @@ bun run test:lab
 - [Three-minute human demo script](docs/DEMO-SCRIPT.md), [judge questions](docs/JUDGE-QA.md)
 
 Production still requires an authenticated accounting connector, exclusive reservation/reconciliation across agent runs, governed policy updates, deployed confidential-workflow access and a registered production forwarder identity. Test tokens are synthetic; the prototype is unaudited. The team has not yet completed customer validation or a human-narrated submission video. AI assistance is disclosed in the submission draft.
+
+
+## Site structure
+
+The shared navigation contains Agent, Accounting, Contract lab and Evidence. Accounting is the persistent workspace; recorded CLI and Sepolia results live on the Evidence page. Earlier batch/single-invoice fixtures are retained at `/examples.html`, under the evidence page's technical references.
+
+`public/site.css` defines the shared colors, type, layout and controls. `bun run build:site` generates every page's header and footer from one source; CI checks the committed output for drift. `bun run test:site` checks navigation, active states, mobile layouts, evidence rendering and browser errors across all four product pages.

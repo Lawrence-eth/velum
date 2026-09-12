@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-09-12T11:43:46.081Z",
+  "base": "https://velum.aethe.me",
+  "routes": [
+    "/",
+    "/desk.html",
+    "/lab.html",
+    "/evidence.html"
+  ],
+  "checks": [
+    "one page title and consistent shell",
+    "active navigation matches route",
+    "all navigation visible at 390 and 768px",
+    "no horizontal overflow",
+    "complete mobile navigation journey",
+    "accounting has one purpose",
+    "three recorded agent cases and three Sepolia transactions",
+    "no browser exceptions"
+  ]
+}

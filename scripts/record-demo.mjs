@@ -29,7 +29,7 @@ try{
  await page.waitForFunction(()=>document.querySelector('#lab-progress').textContent.includes('Experiment complete'),undefined,{timeout:35000});
  assert.match(await page.locator('#lab-state').innerText(),/Approved/);
  await scene('Failed token transfer restores authorization','.lab-layout',15);
- await page.goto('https://velum.aethe.me/desk.html',{waitUntil:'networkidle'});await page.locator('#sepolia-proof').waitFor({state:'visible'});
+ await page.goto('https://velum.aethe.me/evidence.html',{waitUntil:'networkidle'});await page.locator('#sepolia-proof').waitFor({state:'visible'});
  await scene('Separate original batch: real Sepolia receipts, mock-forwarder boundary','#sepolia-proof',15);
  await page.goto('https://velum.aethe.me',{waitUntil:'networkidle'});await scene('Close: private policy and explicit prototype scope','.boundary',15);
 }finally{await context.close();await video.saveAs('artifacts/velum-agent-demo-footage.webm');await browser.close();writeFileSync('artifacts/agent-demo-cues.json',JSON.stringify({note:'Silent screen footage for human narration. Actual live calls shown. Not submission-ready.',cues},null,2)+'\n');}

@@ -52,3 +52,6 @@ Silent take: approximately 3:03, 1440×900. The actual live malicious-invoice ca
 | 2:16 | Failed token transfer restores authorization |
 | 2:32 | Separate original batch: real Sepolia receipts, mock-forwarder boundary |
 | 2:47 | Close: private policy and explicit prototype scope |
+
+
+The unified-site redesign supersedes the appearance of the earlier recorded take. The recorder now opens the canonical Evidence page for Sepolia receipts. Re-record before producing the final narrated submission so the footage matches the current navigation.

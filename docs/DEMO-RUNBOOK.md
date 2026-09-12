@@ -8,7 +8,7 @@ Keep these tabs ready:
 - Homepage: actual agent output and ordinary policy preview.
 - `/agent-evidence.json`: recorded exact proposals, reports and local contract results.
 - `/lab.html`: actual browser EVM experiments.
-- `/desk.html#sepolia-proof`: separate existing Sepolia transactions.
+- `/evidence.html#sepolia-proof`: separate existing Sepolia transactions.
 
 ## If the model resists the malicious invoice
 

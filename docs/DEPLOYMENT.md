@@ -98,3 +98,7 @@ Worker version `f0653a07-6a58-4cc4-a72e-a67b57222c32` adds the live treasury-pro
 The zone POST firewall exception was extended only for `velum.aethe.me` at `/api/agent`; existing restrictions and other hosts were preserved. The endpoint accepts fixed synthetic scenarios, not arbitrary documents. Live inference needs no browser API key; the server binding calls Workers AI.
 
 Published evidence includes actual clean/malicious model captures, three real CRE CLI simulations and local compiled-contract settlement results. This adds no new Sepolia transactions and does not claim deployed confidential attestation.
+
+## Unified product site — September 12, 2026
+
+Worker version `121e18e9-16d5-4ce8-bbba-026922d88346` unifies all product pages through shared static navigation and design styles. Accounting now has one dedicated workspace, the Evidence page centralizes recorded results, and earlier fixtures live under technical references. API bindings, stored workspace identities, policy and contract behavior are unchanged. See `SITE-DESIGN.md` for route and validation details.
