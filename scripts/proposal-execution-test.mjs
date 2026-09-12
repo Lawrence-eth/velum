@@ -1,0 +1,8 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true});const page=await browser.newPage();
+try{
+ await page.goto('http://127.0.0.1:8787');
+ const cases=[['valid','0x2222222222222222222222222222222222222222','2400.00',true],['wallet','0x4444444444444444444444444444444444444444','2400.00',false],['increase','0x2222222222222222222222222222222222222222','2400.01',false],['decrease','0x2222222222222222222222222222222222222222','2399.99',false],['zero','0x2222222222222222222222222222222222222222','0.00',false]];
+ for(const [label,recipient,amount,approved] of cases){const pending=page.evaluate(async({recipient,amount,label})=>{const artifacts=await(await fetch('/lab-contracts.json')).json();const worker=new Worker('/lab-worker.js',{type:'module'});try{return await new Promise((resolve,reject)=>{worker.onmessage=e=>e.data.ok?resolve(e.data.result):reject(Error(e.data.error));worker.onerror=reject;worker.postMessage({attack:'proposal',proposal:{invoiceRef:'NS-101',recipient,amount},runId:'proposal-test-'+label,contracts:artifacts.contracts});});}finally{worker.terminate();}},{recipient,amount,label});if(label==='zero'){await assert.rejects(pending);console.log('zero: treasury refused registration');continue;}const result=await pending;assert.equal(result.policyApproved,approved,label);assert.equal(result.settlementAccepted,approved,label);assert.equal(result.proposal.recipient,recipient);assert.equal(result.proposal.amount,amount);assert.equal(result.treasuryAfter,approved?'17600000000':'20000000000');console.log(`${label}: actual contract ${approved?'transferred':'rejected'}, proposal fields preserved`);}
+}finally{await browser.close()}

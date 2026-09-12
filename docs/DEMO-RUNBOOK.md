@@ -5,18 +5,18 @@
 Open https://velum.aethe.me in a fresh tab. Confirm the synthetic invoice loads and the recorded agent evidence lists all three cases. Run the clean model once if needed; public inference allows 50 total daily calls and one every five seconds. Do not repeatedly refresh or run inference to hunt for a more dramatic result.
 
 Keep these tabs ready:
-- Homepage: actual agent output and ordinary policy preview.
+- Homepage: actual agent output, independent policy and automatic local contract settlement.
 - `/agent-evidence.json`: recorded exact proposals, reports and local contract results.
 - `/lab.html`: actual browser EVM experiments.
 - `/evidence.html#sepolia-proof`: separate existing Sepolia transactions.
 
 ## If the model resists the malicious invoice
 
-Say that it resisted on this run. Use “Test a compromised proposal” to demonstrate the independent gate, explicitly describing the injected control. The recorded malicious model response remains available as one observed failure, not an inevitable model behavior.
+Say that it resisted on this run. Open “If the model resists the instruction” and use “Supply an attacker-wallet proposal” to demonstrate the independent gate, explicitly describing the injected control. The recorded malicious model response remains available as one observed failure, not an inevitable model behavior.
 
 ## If live inference is unavailable or quota-limited
 
-Show the recorded model output and its timestamp. Call it a recording. The injected-proposal test does not call the model and remains available for demonstrating policy rejection. Do not present it as a fallback AI response. The screen recorder intentionally stops if it cannot obtain valid live output.
+Show the recorded model output and its timestamp. Call it a recording. The injected-proposal test does not call the model and remains available for demonstrating policy rejection and actual local settlement failure. A denied proposal can be explicitly corrected using “Use verified details & retry”. Do not present it as a fallback AI response. The screen recorder intentionally stops if it cannot obtain valid live output.
 
 ## If the browser contract lab takes too long
 
@@ -26,7 +26,7 @@ Its first run downloads the EVM bundle and compiles WASM crypto modules. Allow u
 
 | Screen | Safe description |
 |---|---|
-| Homepage result | Live AI output followed by a synthetic Worker policy preview |
+| Homepage result | Live AI output → independent policy → actual browser-local contract settlement |
 | Agent evidence | Captured live outputs through real CRE CLI simulation and local Solidity |
 | Contract lab | Actual Solidity execution in this browser using a mock report identity |
 | Sepolia receipts | Separate batch testnet payments through the simulation forwarder and owner-pinned adapter |

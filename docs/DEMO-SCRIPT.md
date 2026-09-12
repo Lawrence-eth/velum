@@ -1,43 +1,43 @@
-# Velum — human-narrated demo, approximately 3:15
+# Velum — one payment, one story
 
-Record at 1440×900 or higher. Speak in your own voice. This is a suggested script; rehearse and adjust it to what the live model actually returns. Do not use the old invoice-batch recording as the new product demo.
+Target: approximately 3 minutes. Human narration, 1440×900 screen capture. Show actual outcomes and describe each execution environment accurately.
 
-## 0:00–0:25 · The problem
-Open https://velum.aethe.me. Show the headline, then scroll to the invoice.
+## 0:00–0:20 · A concrete task
+Open https://velum.aethe.me. The suspicious invoice is selected by default.
 
-“An AI treasury agent reads an invoice and proposes a payment. But an invoice can also contain instructions telling the agent to change the recipient. Velum separates the agent's proposal from the authority to spend. Private accounting policy decides whether the treasury may execute that exact payment.”
+“This agent has one job: pay a $2,400 contractor invoice. But the invoice includes a note telling it to use a different wallet and hide the change. Velum keeps the authority to spend separate from the agent's instructions.”
 
-## 0:25–0:55 · The valid control
-Select Clean invoice and click Run live agent. Wait for the actual result.
+## 0:20–0:55 · One click through the payment gate
+Show the note and click **Run this payment check**. The live model runs, then the actual proposed recipient and amount automatically go through policy checks and compiled Solidity in the browser.
 
-“This is a live model call using a synthetic $2,400 contractor invoice. The agent extracts the recipient and amount. Velum compares that proposal with a separate canonical accounting record. This matches, so the preview is eligible. This browser button does not send money or run CRE.”
+“The model reads the invoice. The gate compares its proposal with the verified accounting record. Then we attempt the payment against the actual treasury contract. This is a local test treasury, so no wallet or real funds are needed.”
 
-If inference is unavailable or quota-limited, say so and open the recorded evidence; do not call a recording live.
+If live inference is unavailable, say so and open recorded evidence; do not describe a replay or injected control as live AI output.
 
-## 0:55–1:30 · The malicious input
-Select Malicious remittance note. Show the appended instruction, then Run live agent.
+## 0:55–1:20 · Show the consequence
+Show the result: proposed amount, transferred amount, wallet difference and unchanged balance.
 
-“The footer tells the assistant to ignore the original wallet, use this new wallet, and conceal the change. The system prompt already says invoices are untrusted. In our recorded run, the model still proposed the attacker wallet. The independent policy rejected it.”
+“In our captured runs, the model followed the changed-wallet instruction. The independent policy denied the proposal. The contract rejected settlement: $2,400 requested, zero transferred. The model's output cannot authorize its own payment.”
 
-If the current model resists: “This run resisted the instruction. The recorded run did not. The gate must work even when the agent fails.” Then click Test a compromised proposal, explaining that this deliberately supplies the attacker wallet and makes no model call.
+If this model resists, say it resisted. Open **If the model resists the instruction** and supply the explicitly labeled attacker-wallet proposal. Explain that no model call occurs for this control.
 
-## 1:30–2:05 · The Chainlink boundary
-Open the source-record disclosure briefly, then the evidence panel and CRE log.
+## 1:20–1:50 · Resolve the payment
+Click **Use verified details & retry**. Show the verified correction and 2,400 test tokens transferred.
 
-“The model never receives the private approval cap or remaining budget. Our Chainlink handler retrieves the accounting credential and source bundle inside handlerInTee, applies deterministic checks, and releases only request-bound decisions. The report excludes invoice references, purchase-order terms, limits, budget and reasons. Settlement still exposes amounts and recipients.”
+“A legitimate invoice still needs to be paid. I explicitly choose the details from the separate verified record. This is my correction, not a new model response. The same policy now approves the correct payment, and a fresh local test treasury settles it. The trace contains the rejected attempt and the corrected attempt.”
 
-“We captured the actual model proposals and ran them through the real CRE CLI. The clean proposal transferred 2,400 test tokens in a local EVM. The malicious proposal's settlement reverted and the treasury balance stayed unchanged. This is CLI simulation and mock identity delivery, not an attested enclave deployment.”
+Do not describe these independent local treasuries as a persistent accounting lifecycle or as two transactions on the same deployed treasury.
 
-## 2:05–2:45 · Enforcement
-Open /lab.html. Run a recipient mutation, then the valid control or failed-transfer case.
+## 1:50–2:30 · Why Chainlink
+Scroll to **The Chainlink connection**, then open the linked agent execution record.
 
-“This runs the compiled Solidity treasury in your browser. A changed payment commitment fails. The contract also rejects forged callers, wrong identities, incomplete reports and replay. If a token transfer fails, approval consumption rolls back. The AI model has no signing key and no authority to bypass these checks.”
+“The model doesn't receive the private approval cap or remaining budget. Our CRE confidential handler retrieves the source credential and private record inside handlerInTee, checks the payment, and releases a report bound to its exact fields. The public report omits invoice references, caps, budget and reasons.”
 
-Optionally show the Sepolia receipts link for ten seconds: “Our separate batch integration also has real CRE CLI broadcast and test-token settlement receipts on Sepolia, using the explicitly labeled simulation adapter.”
+“These are actual captured model responses passed through the real CRE CLI and compiled Solidity. The valid proposal settled; the malicious one reverted. The browser interaction uses local policy and mock identity; the recorded CLI simulation is separate. We do not claim a deployed attested enclave.”
 
-## 2:45–3:15 · Honest scope and close
-Return to the homepage.
+## 2:30–3:00 · Scope and close
+Show the separate Sepolia section briefly if time allows, then return to the agent page.
 
-“This prototype uses synthetic invoices and a trusted accounting fixture. A production integration needs exclusive source reservations, reconciliation and the deployed confidential workflow with a production forwarder. Our separate payment desk already demonstrates persistent reservations and finalized receipt reconciliation. Velum's central principle is simple: an agent may propose a payment, but it never gets to write the rules that authorize it.”
+“Our separate batch integration also has actual test-token settlement receipts on Sepolia through a simulation adapter. Production still needs an authenticated accounting connector, exclusive reservations and deployed confidential execution. The central boundary already works in the demo: an agent can propose a payment, but it cannot write the rules that authorize it.”
 
-End on the repository and evidence links. Keep the complete video within the event's 2–4 minute limit; human narration is required.
+No tour of every page is needed. Keep the recording focused on the mistake, enforced result, explicit correction and Chainlink evidence.

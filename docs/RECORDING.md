@@ -1,57 +1,19 @@
-# Recording handoff
+# Guided payment recording
 
-The scripted screen take is silent source footage, not a finished submission video.
-The human-narrated recording is still required. `scripts/record-demo.mjs` records
-1440×900 screen footage and saves timestamped scene cues under `artifacts/`.
-
-Reproduce with:
+The current recorder follows one payment journey: suspicious invoice → live model proposal → actual local contract result → explicit verified correction → recorded Chainlink evidence. It does not require a tour through every product page.
 
 ```sh
-node --no-addons scripts/record-demo.mjs
+VELUM_TEST_IP=104.21.32.18 node --no-addons scripts/record-demo.mjs
+bash scripts/finish-demo-recording.sh
 ```
 
-On the current VM, use `VELUM_TEST_IP=104.21.32.18` if DNS fails. This preserves TLS
-hostname verification. The recorder makes two real model calls, shows their actual outcomes, runs two
-local Solidity experiments, and opens the separate recorded Sepolia receipts.
-It does not send chain transactions, reserve accounting records or expose a wallet key.
-If the malicious invoice is resisted, it adds an explicitly labeled injected control.
-An unavailable live model stops the take rather than substituting a canned response.
+The IP override is optional and preserves TLS hostname verification. The recorder makes a real model call. If the model resists the instruction, the take explicitly introduces the injected control before demonstrating correction. If live inference is unavailable, the recorder stops rather than substituting a canned answer.
 
-Use `docs/DEMO-SCRIPT.md` as the narration draft. Explain the simulator, mock adapter,
-and public payment fields accurately. Record your voice at a normal pace. Align it
-with the scene cues or record a fresh screen take while speaking; do not use an AI
-voice or label the silent take as submission-ready. Remove long network waits with
-cuts rather than speeding up playback. Verify 2–4 minutes and at least 720p.
+Artifacts:
+- `artifacts/velum-guided-demo-footage.webm`: silent 1440×900 screen take.
+- `artifacts/velum-guided-demo-footage.mp4`: H.264 export.
+- `artifacts/guided-demo-cues.json`: actual scene timestamps.
 
-Human review and actual customer findings should guide your final wording. Only add
-an interview statement after the interview has happened and publication is permitted.
+Add your own human narration using `DEMO-SCRIPT.md`, review the execution claims, and verify 2–4 minutes and at least 720p before submission. Silent footage is not a finished submission video. Earlier `velum-demo-footage.*` and `velum-agent-demo-footage.*` files show superseded flows.
 
-
-Files produced:
-- `artifacts/velum-agent-demo-footage.webm` — silent screen take.
-- `artifacts/velum-agent-demo-footage.mp4` — H.264 conversion after `bash scripts/finish-demo-recording.sh`.
-- `artifacts/agent-demo-cues.json` — timestamps and observed malicious-model verdict.
-
-The older `velum-demo-footage.*` files show the previous batch-focused concept and should not be used for the new pitch.
-
-
-## Recorded agent take — September 12, 2026
-
-Silent take: approximately 3:03, 1440×900. The actual live malicious-invoice call selected the attacker wallet and was denied. The local contract result is visible in the captured frame.
-
-| Time | Screen |
-|---|---|
-| 0:01 | Opening: agent intent and independent authority |
-| 0:18 | Clean synthetic invoice |
-| 0:26 | Actual live clean proposal is eligible; preview sends no payment |
-| 0:43 | Malicious remittance instruction |
-| 0:54 | Actual malicious-invoice model outcome: DENIED · Recipient does not match purchase order |
-| 1:14 | Separate source policy and actual model prompt |
-| 1:34 | Three captured proposals through real CRE CLI and local Solidity |
-| 1:57 | Actual browser EVM rejects changed payment commitment |
-| 2:16 | Failed token transfer restores authorization |
-| 2:32 | Separate original batch: real Sepolia receipts, mock-forwarder boundary |
-| 2:47 | Close: private policy and explicit prototype scope |
-
-
-The unified-site redesign supersedes the appearance of the earlier recorded take. The recorder now opens the canonical Evidence page for Sepolia receipts. Re-record before producing the final narrated submission so the footage matches the current navigation.
+The interactive payment attempts execute real Solidity locally with fresh test treasuries. They do not send network transactions, call CRE, or update persistent accounting. The linked CLI simulation and Sepolia receipts are separate recorded evidence. Preserve those distinctions in narration.

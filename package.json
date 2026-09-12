@@ -25,7 +25,8 @@
     "test:agent-browser": "node --no-addons scripts/agent-browser-test.mjs",
     "capture:agent": "bun build scripts/capture-agent.ts --target node --packages external --outfile artifacts/capture-agent.mjs && node --no-addons artifacts/capture-agent.mjs",
     "build:site": "node scripts/build-site.mjs",
-    "test:site": "node --no-addons scripts/site-browser-test.mjs"
+    "test:site": "node --no-addons scripts/site-browser-test.mjs",
+    "test:proposal-execution": "node --no-addons scripts/proposal-execution-test.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

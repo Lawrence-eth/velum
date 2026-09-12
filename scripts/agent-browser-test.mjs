@@ -1,22 +1,22 @@
-import { chromium } from '@playwright/test';
+import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
-import { writeFileSync } from 'node:fs';
+import {writeFileSync,readFileSync} from 'node:fs';
 const base=process.env.VELUM_TEST_URL||'https://velum.aethe.me';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox',...(process.env.VELUM_TEST_IP?[`--host-resolver-rules=MAP ${new URL(base).hostname} ${process.env.VELUM_TEST_IP}`]:[])]});
-const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
-try {
- await page.goto(base,{waitUntil:'networkidle'});
- await page.locator('#invoice-text').filter({hasText:'NS-101'}).waitFor();
- await page.locator('#run-agent').click();await page.locator('#verdict').waitFor({timeout:65000});assert.match(await page.locator('#run-source').innerText(),/LIVE MODEL/);assert.match(await page.locator('#verdict').innerText(),/ELIGIBLE/);
- await page.waitForTimeout(5500);
- await page.locator('[data-scenario="malicious"]').click();assert.ok(await page.locator('#attack-note').isVisible());
- await page.locator('#run-agent').click();await page.locator('#verdict').waitFor({timeout:65000});assert.match(await page.locator('#run-source').innerText(),/LIVE MODEL/);
+const browser=await chromium.launch({headless:true,args:process.env.VELUM_TEST_IP?[`--host-resolver-rules=MAP ${new URL(base).hostname} ${process.env.VELUM_TEST_IP}`]:[]});
+const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+async function completed(){await page.locator('#payment-result').waitFor({state:'visible',timeout:90000});await page.waitForFunction(()=>!document.getElementById('run-agent').disabled);}
+async function receipt(){const pending=page.waitForEvent('download');await page.locator('#download-agent').click();const download=await pending;assert.equal(download.suggestedFilename(),'velum-payment-run.json');const stream=await download.createReadStream();let text='';for await(const chunk of stream)text+=chunk.toString();return JSON.parse(text);}
+const checks=[];
+try{
+ if(process.env.VELUM_MODEL_FIXTURES==='1')await page.route('**/api/agent?*',route=>{const input=route.request().postDataJSON();const name=input.mode==='injected'?'injected':input.scenario;return route.fulfill({json:JSON.parse(readFileSync(`artifacts/agent-${name}.json`,'utf8'))});});
+ await page.goto(base,{waitUntil:'networkidle'});await page.locator('#invoice-text').filter({hasText:'NS-101'}).waitFor({state:'attached'});
+ assert.equal(await page.locator('[data-scenario="malicious"]').getAttribute('aria-pressed'),'true');checks.push('suspicious invoice is the guided starting point');
+ await page.locator('#run-agent').click();await completed();let result=await receipt();assert.equal(result.capture.source,'live-model');assert.equal(result.capture.proposal.recipient,result.execution.proposal.recipient);assert.equal(result.capture.proposal.amount,result.execution.proposal.amount);assert.equal(result.capture.gate.approved,result.execution.settlementAccepted);assert.equal(result.execution.paid,result.execution.policyApproved?'2400000000':'0');checks.push('one live model call automatically reaches actual local Solidity using identical payment fields');
  await page.screenshot({path:'evidence/agent-live-model.png',fullPage:true});
- await page.locator('#inject-proposal').click();await page.locator('#verdict').waitFor();assert.match(await page.locator('#verdict').innerText(),/DENIED/);assert.match(await page.locator('#run-source').innerText(),/INJECTED/);
- const download=page.waitForEvent('download');await page.locator('#download-agent').click();const d=await download;assert.equal(d.suggestedFilename(),'velum-agent-operator-trace.json');
- await page.screenshot({path:'evidence/agent-desktop.png',fullPage:true});
- await page.locator('[data-scenario="clean"]').click();assert.ok(await page.locator('#verdict').isHidden());assert.ok(await page.locator('#download-agent').isHidden());
- await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:'evidence/agent-mobile.png',fullPage:true});
- assert.deepEqual(errors,[]);
- const result={checkedAt:new Date().toISOString(),site:base,checks:['live clean model produces eligible proposal','live malicious model output displayed without assuming attack success','invoice scenario switches','injected proposal denied by live backend','injected source clearly labeled','operator trace download','scenario change clears stale decision','mobile no horizontal overflow','no browser exceptions']};writeFileSync('evidence/agent-browser.json',JSON.stringify(result,null,2)+'\n');console.log('9 agent browser checks passed');
+ await page.locator('.advanced-control summary').click();await page.locator('#inject-proposal').click();await completed();result=await receipt();assert.equal(result.capture.source,'injected-proposal');assert.equal(result.execution.policyApproved,false);assert.equal(result.execution.settlementAccepted,false);assert.equal(result.execution.requestStatus,3);assert.equal(result.execution.treasuryAfter,'20000000000');assert.ok(await page.locator('#repair-payment').isVisible());checks.push('explicit compromised proposal is denied and settlement actually reverts');
+ await page.locator('#repair-payment').click();await completed();result=await receipt();assert.equal(result.capture.source,'operator-corrected');assert.equal(result.execution.paid,'2400000000');assert.equal(result.execution.requestStatus,4);assert.equal(result.execution.treasuryAfter,'17600000000');assert.equal(result.previousAttempt.execution.paid,'0');assert.match(await page.locator('#attempt-history').innerText(),/First attempt: denied/);checks.push('explicit source correction settles in a fresh treasury and retains denied attempt in downloaded trace');
+ await page.locator('#try-other').click();assert.ok(await page.locator('#payment-result').isHidden());assert.equal(await page.locator('[data-scenario="clean"]').getAttribute('aria-pressed'),'true');checks.push('next action changes scenario and clears stale payment outcome');
+ await page.locator('#run-agent').click();await completed();result=await receipt();assert.equal(result.capture.source,'live-model');assert.equal(result.execution.paid,'2400000000');checks.push('clean live proposal transfers exactly 2400 local test tokens');
+ await page.screenshot({path:'evidence/agent-desktop.png',fullPage:true});await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:'evidence/agent-mobile.png',fullPage:true});checks.push('completed flow fits mobile viewport');assert.deepEqual(errors,[]);checks.push('no browser exceptions');
+ writeFileSync('evidence/agent-browser.json',JSON.stringify({checkedAt:new Date().toISOString(),site:base,mode:process.env.VELUM_MODEL_FIXTURES==='1'?'Recorded model fixtures and actual browser-local EVM; test harness':'Actual deployed live model and browser-local EVM; no CRE run triggered',checks},null,2)+'\n');console.log(JSON.stringify({success:true,checks},null,2));
 }finally{await browser.close()}

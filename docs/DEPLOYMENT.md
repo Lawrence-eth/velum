@@ -102,3 +102,9 @@ Published evidence includes actual clean/malicious model captures, three real CR
 ## Unified product site — September 12, 2026
 
 Worker version `121e18e9-16d5-4ce8-bbba-026922d88346` unifies all product pages through shared static navigation and design styles. Accounting now has one dedicated workspace, the Evidence page centralizes recorded results, and earlier fixtures live under technical references. API bindings, stored workspace identities, policy and contract behavior are unchanged. See `SITE-DESIGN.md` for route and validation details.
+
+## Guided proposal-to-contract execution — September 12, 2026
+
+Worker version `6a9f6b50-2b65-4026-a160-b66922b1506a` makes the agent homepage a single guided flow. The existing live inference endpoint feeds the exact proposed recipient and amount into the browser-local Solidity executor. The UI compares policy and settlement outcomes, shows token balances, and supports an explicitly labeled verified-record correction with a combined trace. Every attempt uses a fresh local treasury; no new onchain transaction, persistent reservation or CRE network run is triggered by the button.
+
+The browser EVM bundle now supports a validated `proposal` experiment alongside the existing nine contract cases. Type checking, actual proposal execution edge cases, the deployed guided browser test and the original contract-lab tests cover the change.

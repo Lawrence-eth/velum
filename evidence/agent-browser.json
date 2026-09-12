@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-09-12T11:42:59.330Z",
+  "checkedAt": "2026-09-12T11:55:37.614Z",
   "site": "https://velum.aethe.me",
+  "mode": "Actual deployed live model and browser-local EVM; no CRE run triggered",
   "checks": [
-    "live clean model produces eligible proposal",
-    "live malicious model output displayed without assuming attack success",
-    "invoice scenario switches",
-    "injected proposal denied by live backend",
-    "injected source clearly labeled",
-    "operator trace download",
-    "scenario change clears stale decision",
-    "mobile no horizontal overflow",
+    "suspicious invoice is the guided starting point",
+    "one live model call automatically reaches actual local Solidity using identical payment fields",
+    "explicit compromised proposal is denied and settlement actually reverts",
+    "explicit source correction settles in a fresh treasury and retains denied attempt in downloaded trace",
+    "next action changes scenario and clears stale payment outcome",
+    "clean live proposal transfers exactly 2400 local test tokens",
+    "completed flow fits mobile viewport",
     "no browser exceptions"
   ]
 }

@@ -23,7 +23,7 @@ Each scenario is an independent experiment with a fresh treasury. These runs do 
 
 | Environment | Actual execution | Limitation |
 |---|---|---|
-| Live agent page | Workers AI inference followed by deterministic Worker policy evaluation | Synthetic source; policy check outside a TEE; no CRE call or payment from this button |
+| Live agent page | Workers AI inference → independent deterministic policy → actual browser-local Solidity settlement attempt | Synthetic source; policy outside a TEE; no CRE call or network payment; each local attempt uses a fresh treasury |
 | Agent evidence runner | Captured model output → real CRE CLI handler simulation → compiled Solidity in local EVM | Local identity injection, no DON signatures, no deployed TEE attestation, no testnet transaction |
 | Existing Sepolia batch | Real CRE CLI broadcast through simulation adapter, successful test-token settlement transactions | Separate batch fixture; owner pins report hash; mock forwarder is not production authentication |
 | Browser contract lab | Compiled Solidity executes in an in-browser EVM | Locally computed policy and mock report identity |
@@ -40,3 +40,13 @@ An authenticated accounting connector must exclusively reserve and reconcile bud
 - [Workers AI bindings](https://developers.cloudflare.com/workers-ai/configuration/bindings/)
 - [Chainlink prize requirements](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
 - [CRE confidential workflow access](https://docs.chain.link/cre/account/confidential-workflows-access)
+
+## Guided interactive execution
+
+The homepage now sends the actual proposed recipient and amount directly to the browser-local EVM executor. It creates a fresh treasury and token, derives a trusted accounting bundle independently of the model, registers the proposal, delivers the locally evaluated report with mock identity, attempts settlement, and reads the resulting balances and request state. The displayed outcome comes from these EVM return values. The UI checks preserved proposal fields, server/local policy agreement, and policy/settlement agreement before showing success.
+
+The live API request ID is retained for the local attempt; consumer, token and expiry are assigned to its fresh local environment. The downloadable trace distinguishes the upstream proposal from the locally bound report. This is not a replay of a deployed authorization and does not call CRE from the browser.
+
+A denied run can be corrected through an explicit operator button that chooses the verified synthetic wallet and amount. The correction is labeled `operator-corrected`, never attributed to the model, and uses a fresh run ID and local treasury. Its downloaded trace retains the previous denied attempt. These independent attempts do not demonstrate durable reservation or reconciliation.
+
+`bun run test:proposal-execution` verifies actual browser EVM settlement for the valid proposal, changed wallet, one-cent increase and decrease, and zero-value registration rejection. Run the local fixture server first. `bun run test:agent-browser` exercises live inference, automatic execution, explicit attacker-wallet control, correction, combined trace download and mobile behavior against the deployed site.

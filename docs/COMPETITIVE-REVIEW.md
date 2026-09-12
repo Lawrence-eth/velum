@@ -67,3 +67,13 @@ access request was submitted successfully. Customer research materials and human
 review tasks are prepared, not completed validation. Human-narrated submission
 video remains pending. These are the remaining tasks most likely to affect the
 credibility and completeness of the submission.
+
+## Guided execution review — September 12
+
+The main weakness after visual unification was the demonstration itself: a reviewer had to connect an AI preview, a separate EVM lab and recorded CRE files. The primary interaction now carries an actual model proposal directly into the compiled local treasury. It shows requested versus transferred funds, then provides an explicit operator correction and successful retry. This replaces page navigation with a complete observable task.
+
+The live model is fallible and the source fixture is deliberately separate from its output. The local executor checks preserved proposal fields and agreement with the server policy before displaying success. A rejected attempt and its correction can be downloaded together. Each attempt has a fresh treasury and is clearly distinguished from persistent accounting and CRE execution.
+
+Against the current Chainlink criteria, the strongest evidence remains the actual confidential handler simulation and report-driven contract outcomes. The prize accepts successful CLI simulations, but requires the confidential component to contribute meaningfully to the application's core. The integrated interaction helps explain that architecture; it is not itself a live CRE run. [Official criteria](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
+
+Competitive gaps remain: no independent treasury-operator validation, no production accounting connector, no deployed confidential attestation, and no broad attack evaluation. There is no basis to estimate winning probability or claim these examples establish universal security. The presentation should lead with one verifiable payment failure and recovery, not a feature count.

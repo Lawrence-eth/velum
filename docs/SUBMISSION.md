@@ -13,6 +13,8 @@ Velum separates intent from authorization. A live model extracts a proposed paym
 
 In our recorded experiment, a live Llama model extracted the correct wallet from a clean $2,400 invoice but selected an attacker wallet after reading malicious remittance instructions, despite being told that invoices were untrusted. The actual proposals then ran through the CRE CLI and compiled Solidity in independent local EVMs. The clean proposal transferred 2,400 test tokens. The malicious proposal was denied and its settlement reverted, leaving the treasury balance unchanged. A separate, explicitly injected compromised proposal was also blocked. The live demo reports model resistance honestly; these examples do not claim universal prompt-injection prevention.
 
+The primary demo is one guided run: choose an invoice, make a live model call, automatically execute the exact proposed wallet and amount against local Solidity, and compare requested versus transferred funds. A denied proposal can be explicitly corrected from the verified accounting record and retried in a fresh local treasury; the downloaded trace retains both attempts.
+
 Supporting demonstrations include a nine-case browser EVM contract lab, persistent synthetic accounting with shared-budget reservations and duplicate protection, and recorded Sepolia test-token settlement through the CRE simulation forwarder.
 
 ## How it is made
@@ -27,7 +29,7 @@ Target: **Best Confidential Workflow**. The confidential handler is integral to 
 
 The recorded agent evidence contains two actual live-model captures plus a labeled injected control, three real CRE CLI simulations and 21 local contract checks. The returned report bytes are delivered directly to compiled Solidity. Separate original batch evidence records a CRE CLI Sepolia broadcast and two successful test-token transfers totaling 5,800.
 
-The published prize criteria accept CLI simulation evidence. We have not deployed an attested TEE workflow. Local EVM runs supply mock workflow metadata and do not verify DON signatures. The Sepolia simulation adapter requires the owner to pin an exact report hash and supplies synthetic metadata; it is not production oracle authentication. The homepage button runs live inference followed by ordinary Worker policy evaluation, and does not trigger CRE or payments.
+The published prize criteria accept CLI simulation evidence. We have not deployed an attested TEE workflow. Local EVM runs supply mock workflow metadata and do not verify DON signatures. The Sepolia simulation adapter requires the owner to pin an exact report hash and supplies synthetic metadata; it is not production oracle authentication. The homepage button runs live inference, independently checks the proposal, and attempts settlement in actual Solidity bytecode in a browser-local treasury. Denied proposals can be explicitly corrected using the verified record. It does not trigger CRE or network transactions.
 
 ## Links
 - Demo: https://velum.aethe.me

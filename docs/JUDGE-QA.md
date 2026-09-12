@@ -7,7 +7,7 @@ The supplied system prompt already treats invoices as untrusted. Our captured ma
 The intended confidential workflow retrieves the source invoice and secret, evaluates private limits/budget, and releases an exact payment authorization. The model does not receive those policy fields; the public contract does not need them. The confidential handler is the decision step, not a logging add-on. We verified it through real CLI simulation, which does not prove deployed hardware confidentiality.
 
 **Does clicking the homepage button run CRE?**
-No. It runs live Workers AI inference followed by an ordinary Worker policy preview. The separate evidence runner takes captured model proposals through the actual CRE CLI and then compiled Solidity. The UI distinguishes both. Agent previews do not reserve money or send transactions.
+No. It runs live Workers AI inference, independent policy checks, and an actual local Solidity settlement attempt using that proposal’s recipient and amount. The separate evidence runner takes captured proposals through the actual CRE CLI and then compiled Solidity. The UI distinguishes both. Interactive runs do not update persistent accounting or send network transactions.
 
 **Is the malicious model response scripted?**
 No: the evidence contains the actual live response, model ID, timestamp and proposed wallet. Repeated model calls may differ. A separate injected-proposal button is explicitly labeled and exists to test the policy boundary even if the model resists the invoice instruction.

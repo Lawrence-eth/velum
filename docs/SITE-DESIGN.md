@@ -18,3 +18,7 @@ The homepage shows a compact recorded-result summary with links to the evidence 
 Visual consistency does not imply a fully connected execution pipeline. The agent preview, persistent accounting workflow, local EVM experiments and recorded CRE evidence remain accurately labeled. No backend, policy, contract or deployment-access behavior was changed by this redesign.
 
 Validation: desktop, tablet and mobile route checks; all four navigation links visible; one page heading; active route labels; evidence rows and explorer links; no horizontal overflow; no broken internal anchors; existing live agent, accounting, reference-preview and contract-lab regression checks.
+
+## One-page guided run
+
+The homepage now provides the complete primary interaction, with the suspicious invoice selected first and one prominent action. It automatically carries the live model's payment into the local contract executor. A single result compares requested versus transferred tokens, explains a wallet mismatch, and offers an explicit verified-record correction. Technical payloads, alternative adversarial input and privacy details use expandable sections. The other pages remain supporting inspection tools; completing the primary task does not require navigating to them.

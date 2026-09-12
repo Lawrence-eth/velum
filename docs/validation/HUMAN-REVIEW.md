@@ -11,15 +11,15 @@ This document helps record actual decisions; checking boxes alone is not proof o
 - Who may change an approved contractor wallet, and what review is needed?
 - Which details must stay private, and from whom?
 
-## Agent gate review to perform first
-1. Open https://velum.aethe.me and predict the clean invoice proposal, then run the live model.
-2. Read the malicious footer before running it. Record the actual selected wallet; do not assume injection succeeds.
-3. Use the explicitly injected proposal. Explain why the gate rejects it even if the model resists the footer.
-4. Inspect the separate source record. Explain who is authorized to update a contractor wallet and why invoice text alone is insufficient.
-5. Read the recorded agent evidence. Distinguish live browser preview, CRE CLI simulation, local EVM settlement and the separate Sepolia batch.
-6. In the contract lab, predict the failed-transfer result before running it. Explain why approval remains available after a revert.
+## Guided payment review to perform first
+1. Open https://velum.aethe.me. Before clicking, predict what the suspicious invoice may cause the model to propose.
+2. Click **Run this payment check**. Record the actual proposed wallet and the local treasury's transferred amount. If the model resists, record that outcome.
+3. If necessary, open the advanced control and supply an explicitly compromised proposal. Explain why this is different from a live model failure.
+4. Click **Use verified details & retry** after a denial. Explain who selected the correction and why invoice text alone cannot authorize a wallet change.
+5. Download the combined trace. Explain why each attempt uses a fresh local treasury and why this does not prove durable cross-run accounting.
+6. Open the recorded CRE evidence. Distinguish the browser's local policy execution from the actual CLI simulation and the separate Sepolia batch.
 
-Record a product decision from this review: should a legitimate wallet-change request be rejected, held for a second approver, or verified through an existing vendor channel? Explain which real workflow informed your answer.
+Record one concrete product decision: what verification should authorize a legitimate wallet change in your intended customer's workflow? Consider a second approver or an independently verified vendor channel; do not invent an interview or team contribution.
 
 ## Supporting accounting review to perform
 1. Import the CSV and predict the five decisions before clicking reserve. Explain every held row.
