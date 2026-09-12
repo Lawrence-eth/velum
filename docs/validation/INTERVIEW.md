@@ -14,7 +14,7 @@ Lawrence conducts the interview. Use synthetic examples; do not collect customer
 Avoid suggesting that duplicates or privacy must be their biggest problem. Record if they are not.
 
 ## Observe without coaching (5 minutes)
-Open https://velum.aethe.me/#ledger. Ask them to import the sample CSV, identify a held
+Open https://velum.aethe.me/desk.html#ledger. Ask them to import the sample CSV, identify a held
 invoice, correct the wallet, and explain what “reserved” means. Then show the Sepolia
 example and ask what evidence they would need before marking an invoice paid.
 Record the task they attempted, where they hesitated, and whether they completed it.

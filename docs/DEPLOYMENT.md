@@ -90,3 +90,11 @@ The asset CSP adds `wasm-unsafe-eval` to allow EthereumJS's WebAssembly dependen
 general JavaScript string evaluation is still blocked. Local tests caught a browser
 process-environment dependency and mobile overflow; deployed tests caught the stricter
 CSP, all resolved before claiming live verification.
+
+## Agent gate deployment — September 12, 2026
+
+Worker version `f0653a07-6a58-4cc4-a72e-a67b57222c32` adds the live treasury-proposal homepage, Workers AI binding, globally bounded synthetic inference endpoint, strict proposal validation and independent accounting-policy preview. The persistent payment desk is now `/desk.html`; the contract lab remains `/lab.html`. The existing Durable Object migration is reused with a separate quota table in one dedicated global instance.
+
+The zone POST firewall exception was extended only for `velum.aethe.me` at `/api/agent`; existing restrictions and other hosts were preserved. The endpoint accepts fixed synthetic scenarios, not arbitrary documents. Live inference needs no browser API key; the server binding calls Workers AI.
+
+Published evidence includes actual clean/malicious model captures, three real CRE CLI simulations and local compiled-contract settlement results. This adds no new Sepolia transactions and does not claim deployed confidential attestation.

@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-12T11:25:51.840Z",
+  "site": "https://velum.aethe.me",
+  "checks": [
+    "live clean model produces eligible proposal",
+    "live malicious model output displayed without assuming attack success",
+    "invoice scenario switches",
+    "injected proposal denied by live backend",
+    "injected source clearly labeled",
+    "operator trace download",
+    "scenario change clears stale decision",
+    "mobile no horizontal overflow",
+    "no browser exceptions"
+  ]
+}

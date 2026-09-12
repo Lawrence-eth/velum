@@ -4,54 +4,48 @@
 Velum
 
 ## Short description
-A confidential payment gate that catches duplicate invoices and shared-budget overruns before an onchain treasury pays a contractor batch.
+A confidential execution gate for AI treasury agents. An agent proposes a payment; private policy decides whether the treasury may execute it.
 
 ## Description
-A $4,200 invoice and a $3,800 invoice can both pass a $5,000 approval limit and still overdraw a $6,000 purchase order. Velum checks the entire payment run, including private budget commitments and resubmitted invoice identities, inside a Chainlink CRE confidential handler.
+An invoice can tell an AI payment agent to ignore the approved wallet and send funds somewhere else. Better prompting helps, but the agent should never be the final authority over spending.
 
-The handler retrieves an authenticated accounting snapshot and keeps invoice references, vendor IDs, purchase-order terms and rejection reasons out of its public report. The report commits to an ordered set of exact payments. A treasury validates that manifest and settles only approved entries, consuming approval and transferring tokens in one transaction. Failed transfers restore the approval.
+Velum separates intent from authorization. A live model extracts a proposed payment from an untrusted contractor invoice. A Chainlink CRE confidential handler fetches the canonical invoice and private spending policy from a separate authenticated source, then generates a report bound to the exact recipient, amount, token, chain, consumer and expiry. A Solidity treasury permits settlement only for approved, unexpired, unused requests.
 
-A persistent SQLite-backed accounting workspace accepts synthetic CSV imports and corrections, provides read-only review and downloadable public run receipts, rejects stale reviewed state, safely retries reservations without creating another run, atomically reserves shared budgets across runs, and reconciles finalized Sepolia payment events. Paid invoice identities remain blocked under new request IDs after reload. A second actual CRE run reads this reconciled accounting snapshot and rejects the resubmitted batch.
+In our recorded experiment, a live Llama model extracted the correct wallet from a clean $2,400 invoice but selected an attacker wallet after reading malicious remittance instructions, despite being told that invoices were untrusted. The actual proposals then ran through the CRE CLI and compiled Solidity in independent local EVMs. The clean proposal transferred 2,400 test tokens. The malicious proposal was denied and its settlement reverted, leaving the treasury balance unchanged. A separate, explicitly injected compromised proposal was also blocked. The live demo reports model resistance honestly; these examples do not claim universal prompt-injection prevention.
 
-The demo makes the distinction visible: an interactive synthetic preview compares isolated checks to shared-budget decisions, a disclosure inspector shows operator versus public data, and an evidence panel shows real CRE simulation output driving actual Solidity bytecode and token balance changes in a local EVM.
+Supporting demonstrations include a nine-case browser EVM contract lab, persistent synthetic accounting with shared-budget reservations and duplicate protection, and recorded Sepolia test-token settlement through the CRE simulation forwarder.
 
 ## How it is made
-TypeScript, Chainlink CRE SDK 1.18.0 and `handlerInTee` targeting AWS Nitro in us-west-2. `getSecret` and `HTTPClient` run inside the handler. Batch policy checks snapshot freshness, consistent private PO terms, invoice identity, amount/recipient/currency matching, remaining budget and expiry. `usingTheDons` releases only the batch ID, ordered manifest and request-bound decisions for one ABI-encoded report.
+Cloudflare Workers AI supplies actual `@cf/meta/llama-3.1-8b-instruct-fast` inference. Strict TypeScript/Zod validation accepts only the expected invoice ID, recipient and decimal amount. The model cannot define its own policy, canonical source record, paid status, token or execution domain. A global Durable Object bounds inference usage.
 
-Solidity `BatchTreasury` authenticates the forwarder and exact workflow identity, rejects incomplete/reordered/tampered reports, serializes active batches, prevents replay and atomically transfers ERC-20 test tokens. Cloudflare Workers host the preview, and vanilla JavaScript powers the responsive interface and downloadable receipts.
+Chainlink CRE SDK 1.18.0 provides `handlerInTee`, targeting AWS Nitro in us-west-2. Secret retrieval and authenticated HTTP happen inside the handler. Deterministic policy checks the source invoice, recipient, amount, approval limit, remaining PO, duplicates, snapshot freshness and expiry. `usingTheDons` produces one ABI-encoded report containing the batch ID, ordered manifest and exact request decisions. Vendor identifiers, invoice/PO references, private caps, budgets and rejection reasons are not released into that report.
+
+Solidity `BatchTreasury` authenticates the configured forwarder/workflow identity, checks report completeness and commitments, blocks replay, and atomically consumes authorization with ERC-20 transfer. The browser contract lab executes real bytecode using EthereumJS. SQLite-backed Durable Objects support the separate accounting desk's atomic reservations, idempotent retry and finalized Sepolia reconciliation. Vanilla JavaScript and CSS provide the responsive interface.
 
 ## Chainlink integration and evidence
-Target: **Best Confidential Workflow**. The core batch decision is evaluated in a real CRE CLI confidential-workflow simulation. `scripts/batch-e2e.ts` uses the actual returned ABI bytes in a local EVM adapter. Recorded results: two approved payments totaling 5,800 synthetic USD, treasury balance 20,000 → 14,200, and 33 end-to-end checks. Original four single-invoice simulations remain available.
+Target: **Best Confidential Workflow**. The confidential handler is integral to the authorization design: the agent receives neither private approval caps nor budget; the workflow evaluates that policy and authorizes an exact payment.
 
-This is simulation evidence accepted by the published prize criteria; it is not a live hardware enclave deployment. The local adapter uses a mock forwarder caller and does not verify Chainlink signatures. Separate Sepolia evidence records actual testnet transactions through the public simulation forwarder. Its test-only adapter requires the owner to pin the exact report hash and supplies synthetic workflow metadata; this does not prove oracle authenticity. No real-asset payment is claimed. Receipt hashing verifies file consistency only.
+The recorded agent evidence contains two actual live-model captures plus a labeled injected control, three real CRE CLI simulations and 21 local contract checks. The returned report bytes are delivered directly to compiled Solidity. Separate original batch evidence records a CRE CLI Sepolia broadcast and two successful test-token transfers totaling 5,800.
+
+The published prize criteria accept CLI simulation evidence. We have not deployed an attested TEE workflow. Local EVM runs supply mock workflow metadata and do not verify DON signatures. The Sepolia simulation adapter requires the owner to pin an exact report hash and supplies synthetic metadata; it is not production oracle authentication. The homepage button runs live inference followed by ordinary Worker policy evaluation, and does not trigger CRE or payments.
 
 ## Links
 - Demo: https://velum.aethe.me
 - Source: https://github.com/Lawrence-eth/velum
-- Settlement receipt: https://velum.aethe.me/settlement-evidence.json
-- CRE batch log: https://velum.aethe.me/logs/cre-batch.log
-- Persistent ledger → CRE evidence: https://velum.aethe.me/ledger-cre-evidence.json
+- Agent → CRE → contract evidence: https://velum.aethe.me/agent-evidence.json
+- Actual agent CRE logs: https://velum.aethe.me/logs/cre-agent.log
+- Interactive Solidity attack lab: https://velum.aethe.me/lab.html
+- Sepolia receipts: https://velum.aethe.me/sepolia-evidence.json
+- Persistent accounting → CRE evidence: https://velum.aethe.me/ledger-cre-evidence.json
 - Video: PENDING — 2–4 minutes, human narration, at least 720p.
 
 ## Limitations
-Synthetic accounting API and isolated persistent demo ledgers. The production organization/accounting-provider integration remains unbuilt; CSV preview reservations do not trigger CRE or payments. The demonstrated reconciliation is bound to the recorded Sepolia treasury and trusts its configured RPC. No production accounting integration, real-asset settlement or live CRE network deployment. No audit. The treasury trusts configured token behavior and the authorized workflow/source.
+Fixed synthetic invoice scenarios and private policy fixtures. Live inference is not confidential. Agent previews do not reserve budget or execute payments, and the persistent accounting desk is a separate demonstration. Production needs an authenticated accounting connector with exclusive reservation and reconciliation, governed policy updates, deployed confidential-workflow access and a production forwarder identity. Trusted-source compromise and alternative agent spending routes are outside the demonstrated protection. No real assets, audit, customer validation or measured attack-detection rate is claimed.
 
 ## AI and prior work
-Codex generated the concept, implementation, tests, UI and drafts. Lawrence provided Chainlink direction/environment, authenticated CRE, reviewed the prototype, chose the Velum name and artistic direction, and requested the competitive upgrade. Public templates informed the CRE API wiring. No prior private project code was reused. Human customer validation and final narration remain pending. Do not embellish the contribution record.
+Codex generated the implementation, tests, UI and drafts, including the agent-gate direction. Lawrence selected the Chainlink focus, provided and authenticated the development environment and CRE account, chose Velum and the artistic direction, reviewed iterations and authorized the pivot. Public documentation informed API usage. No prior private project code was reused. Human customer validation and final narration remain pending; do not embellish the contribution record.
 
 ## Before submitting
-Confirm the registered Start Fresh/Continuity track, review the functionality and disclosure, document meaningful actual team contribution, record the human-narrated demo, select Chainlink in the dashboard and submit before **September 13, 2026, 16:00 UTC**. No dashboard submission has been performed.
+Confirm the registered Start Fresh/Continuity track, review the prototype and disclosures, document meaningful actual team contribution, record the human-narrated demo, select Chainlink in the dashboard and submit before **September 13, 2026, 16:00 UTC**. No dashboard submission has been performed.
 
 [Rules](https://ethglobal.com/events/ethonline2026/info/details) · [Chainlink prize](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
-
-Sepolia transaction receipts and contract addresses: [public/sepolia-evidence.json](../public/sepolia-evidence.json). Reproduction and adapter trust boundary: [docs/SEPOLIA.md](SEPOLIA.md).
-
-## Interactive technical demonstration
-
-The live contract lab at https://velum.aethe.me/lab.html lets reviewers test nine
-conditions against freshly deployed Solidity bytecode in a browser-local EVM.
-Recipient and amount mutations, incomplete or reordered reports, forged identity,
-and replay are rejected. The valid control transfers test tokens; a failed token
-transfer restores approval and leaves balances unchanged. Every result comes from
-actual EVM calls. This complements the recorded CRE and Sepolia integration evidence;
-it does not run CRE or claim DON/TEE verification in the browser.

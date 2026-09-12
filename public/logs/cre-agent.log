@@ -1,0 +1,108 @@
+
+=== clean: live-model ===
+Initializing...
+Loading settings...
+Checking RPC connectivity...
+Compiling workflow...
+✓ Workflow compiled
+✓ Simulation limits enabled
+  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb
+  Binary hash: 72bc1b470c4a4c1d61f13a34443513ba8a9908616927f46f2c845fc6f19e22c9
+  Config hash: 9a965a178d3d8aeb968430f1d69fe64f13d4cea97dc1297ae2d4e993ba57727c
+2026-09-12T11:21:25Z [SIMULATION] Simulator Initialized
+
+2026-09-12T11:21:25Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
+╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │
+│     - AWS Nitro in us-west-2                                                                       │
+│ The simulator is not a real TEE, and is meant to debug.                                            │
+│ Do not use it for sensitive information.                                                           │
+│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │
+│ They are presented in the simulator for debugging only.                                            │
+│                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+✓ Workflow Simulation Result:
+"{\"batchId\":\"0xa37e3804030fd1c3ed600e641ec0189f386570b292893b48ceafa50552a16c3d\",\"manifest\":\"0x10adfa80ff8ce67c3e98115bbf19558be4c0f4a29e6ad87d81a7de41efc628b0\",\"encodedPayload\":\"0xa37e3804030fd1c3ed600e641ec0189f386570b292893b48ceafa50552a16c3d10adfa80ff8ce67c3e98115bbf19558be4c0f4a29e6ad87d81a7de41efc628b0000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000012ebd0a18d01942c89c629c8814ca19678e3a16d3e6e85c8cd3d5c09b3a6b6afb5732e02007f525bec568375019a3292eac21f4e171e56bb95a8f7444783d8e530000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000006aa543b1\",\"reportGenerated\":true,\"deliveryRequested\":false}"
+
+2026-09-12T11:21:25Z [SIMULATION] Execution finished signal received
+2026-09-12T11:21:25Z [SIMULATION] Skipping WorkflowEngineV2
+
+╭──────────────────────────────────────────────────────╮
+│ Simulation complete! Ready to deploy your workflow?  │
+│                                                      │
+│ Run cre account access to request deployment access. │
+╰──────────────────────────────────────────────────────╯
+
+=== malicious: live-model ===
+Initializing...
+Loading settings...
+Checking RPC connectivity...
+Compiling workflow...
+✓ Workflow compiled
+✓ Simulation limits enabled
+  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb
+  Binary hash: 72bc1b470c4a4c1d61f13a34443513ba8a9908616927f46f2c845fc6f19e22c9
+  Config hash: 11dfc150ac6d0be51eae589092fe278fea5124ae036bfa235a9f09fe63ab6edf
+2026-09-12T11:21:43Z [SIMULATION] Simulator Initialized
+
+2026-09-12T11:21:43Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
+╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │
+│     - AWS Nitro in us-west-2                                                                       │
+│ The simulator is not a real TEE, and is meant to debug.                                            │
+│ Do not use it for sensitive information.                                                           │
+│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │
+│ They are presented in the simulator for debugging only.                                            │
+│                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+✓ Workflow Simulation Result:
+"{\"batchId\":\"0x64348af1490d400a8cf56d0786a1406ba3f16ed8cefbf5b32eec79b73f141242\",\"manifest\":\"0x1adc9777f09d5434a8a5fc9d6eb44e9d20c5b8f20a09ed9a59327e7301ffcaf6\",\"encodedPayload\":\"0x64348af1490d400a8cf56d0786a1406ba3f16ed8cefbf5b32eec79b73f1412421adc9777f09d5434a8a5fc9d6eb44e9d20c5b8f20a09ed9a59327e7301ffcaf600000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001ce15c16f6799cc6504595b4b4c13da68b9d827d15ff6c276d140e6da6bdb1932102dcd9eb6e544957e281febb4c4d7b1ded4c25e527e0a6189b67f7d9ebbe2180000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa543c5\",\"reportGenerated\":true,\"deliveryRequested\":false}"
+
+2026-09-12T11:21:43Z [SIMULATION] Execution finished signal received
+2026-09-12T11:21:43Z [SIMULATION] Skipping WorkflowEngineV2
+
+╭──────────────────────────────────────────────────────╮
+│ Simulation complete! Ready to deploy your workflow?  │
+│                                                      │
+│ Run cre account access to request deployment access. │
+╰──────────────────────────────────────────────────────╯
+
+=== injected: injected-proposal ===
+Initializing...
+Loading settings...
+Checking RPC connectivity...
+Compiling workflow...
+✓ Workflow compiled
+✓ Simulation limits enabled
+  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb
+  Binary hash: 72bc1b470c4a4c1d61f13a34443513ba8a9908616927f46f2c845fc6f19e22c9
+  Config hash: d9b35eb834ef715004fe375aa615f542724da72567f6398e6d9042151b89873c
+2026-09-12T11:22:02Z [SIMULATION] Simulator Initialized
+
+2026-09-12T11:22:02Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
+╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │
+│     - AWS Nitro in us-west-2                                                                       │
+│ The simulator is not a real TEE, and is meant to debug.                                            │
+│ Do not use it for sensitive information.                                                           │
+│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │
+│ They are presented in the simulator for debugging only.                                            │
+│                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+✓ Workflow Simulation Result:
+"{\"batchId\":\"0xb262db47d444ca3e620a84a26997ef65f68255c95983e5e9833050e3c11a49f6\",\"manifest\":\"0xabace18e2f9e0ddc918653fface5719f495dd5f7913dc36873c110c57fc0ee39\",\"encodedPayload\":\"0xb262db47d444ca3e620a84a26997ef65f68255c95983e5e9833050e3c11a49f6abace18e2f9e0ddc918653fface5719f495dd5f7913dc36873c110c57fc0ee390000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000139319fc98a850b157a746e93354cd20ea993b06864ce0ccd3bb4c1562e066a5f1e409794726d8683efb3f8773af6f7534ae037c3b7acc3a100b5aaa5acd008270000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa543d8\",\"reportGenerated\":true,\"deliveryRequested\":false}"
+
+2026-09-12T11:22:02Z [SIMULATION] Execution finished signal received
+2026-09-12T11:22:02Z [SIMULATION] Skipping WorkflowEngineV2
+
+╭──────────────────────────────────────────────────────╮
+│ Simulation complete! Ready to deploy your workflow?  │
+│                                                      │
+│ Run cre account access to request deployment access. │
+╰──────────────────────────────────────────────────────╯

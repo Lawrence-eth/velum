@@ -88,3 +88,9 @@ binding, complete manifests, sender/workflow checks, replay behavior and transfe
 rollback directly inspectable. It does not turn browser execution into CRE execution.
 The primary CTA now opens the lab; the persistent accounting desk remains one click
 away. The EVM bundle is lazy-loaded and does not affect the main page's initial assets.
+
+## Agent execution pivot — September 12
+
+The opening concept is now a confidential execution gate for AI treasury proposals. A live model receives a synthetic invoice; a separate trusted record controls canonical payment fields and policy. Both clean and malicious invoice responses were captured. The malicious live response selected the attacker wallet despite an untrusted-input system prompt. Three actual CRE CLI simulations and 21 local EVM checks verify a valid transfer and two denied settlement attempts. The homepage and human demo script now lead with that evidence.
+
+The persistent desk moved to `/desk.html` and remains a separate supporting workflow. No claim is made that agent preview calls reserve its budget. Inference envelope handling accepts provider string or structured response while retaining strict proposal validation; malformed output fails closed. Fixed scenarios and globally bounded model calls constrain the public endpoint. Production accounting integration and deployed confidential attestation remain missing.

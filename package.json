@@ -20,7 +20,10 @@
     "test:ledger-browser": "node --no-addons scripts/ledger-browser-test.mjs",
     "test:ledger-cre": "bun build scripts/ledger-cre-test.ts --target node --packages external --outfile artifacts/ledger-cre-test.mjs && node --no-addons artifacts/ledger-cre-test.mjs",
     "build:lab": "bun build scripts/build-lab.ts --target node --packages external --outfile artifacts/build-lab.mjs && node --no-addons artifacts/build-lab.mjs && bun build src/lab-worker.ts --target browser --minify --outfile public/lab-worker.js",
-    "test:lab": "node --no-addons scripts/lab-browser-test.mjs"
+    "test:lab": "node --no-addons scripts/lab-browser-test.mjs",
+    "test:agent": "bun build scripts/agent-e2e.ts --target node --packages external --outfile artifacts/agent-e2e.mjs && node --no-addons artifacts/agent-e2e.mjs",
+    "test:agent-browser": "node --no-addons scripts/agent-browser-test.mjs",
+    "capture:agent": "bun build scripts/capture-agent.ts --target node --packages external --outfile artifacts/capture-agent.mjs && node --no-addons artifacts/capture-agent.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

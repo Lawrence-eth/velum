@@ -35,6 +35,17 @@ async function boundedText(request: Request, limit = 1024) {
 export default {
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname === '/api/agent' && request.method === 'POST') {
+      if(request.headers.get('Origin') && request.headers.get('Origin')!==url.origin)return json({error:'Origin mismatch'},403);
+      if(!env.ACCOUNTING)return json({error:'Live inference requires the deployed Worker'},503);
+      try {
+        const input=JSON.parse(await boundedText(request));
+        if(!input || !['clean','malicious'].includes(input.scenario) || !['live','injected'].includes(input.mode))return json({error:'Choose a supplied synthetic scenario'},400);
+        const stub=env.ACCOUNTING.get(env.ACCOUNTING.idFromName('velum-agent-global-v1'));
+        const result=await stub.runAgent(input.scenario,input.mode==='injected');
+        return json(result,result.ok?200:503);
+      }catch{return json({error:'Invalid agent request'},400);}
+    }
     if (url.pathname.startsWith('/api/ledger')) {
       const token = request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
       if (!token) return json({ error: 'Open a workspace first' }, 401);

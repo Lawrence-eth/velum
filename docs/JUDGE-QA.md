@@ -1,54 +1,37 @@
-# Judge Q&A
+# Velum — judge questions
 
-**Why Chainlink rather than a normal API server?**
-The intended deployment executes sensitive policy evaluation in CRE's confidential
-handler and releases only the report needed by the treasury. A conventional server
-can enforce the same business rules but does not itself provide the proposed enclave
-execution boundary and DON delivery path. Our simulator and mock-forwarder demo do
-not establish those production trust properties.
+**Why not just improve the agent prompt?**
+The supplied system prompt already treats invoices as untrusted. Our captured malicious invoice still caused the live model to choose an attacker wallet. Prompt defenses can help, but authorization must remain independent. We demonstrate one concrete failure path, not a universal defense or attack success rate.
+
+**Where is Chainlink essential?**
+The intended confidential workflow retrieves the source invoice and secret, evaluates private limits/budget, and releases an exact payment authorization. The model does not receive those policy fields; the public contract does not need them. The confidential handler is the decision step, not a logging add-on. We verified it through real CLI simulation, which does not prove deployed hardware confidentiality.
+
+**Does clicking the homepage button run CRE?**
+No. It runs live Workers AI inference followed by an ordinary Worker policy preview. The separate evidence runner takes captured model proposals through the actual CRE CLI and then compiled Solidity. The UI distinguishes both. Agent previews do not reserve money or send transactions.
+
+**Is the malicious model response scripted?**
+No: the evidence contains the actual live response, model ID, timestamp and proposed wallet. Repeated model calls may differ. A separate injected-proposal button is explicitly labeled and exists to test the policy boundary even if the model resists the invoice instruction.
+
+**Is the agent a fully autonomous treasury operator?**
+It is a constrained invoice-to-payment proposal assistant, without a wallet key or payment tools. This prototype demonstrates the execution gate, not a general autonomous accounting system. Expanding agent capabilities must preserve the separation of proposal and authorization.
 
 **What is private?**
-Invoice references, vendor identifiers, PO terms, private thresholds, and detailed
-reasons are omitted from the report. The accounting operator sees them. Amounts,
-recipients, token addresses, decisions, and commitments are exposed onchain. Repeated
-outputs may leak patterns. This is not anonymous payment infrastructure.
+The intended handler keeps vendor IDs, invoice/PO references, caps, remaining budget and rejection reasons out of the report. The model sees the synthetic invoice, not the private cap or budget. Registration/settlement expose recipient, amount and token. The demo backend and CLI simulator are not private enclaves.
 
-**Why isn't this just invoice software?**
-The distinctive integration is a confidential batch policy decision bound to an
-ordered set of exact onchain payments, with replay checks, shared-budget handling,
-and persistent invoice accounting. We have not established that commercial invoice
-products lack all these features; the claim is about our implementation, not market uniqueness.
+**Who guarantees the accounting record is true?**
+The source is trusted and currently synthetic. A production connector must authenticate the organization, govern policy updates and exclusively reserve/reconcile its canonical records. A compromised source can authorize bad payments; Velum does not claim otherwise.
 
-**Can I use it with my business today?**
-It is a synthetic prototype. CSV editing, isolated persistent reservations, and
-finalized Sepolia reconciliation work. It is not connected to a live accounting
-provider, arbitrary live treasury, or deployed confidential workflow.
+**Can an agent bypass the contract?**
+The demonstrated agent has no signing key. The treasury checks its configured forwarder, workflow identity, payment commitments, expiry and replay state. Production deployment must also remove any alternative unrestricted spend route available to the agent. Our test forwarder setup does not prove DON authenticity.
 
-**Does the browser pay invoices?**
-No. It reserves synthetic accounting entries. The recorded CRE CLI broadcast made
-the actual Sepolia transfers. Reconciliation reads those receipts without signing.
+**What actually happened onchain?**
+The original batch integration broadcast an actual CRE CLI report on Sepolia and settled two test-token transfers totaling 5,800. It uses a public simulation forwarder and owner-pinned report adapter with artificial metadata. The new agent scenarios ran in local EVMs; they are not those Sepolia transactions.
 
-**What prevents double spending across runs?**
-One durable object per workspace serializes storage changes. Canonical vendor/invoice
-identities block repeated invoices. Reservations and paid records reduce available
-budget. Independent workspace keys represent separate demo ledgers; production
-must bind authenticated organizations to a canonical accounting source.
+**Why maintain the payment desk and contract lab?**
+They support the two sides of the gate. The desk demonstrates durable source reservations, shared-budget safety, duplicate identity and reconciliation. The lab lets judges exercise actual contract bytecode against nine conditions. The agent preview is not yet wired into the persistent desk lifecycle.
 
-**Can an owner change the outcome?**
-The prototype trusts the treasury owner and accounting source. A dishonest source
-can supply false policies. In the simulation adapter the owner additionally pins
-the exact report hash. This is not protection against a malicious treasury owner.
+**What would you build next?**
+One authenticated accounting-provider connector, exclusive reservation and reconciliation across agent runs, governed policy updates, and deployed CRE confidential execution with registered production identity. Validate this with a treasury operator using their real workflow before claiming product-market fit.
 
-**What about reorgs and cancellation?**
-Reconciliation requires a canonical receipt at or below the RPC's finalized block.
-It trusts that configured RPC and the deployed test-token contract. Preview-only
-reservations can be released; chain-bound records cannot be released in this UI.
-A general production cancellation flow must verify onchain revocation before
-releasing budget, and is not implemented here.
-
-**What did you personally contribute?**
-Answer only from actual work and the review/customer records. Codex generated most
-implementation and drafts. Lawrence supplied project direction and environment,
-reviewed iterations, chose the brand, authenticated services, and funded testnet
-execution. Additional human research, acceptance review, and narration remain
-unclaimed until completed. ETHGlobal decides eligibility.
+**What did the human team contribute?**
+Describe actual work only: Chainlink direction, environment/account setup, authentication, product reviews, name and visual direction, and whatever additional testing or narration the team actually completes. AI-generated implementation and drafts are disclosed. Customer interviews remain uncompleted.

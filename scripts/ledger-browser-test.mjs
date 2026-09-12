@@ -5,7 +5,7 @@ const base=process.env.VELUM_TEST_URL||'https://velum.aethe.me';
 const browser=await chromium.launch({headless:true,args:process.env.VELUM_TEST_IP?[`--host-resolver-rules=MAP velum.aethe.me ${process.env.VELUM_TEST_IP}`]:[]});
 const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));const checks=[];
 try{
- await page.goto(base,{waitUntil:'networkidle'});await page.locator('#ledger-open').click();await page.locator('#ledger-content').waitFor({state:'visible'});
+ await page.goto(`${base}/desk.html`,{waitUntil:'networkidle'});await page.locator('#ledger-open').click();await page.locator('#ledger-content').waitFor({state:'visible'});
  await page.locator('#ledger-sample').click();await page.getByText('5 synthetic invoice rows imported.',{exact:false}).waitFor();
  await page.locator('#ledger-review').click();await page.getByText('Review complete. Correct held rows or reserve the eligible invoices.').waitFor();await page.locator('#ledger-reserve').click();await page.getByText('$5,800 reserved in a new preview run.',{exact:false}).waitFor();checks.push('CSV sample reserved with shared PO limits');
  await page.locator('.run-history summary').click();const receiptDownload=page.waitForEvent('download');await page.getByRole('button',{name:'Download public run receipt'}).first().click();assert.match((await receiptDownload).suggestedFilename(),/^velum-run-.*\.json$/);checks.push('saved public run receipt downloads');
