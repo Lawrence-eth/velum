@@ -11,7 +11,17 @@ This document helps record actual decisions; checking boxes alone is not proof o
 - Who may change an approved contractor wallet, and what review is needed?
 - Which details must stay private, and from whom?
 
-## Acceptance review to perform
+## Agent gate review to perform first
+1. Open https://velum.aethe.me and predict the clean invoice proposal, then run the live model.
+2. Read the malicious footer before running it. Record the actual selected wallet; do not assume injection succeeds.
+3. Use the explicitly injected proposal. Explain why the gate rejects it even if the model resists the footer.
+4. Inspect the separate source record. Explain who is authorized to update a contractor wallet and why invoice text alone is insufficient.
+5. Read the recorded agent evidence. Distinguish live browser preview, CRE CLI simulation, local EVM settlement and the separate Sepolia batch.
+6. In the contract lab, predict the failed-transfer result before running it. Explain why approval remains available after a revert.
+
+Record a product decision from this review: should a legitimate wallet-change request be rejected, held for a second approver, or verified through an existing vendor channel? Explain which real workflow informed your answer.
+
+## Supporting accounting review to perform
 1. Import the CSV and predict the five decisions before clicking reserve. Explain every held row.
 2. Reload and resubmit it. Explain why the available budget stays reduced.
 3. Release a preview run. Correct NS-103's wallet and predict its next decision.
@@ -28,7 +38,7 @@ Awaiting Lawrence's review.
 
 ## Fast handoff
 
-Start at https://velum.aethe.me/desk.html#ledger. Spend 15–20 minutes on the acceptance tasks
+Start at https://velum.aethe.me. Spend 15–20 minutes on the agent gate tasks
 above, then send your actual observations and answers to the product decisions.
 If a treasury operator is available, use INTERVIEW.md for a separate conversation.
 Neither a completed worksheet nor an interview by itself guarantees prize eligibility.

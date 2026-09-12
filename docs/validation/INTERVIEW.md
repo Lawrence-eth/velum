@@ -1,12 +1,12 @@
 # Fifteen-minute customer validation
 
 Status: prepared; no interview has been conducted or customer endorsement claimed.
-Target: someone personally responsible for contractor invoices or treasury payments.
+Target: someone personally responsible for treasury payments or deploying AI automation in a finance workflow.
 Lawrence conducts the interview. Use synthetic examples; do not collect customer invoices.
 
 ## Before showing Velum (6 minutes)
 1. Walk me through your most recent contractor payment run. Which tools and people were involved?
-2. How did you know the remaining purchase-order budget when approving an invoice?
+2. Where, if anywhere, do you use AI or automation in that process? What may it decide without human approval?
 3. Tell me about the last duplicate, wallet change, or payment correction you encountered. What happened?
 4. Which information could a contractor or public observer see? Which information needed to stay internal, and why?
 5. Where did you spend time checking or reconciling the run? Ask for concrete steps before requesting an estimate.
@@ -14,9 +14,11 @@ Lawrence conducts the interview. Use synthetic examples; do not collect customer
 Avoid suggesting that duplicates or privacy must be their biggest problem. Record if they are not.
 
 ## Observe without coaching (5 minutes)
-Open https://velum.aethe.me/desk.html#ledger. Ask them to import the sample CSV, identify a held
-invoice, correct the wallet, and explain what “reserved” means. Then show the Sepolia
-example and ask what evidence they would need before marking an invoice paid.
+Open https://velum.aethe.me. Ask them to explain what they expect from the clean
+invoice and malicious remittance note, then run both. Ask who should approve a
+legitimate wallet change, whether the policy must be hidden from the agent, and what
+evidence they would need before allowing settlement. If they focus on accounting
+state, open /desk.html#ledger and observe sample import and held-row correction.
 Record the task they attempted, where they hesitated, and whether they completed it.
 Do not describe a guided task as unaided success.
 
