@@ -25,3 +25,10 @@ human narration your own rather than representing AI drafts as independent work.
 
 ## Actual notes
 Awaiting Lawrence's review.
+
+## Fast handoff
+
+Start at https://velum.aethe.me/#ledger. Spend 15–20 minutes on the acceptance tasks
+above, then send your actual observations and answers to the product decisions.
+If a treasury operator is available, use INTERVIEW.md for a separate conversation.
+Neither a completed worksheet nor an interview by itself guarantees prize eligibility.

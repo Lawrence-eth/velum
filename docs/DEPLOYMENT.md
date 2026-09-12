@@ -67,3 +67,8 @@ The zone's existing method-block rule required a narrow exception for five POST
 paths on velum.aethe.me (import, reserve, release, seed, reconcile). Other rules and
 hosts were preserved. `docs/ledger-firewall-expression.txt` records the expression.
 No credentials or workspace bearer capabilities are in public artifacts.
+
+Final workspace deployment version: `4781c8ef-7c92-4551-9f1c-26da586fcd63`.
+GitHub CI passed for implementation commit `4abb937`. The original 18-check live
+browser suite also passed after the upgrade. The public ledger-to-CRE evidence URL
+returned a successful five-check record over verified HTTPS.
