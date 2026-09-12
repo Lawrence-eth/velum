@@ -17,3 +17,24 @@ Cloudflare DNS and Google DNS both returned the new hostname's IPv4 records. The
 The old project Worker and old hostname were retired during the rename. The separate domain-management repo tracks the Velum hostname in commit `da5015c`. Existing mail, other project hosts and global security policies were not modified. The earlier broader zone verifier did not finish unrelated-host HTTPS probes because of a DNS lookup error.
 
 No ETHGlobal submission, live CRE network deployment or Sepolia deployment was performed. Token movements are real Solidity execution of synthetic tokens inside a local EVM; the report adapter is a mock forwarder and does not verify Chainlink signatures. No assets with monetary value moved.
+
+### Sepolia preparation (2026-09-12)
+
+Dedicated test wallet: `0x4C3fFFcEC089E14b9689560BCf7125cDE7D8e625`.
+Its credential is stored outside this repository in an owner-readable VM file.
+At preparation time its Sepolia ETH balance was zero; no deployment or broadcast
+has been performed with this wallet. Fund with Sepolia test ETH only.
+
+The batch workflow now accepts `deliverOnchain` (default `false`). When enabled it
+uses the Sepolia EVM capability to submit the generated report and requires a
+successful delivery status and transaction hash. This delivery branch has not yet
+been verified against Sepolia; existing recorded settlement remains local EVM.
+
+Chainlink's [consumer contract guide](https://docs.chain.link/cre/guides/workflow/using-evm-client/onchain-write/building-consumer-contracts)
+explains that simulation uses a mock forwarder without workflow identity metadata.
+The current `BatchTreasury` requires workflow identity, so it must not be deployed
+unchanged behind the simulation forwarder and described as working. A separate,
+explicitly test-only simulation adapter is needed for a broadcast demonstration;
+the treasury's identity checks should remain intact. A mock-forwarder demonstration
+would prove testnet state changes, not DON signature verification or deployed TEE
+execution. Live CRE deployment still requires account deployment access.
