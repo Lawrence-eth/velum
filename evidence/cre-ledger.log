@@ -1,0 +1,34 @@
+Initializing...
+Loading settings...
+Checking RPC connectivity...
+Compiling workflow...
+✓ Workflow compiled
+✓ Simulation limits enabled
+  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb
+  Binary hash: 72bc1b470c4a4c1d61f13a34443513ba8a9908616927f46f2c845fc6f19e22c9
+  Config hash: a11da8ce207b229b1e09e6a63dd3e70bd549cdd4bd98a8fbb63deb0b7cbbfefe
+2026-09-12T01:29:13Z [SIMULATION] Simulator Initialized
+
+2026-09-12T01:29:13Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0
+╭────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │
+│     - AWS Nitro in us-west-2                                                                       │
+│ The simulator is not a real TEE, and is meant to debug.                                            │
+│ Do not use it for sensitive information.                                                           │
+│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │
+│ They are presented in the simulator for debugging only.                                            │
+│                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+✓ Workflow Simulation Result:
+"{\"batchId\":\"0x4ea43ad033ae738ceb575261214b120982821d59800c86f53e1d7d2953707bec\",\"manifest\":\"0x6e28e3bfcd3f7d1a264f690418c74c1af9d659d0379ec7f6adc3108cf48f3c36\",\"encodedPayload\":\"0x4ea43ad033ae738ceb575261214b120982821d59800c86f53e1d7d2953707bec6e28e3bfcd3f7d1a264f690418c74c1af9d659d0379ec7f6adc3108cf48f3c36000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000053958f8f38be2a61bb5be30df22ffcecadf2cd7d898024f32514d30f44c46c37ef8ecaa3022bcf0dd11e97ff8b093d113859b3d9381b65f1c90c59c49c939b9f60000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa4b8e72abaa3fc49f9ba2e5e05e3e48b66365f541625f1e45fb6238e1526d47ec05060c14018dfba9a6696e1c34e51f0a47bb9b0cfef21b2f3688f7af458516c5729110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa4b8e7c3c889bdf43b048160e00611d48f334e598f8f4f410fab86de2b2246b463ad0514c48f1c50523bb0b59652fb2acdbd69ccc85bd8912c378bb781117bab4690c40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa4b8e794fdc08559edee93d9b9bd6d8d2d591c35844df2c4c1246463e3bfdcc0c588a1d78a09c274e4719125e32ccb4a0f9a11364ae1e56a4b7d62496d6e23efd68f2d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa4b8e7d899418d32be5332899b94e4fc16b5f8d515fd1448f8a056b3d6f1de1da10baf9891b5cc94de397aa1a809d69bf7a7dff0a6e00d31f8817552c7579b949dd8b40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa4b8e7\",\"reportGenerated\":true,\"deliveryRequested\":false}"
+
+2026-09-12T01:29:14Z [SIMULATION] Execution finished signal received
+2026-09-12T01:29:14Z [SIMULATION] Skipping WorkflowEngineV2
+
+╭──────────────────────────────────────────────────────╮
+│ Simulation complete! Ready to deploy your workflow?  │
+│                                                      │
+│ Run cre account access to request deployment access. │
+╰──────────────────────────────────────────────────────╯

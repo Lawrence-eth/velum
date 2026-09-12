@@ -46,3 +46,24 @@ The batch handler uses one authenticated HTTP call and one report operation for 
 
 ## Deliberate tradeoffs
 The owner commits the complete ordered batch before approval, preventing decision omission/reordering after evaluation. First-in-order allocation is predictable, but not fair allocation or optimal scheduling. Cancelling a batch revokes unspent approvals but cannot reverse paid transfers. Current token compatibility is standard ERC-20 behavior; fee/rebase tokens require further accounting. A private policy revision label cannot itself revoke an onchain report. These details should be explained during Q&A.
+
+## September 12: persistence, import, and reconciliation
+
+Implemented a persistent synthetic accounting workspace, strict CSV import with
+editable held invoices, and an explicit privacy matrix. Live tests demonstrate
+cross-run budget reservation, canonical invoice identities, page-reload persistence,
+concurrent reservation serialization, preview release, and finalized Sepolia
+reconciliation. A subsequent actual CRE CLI simulation fetched the saved accounting
+snapshot and rejected all five resubmitted invoices after reconciliation.
+
+The raw policy evaluator remains snapshot-based. The demo ledger is not a live
+accounting-provider integration, and browser reservation does not initiate a CRE
+execution or payment. The new source snapshot endpoint connects saved accounting
+state to the simulator, with evidence saved in `evidence/ledger-cre.json`.
+
+27 policy/API/ledger tests and 12 live ledger/browser checks passed. The separate
+confidential-beta application still needs Lawrence's name/role; a general CRE
+access request was submitted successfully. Customer research materials and human
+review tasks are prepared, not completed validation. Human-narrated submission
+video remains pending. These are the remaining tasks most likely to affect the
+credibility and completeness of the submission.

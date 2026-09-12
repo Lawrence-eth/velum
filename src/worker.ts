@@ -2,7 +2,7 @@ import { fixture, scenarios, type Scenario } from './fixtures';
 import { bundleSchema, evaluate, paymentCommitment } from './policy';
 import { batchFixture, evaluateBatch } from './batch';
 
-type Env = { ASSETS: { fetch(request: Request): Promise<Response> }; INVOICE_API_TOKEN?: string };
+type WorkerEnv = { ACCOUNTING?: DurableObjectNamespace<import('./accounting-object').AccountingLedger>; ASSETS: { fetch(request: Request): Promise<Response> }; INVOICE_API_TOKEN?: string };
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 async function authorized(request: Request, token?: string): Promise<boolean> {
   if (!token) return false;
@@ -33,8 +33,25 @@ async function boundedText(request: Request, limit = 1024) {
   return new TextDecoder().decode(bytes);
 }
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/ledger')) {
+      const token = request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
+      if (!token) return json({ error: 'Open a workspace first' }, 401);
+      if (!env.ACCOUNTING) return json({ error: 'Persistent ledger unavailable in this local server; use the deployed demo' }, 503);
+      const stub = env.ACCOUNTING.get(env.ACCOUNTING.idFromName(token));
+      if (request.method === 'GET' && url.pathname === '/api/ledger/snapshot') { const snapshot=await stub.snapshot(); return json(snapshot, 'error' in snapshot ? 409 : 200); }
+      if (request.method === 'GET' && url.pathname === '/api/ledger') return json(await stub.view());
+      if (request.method !== 'POST' || !/^\/api\/ledger\/(import|reserve|release|seed|reconcile)$/.test(url.pathname)) return json({ error: 'Not found' },404);
+      if (request.headers.get('Origin') && request.headers.get('Origin') !== url.origin) return json({ error:'Origin mismatch' },403);
+      try {
+        const raw = await boundedText(request, 32768);
+        const input = JSON.parse(raw);
+        if (!input || typeof input !== 'object' || Array.isArray(input)) return json({error:'Invalid request'},400);
+        const result = await stub.act(url.pathname.split('/').at(-1)!, input);
+        return json(result, result.ok ? 200 : 400);
+      } catch (error) { return json({error:error instanceof Error && error.message==='BODY_TOO_LARGE'?'Request too large':'Invalid ledger request'},error instanceof Error && error.message==='BODY_TOO_LARGE'?413:400); }
+    }
     if (url.pathname === '/api/health' && request.method === 'GET') return json({ service: 'Velum', mode: 'synthetic-demo', creNetworkDeployment: false });
     if (url.pathname === '/api/private/batch' && request.method === 'GET') {
       if (!await authorized(request, env.INVOICE_API_TOKEN)) return json({ error: 'Unauthorized' }, 401);

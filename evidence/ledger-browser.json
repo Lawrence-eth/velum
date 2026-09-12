@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "recordedAt": "2026-09-12T01:27:18.182Z",
+  "base": "https://velum.aethe.me",
+  "checks": [
+    "CSV sample reserved with shared PO limits",
+    "persistent state survives page reload",
+    "resubmitted invoices blocked across runs",
+    "preview release restores budget",
+    "uploaded CSV held wallet corrected and reserved",
+    "actual finalized Sepolia payment events reconciled",
+    "reconciliation idempotent",
+    "paid invoice blocked after reload under new request IDs",
+    "simultaneous runs cannot double-reserve shared budget",
+    "workspace isolation and missing-key rejection",
+    "mobile layout fits viewport",
+    "no page errors"
+  ]
+}

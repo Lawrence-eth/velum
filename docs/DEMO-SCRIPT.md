@@ -1,29 +1,81 @@
-# Velum demo — approximately 3 minutes
+# Velum demo — target 3 minutes 20 seconds
 
-Record at 1280×720 or above with your own voice. Use your own words and only describe contributions and customer insights that actually occurred.
+Human narration required. This is a recording script, not a completed submission video.
+Record at 1080p if possible (minimum 720p). Keep the final duration between 2 and 4
+minutes. Do not use an AI voice, speed up playback, or imply the browser preview
+triggers CRE. Close notifications and keep keys, terminals with credentials, and
+personal information outside the recording. Allow a first rehearsal before recording.
 
-## 0:00–0:25 — open with the failure
-“Two invoices: $4,200 and $3,800. Both are below a $5,000 approval limit. But together they exceed the $6,000 purchase order. An invoice-by-invoice check misses that. Velum evaluates the whole payment run using private accounting rules.”
+## Prepare the browser
+Open https://velum.aethe.me. Download the sample CSV. Open the Sepolia report and
+payment explorer pages in background tabs. In an empty ledger workspace load recorded
+Sepolia reservations but leave reconciliation for the demonstration. Keep this script
+on a separate screen. For a fresh retry use “Start a separate workspace”; this creates
+a separate ledger and does not erase the previous one.
 
-## 0:25–1:05 — demonstrate the difference
-Open https://velum.aethe.me, scroll to the batch workspace and click Evaluate batch. Show the first invoice approved, the second held against the shared budget, a changed recipient rejected, and a duplicate reference caught even with another request ID. Explain that the synthetic example approves $5,800 versus $13,800 under independent checks. Change the PO budget to $10,000 and rerun: the legitimate second invoice passes, but the duplicate and changed wallet stay held.
+## 0:00–0:25 — The problem
+Show the five-invoice batch and click Evaluate batch.
 
-Say explicitly that this interactive panel runs normal server-side preview code. It does not trigger CRE or send payments.
+“These two invoices each pass a five-thousand-dollar approval limit. Together, they
+exceed a six-thousand-dollar purchase order. A resubmitted invoice can make it worse.
+Velum checks the whole contractor payment run while keeping the team's budget and
+approval rules out of the public report.”
 
-## 1:05–1:35 — make privacy concrete
-Toggle Operator view → Public report. Point out that invoice references, PO details, budgets and rejection reasons disappear. The public report contains commitments and decisions. Amounts and recipients are still visible when used for payment; Velum is not a private-transfer protocol.
+## 0:25–0:55 — The decision
+Point to the first two invoices, the changed wallet, and the duplicate. Switch the
+existing disclosure inspector between operator and public report.
 
-## 1:35–2:20 — show actual execution
-Scroll to the execution evidence. Open the actual CRE batch log and point to the TEE-handler simulation notice and report output. Explain that the simulator is not a hardware enclave. Then show the local treasury balance moving from 20,000 to 14,200 synthetic USD.
+“The first invoice reserves budget. The next one no longer fits. A changed payment
+wallet is held, and the same invoice submitted under another request is still a
+duplicate. Only two payments are approved: fifty-eight hundred synthetic dollars.
+The operator can inspect detailed reasons. The public report contains decisions and
+payment commitments, not the invoice references or private budget.”
 
-“This receipt comes from one reproducible script: it runs CRE, decodes the actual returned bytes and delivers them through a mock forwarder into local Solidity execution. It does not verify Chainlink network signatures or broadcast a network transaction.”
+## 0:55–1:25 — Why CRE
+Scroll to the privacy matrix and architecture.
 
-Optionally run `bun run test:e2e` beforehand and use that fresh log. Do not wait through compilation in the video.
+“The core check runs in a Chainlink CRE confidential handler. It fetches an API
+credential and accounting snapshot inside that handler, evaluates the batch, and
+releases the minimal report for delivery. Our recorded execution uses the CRE CLI
+simulator. That proves the integration, but it is not a deployed hardware enclave.
+Recipients and payment amounts are public onchain; Velum protects the private
+approval inputs, not every fact about a payment.”
 
-## 2:20–2:45 — show the difficult checks
-Show the end-to-end check list: reordered/omitted reports rejected, replay rejected, a failed token transfer rolls back approval consumption, and cancellation prevents later settlement. Explain that one active batch is allowed and within-batch reservations are enforced. A production accounting source still needs exclusive reservations and reconciliation across batches.
+## 1:25–2:05 — Actual payment evidence
+Show the Sepolia panel and open the CRE report delivery and one payment link.
 
-## 2:45–3:10 — contribution and next integration
-Explain why you chose this customer, describe your actual product/testing/design contribution and disclose AI assistance. Name the accounting or treasury integration you would build next. Do not claim that a customer interview, live deployment or production integration has happened unless it has.
+“We also broadcast the report to Sepolia and verified two test-token transfers.
+The treasury validates the ordered payment manifest and spends only approved
+requests. A failed transfer restores the authorization. For simulation, a separate
+adapter accepts an exact report hash authorized by the owner. This mock-forwarder
+path demonstrates settlement; it does not verify DON signatures.”
 
-Optional testnet evidence: open the Sepolia panel and its CRE delivery and two payment explorer links. Explain: “These are actual Sepolia transactions using test tokens. The simulator uses a public mock forwarder, so our test adapter accepts only an owner-pinned report hash. This proves the settlement path; it does not establish DON signatures or deployed TEE execution.”
+## 2:05–2:55 — Accounting remembers
+In the prepared ledger workspace click Verify Sepolia payments & reconcile. Show
+Paid states. Reload, load sample invoices, and click Evaluate & reserve this run.
+
+“A payment run also needs memory. This ledger keeps budget reservations across
+runs and reloads. Reconciliation reads finalized Sepolia events and checks the
+request, token, recipient, and amount before marking an invoice paid. Now I import
+the same invoice again. Even with a fresh request ID, it stays blocked because
+its invoice identity was already paid. This browser action changes the synthetic
+accounting ledger; it does not send another transaction.”
+
+## 2:55–3:20 — Close
+Show the source and evidence links.
+
+“Velum combines confidential batch decisions, exact payment authorization, and
+persistent reconciliation. You can import a synthetic CSV and correct held rows.
+The prototype still needs a real accounting-provider integration and a live
+confidential deployment. The code, simulation logs, tests, and Sepolia receipts
+are public so you can inspect what actually ran.”
+
+If a real customer interview has happened, replace one closing sentence with a
+specific, consented finding and the decision it changed. Do not invent validation.
+
+## Recording checklist
+- Human voice; 2–4 minutes; at least 720p; normal playback speed.
+- Browser preview, actual recorded CRE run, and Sepolia evidence clearly distinguished.
+- Submission description matches the final implementation and includes AI disclosure.
+- Video link opens in a private browser without requesting access.
+- Select Chainlink in the ETHGlobal submission dashboard before September 13, 16:00 UTC.

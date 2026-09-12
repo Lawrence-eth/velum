@@ -48,3 +48,22 @@ CRE delivery: https://sepolia.etherscan.io/tx/0x6864307f28f1c8cc88a0c2393ef8a95a
 Verified balance change: 20,000 → 14,200 synthetic USD; 5,800 paid. All ten transactions confirmed, including batch close. See [full evidence](../public/sepolia-evidence.json) and [reproduction/trust boundaries](SEPOLIA.md). The earlier preparation limitations above are historical; the broadcast branch is now verified through the separate simulation adapter. Live CRE network deployment remains unavailable.
 
 Site deployment with Sepolia evidence: Worker version `29f5dce7-2379-4182-9672-ae1483846ebe`.
+
+### Persistent workspace upgrade (2026-09-12)
+
+Worker entry is now `src/index.ts`, exporting the Worker and `AccountingLedger`.
+The `ACCOUNTING` binding uses SQLite-backed Durable Objects with migration
+`v1-accounting`. Generated Worker types are required before type checking; CI runs
+`bun run types`. The Bun fallback still serves the static demo and old previews but
+returns 503 for ledger requests because it does not emulate Durable Objects.
+
+Live browser checks verified separate workspaces, concurrent reservation safety,
+CSV import/correction, reload persistence, and finalized Sepolia reconciliation.
+The actual CRE simulator then fetched the reconciled ledger snapshot and rejected
+all five resubmitted requests. Evidence: `evidence/ledger-browser.json`,
+`evidence/ledger-cre.json`, and `evidence/cre-ledger.log`.
+
+The zone's existing method-block rule required a narrow exception for five POST
+paths on velum.aethe.me (import, reserve, release, seed, reconcile). Other rules and
+hosts were preserved. `docs/ledger-firewall-expression.txt` records the expression.
+No credentials or workspace bearer capabilities are in public artifacts.

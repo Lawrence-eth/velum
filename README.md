@@ -2,7 +2,7 @@
 
 **Private rules. Accountable payments.** A confidential batch-payment gate for crypto teams paying contractors, built for ETHOnline 2026.
 
-[Live demo](https://velum.aethe.me) · [Sepolia receipts](public/sepolia-evidence.json) · [Actual CRE → local settlement receipt](public/settlement-evidence.json) · [Competitive review](docs/COMPETITIVE-REVIEW.md) · [Submission draft](docs/SUBMISSION.md)
+[Live demo](https://velum.aethe.me) · [Persistent workspace](https://velum.aethe.me/#ledger) · [Sepolia receipts](public/sepolia-evidence.json) · [Actual CRE → local settlement receipt](public/settlement-evidence.json) · [Competitive review](docs/COMPETITIVE-REVIEW.md) · [Submission draft](docs/SUBMISSION.md)
 
 ![Velum batch workspace](evidence/desktop.png)
 
@@ -37,9 +37,9 @@ The test adapter does **not** verify Chainlink report signatures. This demonstra
 | Accounting source | Trusted for invoice truth, policy authorization and snapshot accuracy. |
 | Privacy | Private vendor/PO data and reasons do not enter the ABI report. Amounts, recipients, timing, decisions and public identifiers can still reveal information. Registration and settlement expose payment details. |
 
-Budget reservation is **batch-local**. The treasury serializes active batches, but a real accounting backend must exclusively reserve snapshots and reconcile settled invoices before issuing another batch. `policyVersion` labels the private snapshot; it is not an onchain revocation mechanism. Cancellation is the explicit onchain revocation path. The policy is first-in-order, not an optimizer; the owner commits to the full ordering before report delivery.
+The persistent synthetic accounting workspace serializes reservations across runs using SQLite-backed Durable Objects. Canonical vendor/invoice identities remain reserved or paid across reloads. Finalized Sepolia receipts reconcile the recorded payments. The raw batch evaluator still uses a supplied snapshot; a production accounting integration must authenticate the organization, reserve its canonical source, and verify revocation before releasing any chain-bound reservation. `policyVersion` labels the private snapshot; it is not an onchain revocation mechanism. Cancellation is the explicit onchain revocation path. The policy is first-in-order, not an optimizer; the owner commits to the full ordering before report delivery.
 
-There is no accounting-provider integration or live confidential network deployment and no movement of real assets. The batch workflow also supports Sepolia broadcast through a separately deployed simulation adapter; see [the testnet reproduction guide](docs/SEPOLIA.md). The original single-invoice delivery path remains unverified. Use standard, known ERC-20 tokens only after further work: fee-on-transfer/rebasing tokens are not supported by the demonstrated accounting, and a token that falsely reports success is outside the trust assumptions. This prototype has not been audited. Never fund it with real assets or upload real invoices.
+CSV import and correction, persistent preview reservations, and reconciliation of the recorded Sepolia treasury are implemented. There is no accounting-provider integration or live confidential network deployment and no movement of real assets. The batch workflow also supports Sepolia broadcast through a separately deployed simulation adapter; see [the testnet reproduction guide](docs/SEPOLIA.md). The original single-invoice delivery path remains unverified. Use standard, known ERC-20 tokens only after further work: fee-on-transfer/rebasing tokens are not supported by the demonstrated accounting, and a token that falsely reports success is outside the trust assumptions. This prototype has not been audited. Never fund it with real assets or upload real invoices.
 
 ## Reproduce
 
@@ -110,3 +110,38 @@ The manifest commits to the ordered payment commitments. Each commitment binds r
 CRE API wiring was informed by the public [Hello Confidential Workflows template](https://github.com/smartcontractkit/cre-templates/tree/main/starter-templates/hello-confidential-workflows) and [consumer-contract documentation](https://docs.chain.link/cre/guides/workflow/using-evm-client/onchain-write/building-consumer-contracts). No prior private project code was reused. Project-specific work started September 11, 2026.
 
 **AI disclosure:** Codex proposed and implemented the original concept, code, UI, tests and documentation. Lawrence chose Chainlink, provided the environment, authenticated CRE, reviewed the prototype, selected the name Velum and its mysterious/artistic brand direction, and requested a broader competitive/technical upgrade. Customer validation, registration-track confirmation and the human-narrated demo remain pending. This disclosure does not establish prize eligibility: [ETHOnline rules](https://ethglobal.com/events/ethonline2026/info/details) require meaningful team contribution and AI attribution. Planning artifacts are preserved in `docs/` and git history.
+
+
+## Persistent accounting and privacy
+
+The website now accepts a synthetic CSV (maximum 20 rows / 16 KB), supports editing
+held rows, and saves isolated workspace ledgers across runs and reloads. Approval
+limits and approved wallets are separate fixed synthetic policy records. Concurrent
+reservations cannot overdraw the shared budget. Preview reservations can be released;
+chain-bound reservations cannot be released from the UI.
+
+Reconciliation verifies the canonical, finalized Sepolia receipt and exact treasury
+payment event before marking an invoice paid. It is idempotent and trusts the
+configured public RPC and test-token contract. The recorded example lets judges
+resubmit a paid invoice and inspect why it remains blocked under a new request ID.
+
+The authenticated snapshot endpoint also feeds the real CRE CLI simulation:
+[ledger → CRE evidence](public/ledger-cre-evidence.json). After reconciliation, all
+five sample requests are rejected. This uses the actual saved ledger, not a new
+hardcoded fixture. Simulation still provides no hardware enclave protection.
+
+Workspace access keys are random browser-held bearer capabilities; synthetic CSV
+contents go to Cloudflare, outside any TEE. This is a demo tenant model, not production
+identity management. Starting a separate workspace creates a separate ledger and
+does not erase the previous one. See [accounting design](docs/ACCOUNTING.md).
+
+Run `bun run types` before type checking on a fresh checkout. `bun run test:ledger-browser`
+checks the deployed workspace, including real Sepolia reconciliation. Then
+`bun run test:ledger-cre` tests the saved snapshot with an authenticated CRE CLI.
+On this VM only, set `VELUM_TEST_IP=104.21.32.18` to work around its resolver; HTTPS
+still validates the hostname. The Bun local fallback does not emulate Durable Objects.
+
+Recording: [demo script](docs/DEMO-SCRIPT.md), [judge Q&A](docs/JUDGE-QA.md).
+Customer research: [interview guide](docs/validation/INTERVIEW.md),
+[unfilled findings](docs/validation/FINDINGS.md), [human review](docs/validation/HUMAN-REVIEW.md).
+No customer validation or completed human narration is claimed.

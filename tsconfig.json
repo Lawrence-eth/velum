@@ -18,6 +18,8 @@
     "src/**/*.ts",
     "workflow/**/*.ts",
     "test/policy.test.ts",
-    "test/batch.test.ts"
+    "test/batch.test.ts",
+    "worker-configuration.d.ts",
+    "test/ledger.test.ts"
   ]
 }

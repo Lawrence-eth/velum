@@ -1,9 +1,36 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "velum",
-  "main": "src/worker.ts",
+  "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
-  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
   "workers_dev": false,
-  "routes": [{ "pattern": "velum.aethe.me", "custom_domain": true }]
+  "routes": [
+    {
+      "pattern": "velum.aethe.me",
+      "custom_domain": true
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ACCOUNTING",
+        "class_name": "AccountingLedger"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1-accounting",
+      "new_sqlite_classes": [
+        "AccountingLedger"
+      ]
+    }
+  ]
 }

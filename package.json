@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "bun test test/policy.test.ts test/batch.test.ts",
+    "test": "bun test",
     "typecheck": "tsc --noEmit",
     "dev": "bun scripts/local-server.ts",
     "deploy": "node --no-addons node_modules/wrangler/bin/wrangler.js deploy",
@@ -15,7 +15,10 @@
     "test:e2e": "bun build scripts/batch-e2e.ts --target node --packages external --outfile artifacts/batch-e2e.mjs && node --no-addons artifacts/batch-e2e.mjs",
     "simulate:batch": "cre workflow simulate batch-workflow --target staging-settings --non-interactive --trigger-index 0",
     "test:adapter": "bun build scripts/adapter-test.ts --target node --packages external --outfile artifacts/adapter-test.mjs && node --no-addons artifacts/adapter-test.mjs",
-    "demo:sepolia": "bun build scripts/sepolia-demo.ts --target node --packages external --outfile artifacts/sepolia-demo.mjs && node --no-addons artifacts/sepolia-demo.mjs"
+    "demo:sepolia": "bun build scripts/sepolia-demo.ts --target node --packages external --outfile artifacts/sepolia-demo.mjs && node --no-addons artifacts/sepolia-demo.mjs",
+    "types": "node --no-addons node_modules/wrangler/bin/wrangler.js types",
+    "test:ledger-browser": "node --no-addons scripts/ledger-browser-test.mjs",
+    "test:ledger-cre": "bun build scripts/ledger-cre-test.ts --target node --packages external --outfile artifacts/ledger-cre-test.mjs && node --no-addons artifacts/ledger-cre-test.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",
