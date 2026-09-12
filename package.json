@@ -13,7 +13,9 @@
     "test:contract": "bun build scripts/contract-test.ts --target node --packages external --outfile artifacts/contract-test.mjs && node --no-addons artifacts/contract-test.mjs",
     "test:browser": "node --no-addons scripts/browser-test.mjs",
     "test:e2e": "bun build scripts/batch-e2e.ts --target node --packages external --outfile artifacts/batch-e2e.mjs && node --no-addons artifacts/batch-e2e.mjs",
-    "simulate:batch": "cre workflow simulate batch-workflow --target staging-settings --non-interactive --trigger-index 0"
+    "simulate:batch": "cre workflow simulate batch-workflow --target staging-settings --non-interactive --trigger-index 0",
+    "test:adapter": "bun build scripts/adapter-test.ts --target node --packages external --outfile artifacts/adapter-test.mjs && node --no-addons artifacts/adapter-test.mjs",
+    "demo:sepolia": "bun build scripts/sepolia-demo.ts --target node --packages external --outfile artifacts/sepolia-demo.mjs && node --no-addons artifacts/sepolia-demo.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

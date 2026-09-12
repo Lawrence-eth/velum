@@ -29,6 +29,11 @@ try {
   assert.equal(await page.locator('#batch-approved').textContent(), '$9,600');
   await page.getByText('✓ Receipt file integrity checked').waitFor();
   assert.equal(await page.locator('#balance-after').textContent(), '$14,200');
+  await page.locator('#sepolia-proof').waitFor({ state: 'visible' });
+  assert.match(await page.locator('#sepolia-summary').textContent(), /\$5,800 synthetic USD/);
+  const testnet = await page.evaluate(async () => (await fetch('/sepolia-evidence.json')).json());
+  assert.equal(await page.getByRole('link', { name: 'CRE report delivery' }).getAttribute('href'), `https://sepolia.etherscan.io/tx/${testnet.report.txHash}`);
+  assert.equal(await page.locator('#sepolia-links a').count(), 4);
   await page.locator('.single-lab summary').click();
   await page.getByRole('button', { name: 'Evaluate invoice' }).click();
   await page.getByText('Approved by the preview policy').waitFor();
@@ -60,5 +65,5 @@ try {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile horizontal overflow');
   await page.screenshot({ path: 'evidence/mobile.png', fullPage: true });
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ success: true, base, checks: ['batch budget reservation', 'independent-check comparison', 'duplicate held', 'private/public disclosure', 'receipt download', 'budget change invalidates stale preview', 'budget change recalculates decisions', 'recorded receipt SHA-256 verified', 'settlement balances visible', 'approval', 'over limit', 'wrong recipient', 'duplicate', 'changed threshold', 'recorded evidence visible', '390px mobile overflow', 'no page errors'] }, null, 2));
+  console.log(JSON.stringify({ success: true, base, checks: ['batch budget reservation', 'independent-check comparison', 'duplicate held', 'private/public disclosure', 'receipt download', 'budget change invalidates stale preview', 'budget change recalculates decisions', 'recorded receipt SHA-256 verified', 'settlement balances visible', 'Sepolia receipt and explorer links', 'approval', 'over limit', 'wrong recipient', 'duplicate', 'changed threshold', 'recorded evidence visible', '390px mobile overflow', 'no page errors'] }, null, 2));
 } finally { await browser.close(); }

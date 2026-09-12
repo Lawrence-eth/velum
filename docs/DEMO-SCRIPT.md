@@ -25,3 +25,5 @@ Show the end-to-end check list: reordered/omitted reports rejected, replay rejec
 
 ## 2:45–3:10 — contribution and next integration
 Explain why you chose this customer, describe your actual product/testing/design contribution and disclose AI assistance. Name the accounting or treasury integration you would build next. Do not claim that a customer interview, live deployment or production integration has happened unless it has.
+
+Optional testnet evidence: open the Sepolia panel and its CRE delivery and two payment explorer links. Explain: “These are actual Sepolia transactions using test tokens. The simulator uses a public mock forwarder, so our test adapter accepts only an owner-pinned report hash. This proves the settlement path; it does not establish DON signatures or deployed TEE execution.”

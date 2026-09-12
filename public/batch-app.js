@@ -85,3 +85,23 @@ try {
   $('#trace-report').textContent = error.message;
   $('#trace-paid').textContent = 'Inspect the repository for reproduction steps.';
 }
+
+// Recorded testnet transactions are separate from the interactive preview and local tests.
+try {
+  const response = await fetch('/sepolia-evidence.json');
+  if (response.ok) {
+    const receipt = await response.json();
+    if (receipt.success && receipt.chainId === 11155111 && receipt.settlements.length === 2) {
+      $('#sepolia-summary').textContent = `${money(receipt.accounting.paid)} synthetic USD settled across two approved invoices. Three invoices were held. Recorded ${new Date(receipt.recordedAt).toUTCString()}.`;
+      const links = [['CRE report delivery', receipt.report.txHash], ...receipt.settlements.map((p, i) => [`Payment ${i + 1}`, p.txHash])];
+      for (const [label, hash] of links) {
+        if (!/^0x[0-9a-fA-F]{64}$/.test(hash)) throw new Error('Invalid transaction hash');
+        const link = document.createElement('a'); link.textContent = `${label} ↗`;
+        link.href = `https://sepolia.etherscan.io/tx/${hash}`; link.target = '_blank'; link.rel = 'noreferrer';
+        $('#sepolia-links').append(link);
+      }
+      const download = document.createElement('a'); download.href = '/sepolia-evidence.json'; download.textContent = 'Download testnet receipt ↓'; download.download = 'velum-sepolia-receipt.json';
+      $('#sepolia-links').append(download); $('#sepolia-proof').hidden = false;
+    }
+  }
+} catch { /* Leave unverified or unavailable testnet evidence hidden. */ }

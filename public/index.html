@@ -21,6 +21,12 @@
       <div class="disclosure"><div><p class="eyebrow">THE DISCLOSURE BOUNDARY</p><h3>Show the decision.<br>Keep the rationale private.</h3><p>Switch perspectives to see what the confidential handler deliberately shares. Settlement still reveals recipients and amounts.</p><div class="view-switch" role="group" aria-label="Receipt perspective"><button id="operator-view" aria-pressed="true">Operator view</button><button id="public-view" aria-pressed="false">Public report</button></div><button id="download-preview" class="text-button" disabled>Download preview receipt ↓</button></div><div class="disclosure-panel"><span id="disclosure-label" class="panel-label">SYNTHETIC OPERATOR VIEW</span><pre id="disclosure-content">Evaluate a batch to inspect the privacy boundary.</pre></div></div>
       <p class="boundary">Reservations apply within this ordered batch. A real accounting system must exclusively reserve and reconcile budgets across batches. The demo is not a confidential data store.</p>
     </section>
+    <section id="sepolia-proof" class="settlement-section" hidden>
+      <div class="section-heading"><div><p class="eyebrow">ONCHAIN EVIDENCE · SEPOLIA</p><h2>Two payments. Public receipts.</h2></div></div>
+      <p id="sepolia-summary">Loading recorded testnet settlement…</p>
+      <div id="sepolia-links" class="evidence-links"></div>
+      <p class="boundary">Recorded CRE CLI broadcast through a mock forwarder, with an owner-authorized report hash. Test tokens only; no DON signature verification or deployed TEE attestation. The interactive preview above does not send payments.</p>
+    </section>
     <section id="settlement" class="settlement-section">
       <div class="section-heading"><div><p class="eyebrow">02 / FROM DECISION TO PAYMENT</p><h2>Follow the actual execution.</h2></div><span id="receipt-integrity" class="pill">Loading evidence</span></div>
       <p class="section-note">A recorded CRE CLI run feeds its actual ABI payload into a local EVM treasury. The mock forwarder adapter does not verify Chainlink signatures. This is reproducible integration evidence, not a network transaction.</p>

@@ -21,7 +21,7 @@ Solidity `BatchTreasury` authenticates the forwarder and exact workflow identity
 ## Chainlink integration and evidence
 Target: **Best Confidential Workflow**. The core batch decision is evaluated in a real CRE CLI confidential-workflow simulation. `scripts/batch-e2e.ts` uses the actual returned ABI bytes in a local EVM adapter. Recorded results: two approved payments totaling 5,800 synthetic USD, treasury balance 20,000 → 14,200, and 33 end-to-end checks. Original four single-invoice simulations remain available.
 
-This is simulation evidence accepted by the published prize criteria; it is not a live hardware enclave deployment. The local adapter uses a mock forwarder caller and does not verify Chainlink signatures. No network transaction or real-asset payment is claimed. Receipt hashing verifies file consistency only.
+This is simulation evidence accepted by the published prize criteria; it is not a live hardware enclave deployment. The local adapter uses a mock forwarder caller and does not verify Chainlink signatures. Separate Sepolia evidence records actual testnet transactions through the public simulation forwarder. Its test-only adapter requires the owner to pin the exact report hash and supplies synthetic workflow metadata; this does not prove oracle authenticity. No real-asset payment is claimed. Receipt hashing verifies file consistency only.
 
 ## Links
 - Demo: https://velum.aethe.me
@@ -31,7 +31,7 @@ This is simulation evidence accepted by the published prize criteria; it is not 
 - Video: PENDING — 2–4 minutes, human narration, at least 720p.
 
 ## Limitations
-Synthetic accounting API; batch-local reservations only. A real source must reserve snapshots exclusively and reconcile paid invoices across batches. No production accounting integration, real token settlement, Sepolia deployment or live CRE network deployment. No audit. The treasury trusts configured token behavior and the authorized workflow/source.
+Synthetic accounting API; batch-local reservations only. A real source must reserve snapshots exclusively and reconcile paid invoices across batches. No production accounting integration, real-asset settlement or live CRE network deployment. No audit. The treasury trusts configured token behavior and the authorized workflow/source.
 
 ## AI and prior work
 Codex generated the concept, implementation, tests, UI and drafts. Lawrence provided Chainlink direction/environment, authenticated CRE, reviewed the prototype, chose the Velum name and artistic direction, and requested the competitive upgrade. Public templates informed the CRE API wiring. No prior private project code was reused. Human customer validation and final narration remain pending. Do not embellish the contribution record.
@@ -40,3 +40,5 @@ Codex generated the concept, implementation, tests, UI and drafts. Lawrence prov
 Confirm the registered Start Fresh/Continuity track, review the functionality and disclosure, document meaningful actual team contribution, record the human-narrated demo, select Chainlink in the dashboard and submit before **September 13, 2026, 16:00 UTC**. No dashboard submission has been performed.
 
 [Rules](https://ethglobal.com/events/ethonline2026/info/details) · [Chainlink prize](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
+
+Sepolia transaction receipts and contract addresses: [public/sepolia-evidence.json](../public/sepolia-evidence.json). Reproduction and adapter trust boundary: [docs/SEPOLIA.md](SEPOLIA.md).

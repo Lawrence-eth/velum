@@ -20,4 +20,5 @@ jobs:
       - run: bun run typecheck
       - run: bun test
       - run: bun run test:contract
+      - run: bun run test:adapter
       # Authenticated CRE simulations are reproduced separately with bun run test:e2e.

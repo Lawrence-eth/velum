@@ -2,7 +2,7 @@
 
 **Private rules. Accountable payments.** A confidential batch-payment gate for crypto teams paying contractors, built for ETHOnline 2026.
 
-[Live demo](https://velum.aethe.me) · [Actual CRE → local settlement receipt](public/settlement-evidence.json) · [Competitive review](docs/COMPETITIVE-REVIEW.md) · [Submission draft](docs/SUBMISSION.md)
+[Live demo](https://velum.aethe.me) · [Sepolia receipts](public/sepolia-evidence.json) · [Actual CRE → local settlement receipt](public/settlement-evidence.json) · [Competitive review](docs/COMPETITIVE-REVIEW.md) · [Submission draft](docs/SUBMISSION.md)
 
 ![Velum batch workspace](evidence/desktop.png)
 
@@ -31,14 +31,15 @@ The test adapter does **not** verify Chainlink report signatures. This demonstra
 |---|---|
 | Public browser preview | Ordinary server-side policy execution using synthetic data; never triggers CRE or payments. |
 | CRE simulation | Executes the confidential handler locally; no real enclave privacy or hardware attestation. |
-| EVM settlement | Runs actual Solidity bytecode and synthetic token transfers in memory; no network transaction. |
+| Local EVM settlement | Runs actual Solidity bytecode and synthetic token transfers in memory. |
+| Sepolia settlement | CRE CLI broadcast through a public mock forwarder and owner-pinned report adapter; synthetic tokens, no DON authentication or deployed TEE attestation. |
 | Browser receipt hash | Detects mismatch between payload and the included hash; not proof of Chainlink signatures, authorship or independent attestation. |
 | Accounting source | Trusted for invoice truth, policy authorization and snapshot accuracy. |
 | Privacy | Private vendor/PO data and reasons do not enter the ABI report. Amounts, recipients, timing, decisions and public identifiers can still reveal information. Registration and settlement expose payment details. |
 
 Budget reservation is **batch-local**. The treasury serializes active batches, but a real accounting backend must exclusively reserve snapshots and reconcile settled invoices before issuing another batch. `policyVersion` labels the private snapshot; it is not an onchain revocation mechanism. Cancellation is the explicit onchain revocation path. The policy is first-in-order, not an optimizer; the owner commits to the full ordering before report delivery.
 
-There is no accounting-provider integration, no Sepolia deployment, no live confidential network deployment and no movement of real assets. The original single-invoice workflow includes an optional live-delivery path that remains unverified. Use standard, known ERC-20 tokens only after further work: fee-on-transfer/rebasing tokens are not supported by the demonstrated accounting, and a token that falsely reports success is outside the trust assumptions. This prototype has not been audited. Never fund it with real assets or upload real invoices.
+There is no accounting-provider integration or live confidential network deployment and no movement of real assets. The batch workflow also supports Sepolia broadcast through a separately deployed simulation adapter; see [the testnet reproduction guide](docs/SEPOLIA.md). The original single-invoice delivery path remains unverified. Use standard, known ERC-20 tokens only after further work: fee-on-transfer/rebasing tokens are not supported by the demonstrated accounting, and a token that falsely reports success is outside the trust assumptions. This prototype has not been audited. Never fund it with real assets or upload real invoices.
 
 ## Reproduce
 

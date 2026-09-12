@@ -38,3 +38,13 @@ explicitly test-only simulation adapter is needed for a broadcast demonstration;
 the treasury's identity checks should remain intact. A mock-forwarder demonstration
 would prove testnet state changes, not DON signature verification or deployed TEE
 execution. Live CRE deployment still requires account deployment access.
+
+### Verified Sepolia execution (2026-09-12)
+
+The funded wallet completed CRE CLI broadcast and two settlements. Treasury: `0x9ce987f98853314ca5d139f0016d02ba521477a9`. Test token: `0x6ddfba3c4633710ac948b5261ffda54d86dc354a`. Adapter: `0xe94ec0befe649168cab8ba0f02486264f2a1e211`.
+
+CRE delivery: https://sepolia.etherscan.io/tx/0x6864307f28f1c8cc88a0c2393ef8a95afe1d6ad68dd40de3557567adfc19d68c
+
+Verified balance change: 20,000 → 14,200 synthetic USD; 5,800 paid. All ten transactions confirmed, including batch close. See [full evidence](../public/sepolia-evidence.json) and [reproduction/trust boundaries](SEPOLIA.md). The earlier preparation limitations above are historical; the broadcast branch is now verified through the separate simulation adapter. Live CRE network deployment remains unavailable.
+
+Site deployment with Sepolia evidence: Worker version `29f5dce7-2379-4182-9672-ae1483846ebe`.
