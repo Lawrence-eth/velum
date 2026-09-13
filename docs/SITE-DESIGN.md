@@ -1,3 +1,9 @@
+# Current work-order workspace
+
+The homepage now uses two spacious panes: agreed terms, delivery evidence and payment history on the left; the CRE decision and settlement controls on the right. Body copy remains 16px with large controls. Mobile stacks the panes and provides a direct link to review. The prior three-pane invoice-agent experiment is retained at `/invoice.html`. Work-order state persists; the older CSV accounting workspace remains separate. See [WORK-ORDERS.md](WORK-ORDERS.md).
+
+## Earlier invoice-console design
+
 # Velum payment console
 
 The primary screen is a working payment review, not a marketing landing page. Three panes keep the invoice version and verified vendor record, source document, and execution decision visible together. One action runs the live model and actual CRE CLI; a held payment exposes an explicit correction from the vendor record. The same result contains the exact report and CLI log.

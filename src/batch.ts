@@ -21,7 +21,7 @@ export function batchManifest(batch: Batch): Hex {
   return keccak256(encodeAbiParameters(parseAbiParameters('bytes32[] commitments'), [batch.entries.map(e => paymentCommitment(e.bundle.request))]));
 }
 
-export function evaluateBatch(input: Batch, now: number) {
+export function evaluateBatch(input: Batch, now: number, additionalReasons: readonly string[] = []) {
   const batch = batchSchema.parse(input);
   if (!Number.isSafeInteger(now) || batch.snapshotAt > now || now - batch.snapshotAt > 120) throw new Error('Stale or future accounting snapshot');
   const seenRequests = new Set<string>(), seenInvoices = new Set<string>();
@@ -47,6 +47,7 @@ export function evaluateBatch(input: Batch, now: number) {
     if (seenInvoices.has(invoiceIdentity)) verdict.reasons.push('Duplicate invoice in this batch');
     // Reserve the invoice identity even when rejected: a later conflicting copy must not win.
     seenInvoices.add(invoiceIdentity);
+    verdict.reasons.push(...additionalReasons);
     verdict.approved = verdict.reasons.length === 0;
     if (verdict.approved) { ledger.remaining -= BigInt(r.amount); approvedAmount += BigInt(r.amount); }
     else rejectedAmount += BigInt(r.amount);

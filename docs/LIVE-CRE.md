@@ -1,6 +1,8 @@
-# Browser-triggered CRE execution
+# Invoice-agent CRE execution
 
-The payment review now invokes a real CRE CLI confidential-handler simulation for each run. The returned ABI report drives compiled Solidity on the VM. This replaces the earlier primary flow's browser-local policy report.
+The separate `/invoice.html` review invokes a real CRE CLI confidential-handler simulation for each run. The returned ABI report drives compiled Solidity on the VM. This replaces the earlier primary flow's browser-local policy report.
+
+The homepage work-order workflow has persistent reservations and an execution journal; see [WORK-ORDERS.md](WORK-ORDERS.md). This document describes the independent invoice-agent experiments.
 
 ## Request path
 

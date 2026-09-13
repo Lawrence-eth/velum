@@ -27,7 +27,9 @@
     "build:site": "node scripts/build-site.mjs",
     "test:site": "node --no-addons scripts/site-browser-test.mjs",
     "test:proposal-execution": "node --no-addons scripts/proposal-execution-test.mjs",
-    "build:runner": "bun build scripts/cre-runner.ts --target node --packages external --outfile artifacts/cre-runner.mjs"
+    "build:runner": "bun build scripts/cre-runner.ts --target node --packages external --outfile artifacts/cre-runner.mjs",
+    "test:work-execution": "bun build scripts/work-execution-test.ts --target node --packages external --outfile artifacts/work-execution-test.mjs && VELUM_WORK_JOURNAL_DIR=artifacts/work-test-journals node --no-addons artifacts/work-execution-test.mjs",
+    "test:work-browser": "node --no-addons scripts/work-browser-test.mjs"
   },
   "dependencies": {
     "@chainlink/cre-sdk": "1.18.0",

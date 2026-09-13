@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-09-13T03:34:35.291Z",
+  "site": "https://velum.aethe.me",
+  "mode": "Browser-triggered live CRE GitHub checks and journal-backed local Solidity",
+  "checks": [
+    "work identity and 2400 budget reserved before CRE execution",
+    "identical retry reuses the job; the same retry key cannot substitute evidence",
+    "proposal cannot supply authoritative commercial terms",
+    "concurrent different request cannot acquire the same work reservation",
+    "wrong workspace capability cannot read private history",
+    "reload resumes pending execution; actual CRE denies earlier successful revision and releases reservation",
+    "accepted revision runs CRE, settles and records paid work with remaining budget",
+    "paid history persists after reload and a new payment ID is rejected",
+    "combined operator history downloads without access capabilities",
+    "larger reading scale fits mobile viewport",
+    "no browser exceptions"
+  ],
+  "workspace": {
+    "ok": true,
+    "status": "paid",
+    "terms": {
+      "id": "WO-101",
+      "title": "Payment review release",
+      "vendor": "Northstar Studio",
+      "amount": "2400.00",
+      "recipient": "0x2222222222222222222222222222222222222222",
+      "budget": "6000000000",
+      "repository": "Lawrence-eth/velum",
+      "repositoryId": 1366413547,
+      "workflowId": 355961046,
+      "workflowBlob": "5955271c83d9cda8628558cb94735cfa332ca479",
+      "acceptedSha": "f80c506fbd178750b58c4791d751bdde47545824",
+      "acceptedRun": 34734168531,
+      "earlierRun": 34733699456,
+      "branch": "main",
+      "event": "push",
+      "revision": "work-order-v1"
+    },
+    "budget": {
+      "total": "6000000000",
+      "reserved": "0",
+      "paid": "2400000000",
+      "available": "3600000000"
+    },
+    "attempts": [
+      {
+        "id": "ad6eebd2-de9e-4b5e-b9d8-941e8d7c88f6",
+        "scenario": "earlier",
+        "status": "complete",
+        "execution": {
+          "workEvidence": {
+            "runId": 34733699456,
+            "repositoryId": 1366413547,
+            "workflowId": 355961046,
+            "sha": "67f538a1f334a573d6a1a93f6a3481988120619b",
+            "branch": "main",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "workflowBlob": "5955271c83d9cda8628558cb94735cfa332ca479",
+            "observedAt": 1789270420
+          },
+          "creExecution": true,
+          "proposal": {
+            "invoiceRef": "NS-101",
+            "recipient": "0x2222222222222222222222222222222222222222",
+            "amount": "2400.00"
+          },
+          "policyApproved": false,
+          "policyReasons": [
+            "Successful build belongs to a different revision"
+          ],
+          "deliveryAccepted": true,
+          "settlementAccepted": false,
+          "treasuryBefore": "20000000000",
+          "treasuryAfter": "20000000000",
+          "paid": "0",
+          "requestStatus": 3,
+          "requestId": "0x4f8a3827de92feb8ed0aa8ff668a2fb1d8994f1eca06431b041eb9867b5738aa",
+          "commitment": "0xe09f9ac7dacd755f4b0e57a6d382dbe5f6cce217ce1c4013fad859383399935a",
+          "encodedPayload": "0x7ac4c957a9a3a389fbad97f4d221da04e12a3555d121590b82533741fdb48da63f7e4eaea90909f7d35f62862a53175474c2cadebdb56e0fd47457b46510c98c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000014f8a3827de92feb8ed0aa8ff668a2fb1d8994f1eca06431b041eb9867b5738aae09f9ac7dacd755f4b0e57a6d382dbe5f6cce217ce1c4013fad859383399935a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa6278e",
+          "reportBytes": 256,
+          "deliveryGas": "31108",
+          "settlementGas": "3849",
+          "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+          "sourceSha256": {
+            "BatchTreasury.sol": "92f9bd7f1411b53acf8a6b2dea0713912099fdd41f6cf1a445667711da7a91f8",
+            "TestToken.sol": "d7498a6a06be95e04b4c7eb91cfd9aa6fc7a9bc17c0b7f206f955f6c7732facc"
+          },
+          "treasury": "0x3c952d36207c0d52743a646e7ac2649009bd358e",
+          "token": "0x4501f8fa1e67827ebfb1f6d5510c606871c5a599",
+          "workflowMode": "CRE CLI confidential-handler simulation",
+          "settlementMode": "Journal-backed local Solidity with mock forwarder",
+          "creLog": "Initializing...\nLoading settings...\nChecking RPC connectivity...\nCompiling workflow...\n✓ Workflow compiled\n✓ Simulation limits enabled\n  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb\n  Binary hash: fa166c8f63f253d3406e5cfeb236e3b67e88a83482574be2061c08c08c4ef19a\n  Config hash: 474317919694e28a3e4db6827055ce18151e1aa4eb95ed7e67b9491fb94f7676\n2026-09-13T03:33:40Z [SIMULATION] Simulator Initialized\n\n2026-09-13T03:33:40Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0\n╭────────────────────────────────────────────────────────────────────────────────────────────────────╮\n│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │\n│     - AWS Nitro in us-west-2                                                                       │\n│ The simulator is not a real TEE, and is meant to debug.                                            │\n│ Do not use it for sensitive information.                                                           │\n│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │\n│ They are presented in the simulator for debugging only.                                            │\n│                                                                                                    │\n╰────────────────────────────────────────────────────────────────────────────────────────────────────╯\n\n\n✓ Workflow Simulation Result:\n\"{\\\"workEvidence\\\":{\\\"runId\\\":34733699456,\\\"repositoryId\\\":1366413547,\\\"workflowId\\\":355961046,\\\"sha\\\":\\\"67f538a1f334a573d6a1a93f6a3481988120619b\\\",\\\"branch\\\":\\\"main\\\",\\\"event\\\":\\\"push\\\",\\\"status\\\":\\\"completed\\\",\\\"conclusion\\\":\\\"success\\\",\\\"workflowBlob\\\":\\\"5955271c83d9cda8628558cb94735cfa332ca479\\\",\\\"observedAt\\\":1789270420},\\\"batchId\\\":\\\"0x7ac4c957a9a3a389fbad97f4d221da04e12a3555d121590b82533741fdb48da6\\\",\\\"manifest\\\":\\\"0x3f7e4eaea90909f7d35f62862a53175474c2cadebdb56e0fd47457b46510c98c\\\",\\\"encodedPayload\\\":\\\"0x7ac4c957a9a3a389fbad97f4d221da04e12a3555d121590b82533741fdb48da63f7e4eaea90909f7d35f62862a53175474c2cadebdb56e0fd47457b46510c98c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000014f8a3827de92feb8ed0aa8ff668a2fb1d8994f1eca06431b041eb9867b5738aae09f9ac7dacd755f4b0e57a6d382dbe5f6cce217ce1c4013fad859383399935a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aa6278e\\\",\\\"reportGenerated\\\":true,\\\"deliveryRequested\\\":false}\"\n\n2026-09-13T03:33:41Z [SIMULATION] Execution finished signal received\n2026-09-13T03:33:41Z [SIMULATION] Skipping WorkflowEngineV2\n\n╭──────────────────────────────────────────────────────╮\n│ Simulation complete! Ready to deploy your workflow?  │\n│                                                      │\n│ Run cre account access to request deployment access. │\n╰──────────────────────────────────────────────────────╯\n",
+          "executedAt": "2026-09-13T03:33:41.256Z"
+        }
+      },
+      {
+        "id": "3099e7ee-9056-46c4-b4c4-768171cb751f",
+        "scenario": "accepted",
+        "status": "complete",
+        "execution": {
+          "workEvidence": {
+            "runId": 34734168531,
+            "repositoryId": 1366413547,
+            "workflowId": 355961046,
+            "sha": "f80c506fbd178750b58c4791d751bdde47545824",
+            "branch": "main",
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "workflowBlob": "5955271c83d9cda8628558cb94735cfa332ca479",
+            "observedAt": 1789270471
+          },
+          "creExecution": true,
+          "proposal": {
+            "invoiceRef": "NS-101",
+            "recipient": "0x2222222222222222222222222222222222222222",
+            "amount": "2400.00"
+          },
+          "policyApproved": true,
+          "policyReasons": [],
+          "deliveryAccepted": true,
+          "settlementAccepted": true,
+          "treasuryBefore": "20000000000",
+          "treasuryAfter": "17600000000",
+          "paid": "2400000000",
+          "requestStatus": 4,
+          "requestId": "0x2081833a549c81ff996a67978f0e65e999fa8a9e833c326816da158e5b4ed8de",
+          "commitment": "0x38c86c6d87bad823916e202918306097492c0fe0f53afa74d29274014d1020c9",
+          "encodedPayload": "0x72c0b4ea1a27cd4df788cc48534a451c901510b578eb4b11dfcd60e3a7088068fdb874ac6f1346f59ada2f4ff1bb9eec174546dbd694c9ac25b4f60ad5868333000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000012081833a549c81ff996a67978f0e65e999fa8a9e833c326816da158e5b4ed8de38c86c6d87bad823916e202918306097492c0fe0f53afa74d29274014d1020c90000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000006aa627c3",
+          "reportBytes": 256,
+          "deliveryGas": "49277",
+          "settlementGas": "42350",
+          "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+          "sourceSha256": {
+            "BatchTreasury.sol": "92f9bd7f1411b53acf8a6b2dea0713912099fdd41f6cf1a445667711da7a91f8",
+            "TestToken.sol": "d7498a6a06be95e04b4c7eb91cfd9aa6fc7a9bc17c0b7f206f955f6c7732facc"
+          },
+          "treasury": "0x3c952d36207c0d52743a646e7ac2649009bd358e",
+          "token": "0x4501f8fa1e67827ebfb1f6d5510c606871c5a599",
+          "workflowMode": "CRE CLI confidential-handler simulation",
+          "settlementMode": "Journal-backed local Solidity with mock forwarder",
+          "creLog": "Initializing...\nLoading settings...\nChecking RPC connectivity...\nCompiling workflow...\n✓ Workflow compiled\n✓ Simulation limits enabled\n  HTTP: req=120kb resp=250kb timeout=10s | ConfHTTP: req=125kb resp=500kb timeout=1m30s | Consensus obs=25kb | ChainWrite evm_report=50kb evm_gas=10000000 solana_report=265b solana_cu=300000 | WASM binary=100mb compressed=20mb\n  Binary hash: fa166c8f63f253d3406e5cfeb236e3b67e88a83482574be2061c08c08c4ef19a\n  Config hash: 0b8b82f54e871d040975443d2ef4e3cc75f4a1605b7c2281a7e7b9894b8a582d\n2026-09-13T03:34:30Z [SIMULATION] Simulator Initialized\n\n2026-09-13T03:34:30Z [SIMULATION] Running trigger trigger=cron-trigger@1.0.0\n╭────────────────────────────────────────────────────────────────────────────────────────────────────╮\n│ Trigger requested TEE Execution your trigger will run in one of the following Tees:                │\n│     - AWS Nitro in us-west-2                                                                       │\n│ The simulator is not a real TEE, and is meant to debug.                                            │\n│ Do not use it for sensitive information.                                                           │\n│ During real execution, user logs for this trigger will not be visible, and will not leave the TEE. │\n│ They are presented in the simulator for debugging only.                                            │\n│                                                                                                    │\n╰────────────────────────────────────────────────────────────────────────────────────────────────────╯\n\n\n✓ Workflow Simulation Result:\n\"{\\\"workEvidence\\\":{\\\"runId\\\":34734168531,\\\"repositoryId\\\":1366413547,\\\"workflowId\\\":355961046,\\\"sha\\\":\\\"f80c506fbd178750b58c4791d751bdde47545824\\\",\\\"branch\\\":\\\"main\\\",\\\"event\\\":\\\"push\\\",\\\"status\\\":\\\"completed\\\",\\\"conclusion\\\":\\\"success\\\",\\\"workflowBlob\\\":\\\"5955271c83d9cda8628558cb94735cfa332ca479\\\",\\\"observedAt\\\":1789270471},\\\"batchId\\\":\\\"0x72c0b4ea1a27cd4df788cc48534a451c901510b578eb4b11dfcd60e3a7088068\\\",\\\"manifest\\\":\\\"0xfdb874ac6f1346f59ada2f4ff1bb9eec174546dbd694c9ac25b4f60ad5868333\\\",\\\"encodedPayload\\\":\\\"0x72c0b4ea1a27cd4df788cc48534a451c901510b578eb4b11dfcd60e3a7088068fdb874ac6f1346f59ada2f4ff1bb9eec174546dbd694c9ac25b4f60ad5868333000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000012081833a549c81ff996a67978f0e65e999fa8a9e833c326816da158e5b4ed8de38c86c6d87bad823916e202918306097492c0fe0f53afa74d29274014d1020c90000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000006aa627c3\\\",\\\"reportGenerated\\\":true,\\\"deliveryRequested\\\":false}\"\n\n2026-09-13T03:34:31Z [SIMULATION] Execution finished signal received\n2026-09-13T03:34:31Z [SIMULATION] Skipping WorkflowEngineV2\n\n╭──────────────────────────────────────────────────────╮\n│ Simulation complete! Ready to deploy your workflow?  │\n│                                                      │\n│ Run cre account access to request deployment access. │\n╰──────────────────────────────────────────────────────╯\n",
+          "executedAt": "2026-09-13T03:34:32.178Z"
+        }
+      }
+    ]
+  }
+}

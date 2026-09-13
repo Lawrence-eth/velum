@@ -1,7 +1,7 @@
 import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {writeFileSync,readFileSync} from 'node:fs';
-const base=process.env.VELUM_TEST_URL||'https://velum.aethe.me';
+const base=process.env.VELUM_TEST_URL||'https://velum.aethe.me/invoice.html';
 const browser=await chromium.launch({headless:true,args:process.env.VELUM_TEST_IP?[`--host-resolver-rules=MAP ${new URL(base).hostname} ${process.env.VELUM_TEST_IP}`]:[]});
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
 async function completed(){await page.locator('#payment-result').waitFor({state:'visible',timeout:90000});await page.waitForFunction(()=>!document.getElementById('run-agent').disabled);}

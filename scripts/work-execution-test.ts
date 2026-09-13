@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {writeFileSync} from 'node:fs';
+import {executeJob} from './cre-job-executor';
+import {workTerms,workIdentity,type WorkBinding} from '../src/work-order';
+const workspace=crypto.randomUUID();
+const make=(evidenceRun:number)=>({id:crypto.randomUUID(),capture:{runId:crypto.randomUUID(),proposal:{invoiceRef:'NS-101',recipient:workTerms.recipient,amount:workTerms.amount},work:{workspace,identity:workIdentity(workspace),evidenceRun,termsRevision:workTerms.revision} as WorkBinding}});
+const earlier=make(workTerms.earlierRun),accepted=make(workTerms.acceptedRun);
+console.log('Running actual CRE for earlier revision…');const held=await executeJob(earlier);assert.equal(held.paid,'0');assert.equal(held.policyApproved,false);assert.equal(held.workEvidence?.runId,workTerms.earlierRun);
+console.log('Rebuilding the journal-backed treasury and running accepted revision…');const paid=await executeJob(accepted);assert.equal(paid.paid,'2400000000');assert.equal(paid.treasuryAfter,'17600000000');assert.equal(paid.workEvidence?.sha,workTerms.acceptedSha);
+assert.deepEqual(await executeJob(accepted),paid);await assert.rejects(()=>executeJob(make(workTerms.acceptedRun)),/already paid/);
+const record={recordedAt:new Date().toISOString(),mode:'Actual CRE GitHub evidence and journal-backed local Solidity; synthetic terms and mock identity',held,paid,checks:['real successful earlier revision denied','actual accepted revision paid','prior denied contract state replayed from journal','same job returns durable result without another payment','new job for paid work rejected by journal']};
+writeFileSync('evidence/work-order-execution.json',JSON.stringify(record,null,2)+'\n');writeFileSync('public/work-order-execution.json',JSON.stringify(record,null,2)+'\n');console.log('Work-order execution checks passed.');

@@ -49,6 +49,12 @@ export default {
         const input=JSON.parse(await boundedText(request,runner?90000:1024));
         if(!input||typeof input!=='object'||Array.isArray(input))return json({error:'Invalid request'},400);
         const stub=env.ACCOUNTING.get(env.ACCOUNTING.idFromName('velum-agent-global-v1'));
+        if(['work-open','work-view','work-run','work-resume'].includes(input.action)){
+          const allowed=input.action==='work-run'?['action','scenario','retry']:['action'];if(Object.keys(input).some(k=>!allowed.includes(k)))return json({error:'Work terms cannot be supplied by the proposal'},400);
+          const access=request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1]||'';
+          const result=input.action==='work-open'?await stub.workOpen():input.action==='work-view'?await stub.workView(access):input.action==='work-resume'?await stub.workResume(access):await stub.workRun(access,String(input.scenario||''),String(input.retry||''));
+          return json(result,result.ok?200:409);
+        }
         if(input.action==='runner-claim'||input.action==='runner-result'){
           if(!runner)return json({error:'Unauthorized'},401);
           return json(input.action==='runner-claim'?await stub.claimJob():await stub.completeJob(String(input.id||''),input.execution,input.failed===true));

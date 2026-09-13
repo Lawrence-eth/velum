@@ -1,0 +1,7 @@
+staging-settings:
+  user-workflow:
+    workflow-name: velum-work-order-staging
+  workflow-artifacts:
+    workflow-path: ../workflow/batch-main.ts
+    config-path: ../batch-workflow/config.staging.json
+    secrets-path: ./secrets.yaml

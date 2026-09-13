@@ -1,0 +1,11 @@
+import {test,expect} from 'bun:test';
+import {workTerms,workIdentity,workRequestId,workReasons,type WorkBinding,type WorkEvidence} from '../src/work-order';
+import {agentBatch} from '../src/agent';
+import {evaluateBatch} from '../src/batch';
+const workspace='b4db671d-efbb-4a51-bb9f-de1280266b99',now=1800000000;
+const binding:WorkBinding={workspace,identity:workIdentity(workspace),evidenceRun:workTerms.acceptedRun,termsRevision:workTerms.revision};
+const evidence:WorkEvidence={runId:workTerms.acceptedRun,repositoryId:workTerms.repositoryId,workflowId:workTerms.workflowId,sha:workTerms.acceptedSha,branch:'main',event:'push',status:'completed',conclusion:'success',workflowBlob:workTerms.workflowBlob,observedAt:now};
+test('accepted provider evidence meets independently configured work terms',()=>expect(workReasons(binding,evidence,now)).toEqual([]));
+for(const [name,patch] of Object.entries({revision:{sha:'a'.repeat(40)},repository:{repositoryId:1},workflow:{workflowId:1},definition:{workflowBlob:'a'.repeat(40)},branch:{branch:'other'},trigger:{event:'pull_request'},pending:{status:'in_progress'},failure:{conclusion:'failure'},old:{observedAt:now-121},future:{observedAt:now+1},reference:{runId:workTerms.earlierRun}}))test(`work gate rejects ${name}`,()=>expect(workReasons(binding,{...evidence,...patch},now).length).toBeGreaterThan(0));
+test('request identity binds work, provider reference and execution attempt',()=>{const id=workRequestId('one',binding);expect(workRequestId('two',binding)).not.toBe(id);expect(workRequestId('one',{...binding,evidenceRun:workTerms.earlierRun})).not.toBe(id);});
+test('failed work evidence changes the actual batch authorization',()=>{const batch=agentBatch({invoiceRef:'NS-101',recipient:workTerms.recipient,amount:workTerms.amount},now,'test');expect(evaluateBatch(batch,now).decisions[0].approved).toBe(true);const held=evaluateBatch(batch,now,workReasons(binding,{...evidence,sha:'a'.repeat(40)},now));expect(held.decisions[0].approved).toBe(false);expect(held.approvedAmount).toBe('0');});

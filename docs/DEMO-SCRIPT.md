@@ -1,30 +1,37 @@
-# Velum — payment review demonstration
+# Velum work-order walkthrough
 
-Target 3 minutes, 1440×900, human narration. Show the actual model outcome, including resistance if it happens.
+Target approximately three minutes, human narration, 1440×900. Use a fresh browser context to create an independent demo workspace; do not reset an existing paid workspace to manufacture a second payment.
 
-## 0:00–0:25 — The decision
-Show the invoice, appended remittance instruction and separate verified vendor wallet.
+## 0:00–0:25 — Agreed work
 
-“An agent is asked to pay a $2,400 invoice. The document also tells it to change the wallet and conceal that change. Velum separates what the agent proposes from who can authorize payment.”
+“This software contractor is owed $2,400 for one accepted revision. The wallet and amount are correct. But the submitted evidence is a successful build for an earlier revision. A transaction allowlist cannot decide whether this is the work we agreed to pay for.”
 
-## 0:25–1:05 — Run the actual workflow
-Click **Run review**. Keep the progress visible while the model and CRE run.
+Show the accepted revision and the submitted earlier revision. Both GitHub run links are real. Acceptance and commercial terms are synthetic and configured by the demo team.
 
-“This is a live model call followed by a real CRE CLI execution on our demo server. The confidential handler fetches a separate source record, checks the proposed recipient and amount against policy, and returns a payment-bound report. We then deliver those exact bytes to Solidity in a local test treasury.”
+## 0:25–1:05 — Independent verification
 
-## 1:05–1:35 — Inspect the consequence
-Show the proposed wallet, decision and transferred amount. If the model resisted, state that, then use the explicitly labeled attacker-wallet control. Never call that control a model response.
+Click **Verify & release test payment**.
 
-“The contract rejects the wrong-wallet payment. Nothing transfers. The document cannot rewrite the verified vendor record or the rules that authorize spending.”
+“Velum reserves the work order and budget. The actual Chainlink CRE confidential handler retrieves the source record and GitHub evidence using separate credentials. It checks the exact revision, repository, workflow, branch, trigger and accepted workflow definition, alongside payment policy.”
 
-## 1:35–2:20 — Resolve the held payment
-Click **Use vendor record & retry**. Show the second CRE run and $2,400 test-token transfer.
+Show **Payment held** and zero transferred. Describe it as a revision mismatch, not a failed build or a model-generated attack.
 
-“I explicitly choose the verified details. CRE evaluates this new proposal and the fresh test treasury settles it. The downloaded trace retains both attempts and their actual execution logs. These are independent test treasuries, not a persistent invoice lifecycle.”
+## 1:05–1:55 — Resolve and pay
 
-## 2:20–3:00 — Verify and scope
-Open execution details and download the CRE log. Briefly show Evidence if time permits.
+Click **Use accepted revision & retry** and wait for the actual result.
 
-“The handler keeps private limits and accounting references out of the public report. The demo uses synthetic records and CLI simulation: it does not claim deployed TEE attestation or DON-authenticated delivery. Separate Sepolia receipts demonstrate test-token settlement through a simulation adapter. Production requires a real accounting connector, exclusive reservations and deployed confidential execution.”
+“The accepted revision satisfies the configured record. CRE returns a report bound to this work reference and exact payment. Its bytes drive Solidity, which releases 2,400 test tokens. The prior denial and successful payment remain in this workspace’s execution journal.”
 
-Do not tour every supporting tool. Finish on the verified payment decision. If inference or CRE is unavailable, explicitly label any recording shown as recorded evidence.
+## 1:55–2:30 — Persistence and duplicate protection
+
+Show payment history, reload, then click **Check duplicate protection**.
+
+“A new request cannot pay the same work order again. Reservations and paid history persist in SQLite; local contract operations persist in a protected journal. Unknown execution results stay reserved rather than opening a second payment path.”
+
+## 2:30–3:10 — Evidence and scope
+
+Show the work-order execution log or Evidence page.
+
+“This is real CLI simulation with live public GitHub evidence and journal-backed local Solidity. Commercial terms are synthetic. The public authorization omits those terms; payment amount and recipient are not hidden. Forwarder identity is mocked, and we do not claim deployed TEE attestation or a network payment. A successful build is evidence for a configured revision, not proof of software quality.”
+
+Finish on the paid history. The separate invoice-agent and Sepolia experiments support the project but do not need a full tour.

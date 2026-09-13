@@ -120,3 +120,11 @@ Validation: 44 unit tests, TypeScript, four actual browser-triggered CRE jobs, 1
 ## Readability revision — September 13, 2026
 
 Worker `cedd0f1e-f2c0-4b82-867a-58cab99d41fe` increases the console reading scale, pane spacing, decision-column width and primary control height. Shared navigation and evidence tables are larger. Smaller screens switch layouts sooner and include a direct review link. CRE execution and accounting behavior are unchanged.
+
+## Persistent work orders — September 13, 2026
+
+Worker `6381872c-c5e0-46d3-9348-a6518a305943` deploys the work-order homepage, live GitHub retrieval inside CRE, exclusive work/budget reservation, saved history, same-job recovery and duplicate rejection. The invoice-agent experiment is retained at `/invoice.html`. Shared source/report enforcement remains in the existing batch workflow; `work-workflow` adds the GitHub secret mapping.
+
+The VM runner now maintains protected journals outside Git and redelivers unacknowledged results after restart. Work-order Solidity state is reconstructed from its recorded operations. The UI labels this journal-backed local execution, synthetic acceptance and mock forwarding. No new network payment or deployed enclave is claimed.
+
+Validation includes 58 unit tests; real CRE denial and settlement; 11 deployed work-order browser checks; same-job recovery from a labeled injected executor failure; actual service restart/result redelivery; the existing eight invoice-agent, 14 accounting and nine contract-control checks; and desktop/tablet/mobile site checks. See `WORK-ORDERS.md` for limits and remaining production work.

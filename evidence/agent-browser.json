@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-09-12T12:32:02.591Z",
-  "site": "https://velum.aethe.me",
+  "checkedAt": "2026-09-13T03:26:19.978Z",
+  "site": "https://velum.aethe.me/invoice.html",
   "mode": "Actual deployed live model → live CRE CLI → server-local Solidity",
   "checks": [
     "suspicious invoice is the guided starting point",

@@ -1,20 +1,24 @@
 # Velum
 
-**Give agents a task. Keep the authority.** A confidential execution gate for AI treasury agents, built for ETHOnline 2026 and the Chainlink Best Confidential Workflow track.
+**Pay for the accepted work, under the payer's terms.** Velum uses Chainlink CRE to verify a software deliverable against a separately configured work order before releasing one test payment.
 
-[Live agent demo](https://velum.aethe.me) · [Agent → CRE → contract evidence](public/agent-evidence.json) · [Contract lab](https://velum.aethe.me/lab.html) · [Payment desk](https://velum.aethe.me/desk.html#ledger) · [Evidence explorer](https://velum.aethe.me/evidence.html) · [Submission draft](docs/SUBMISSION.md)
+[Live work order](https://velum.aethe.me) · [Work-order execution evidence](public/work-browser.json) · [Live invoice-agent experiment](https://velum.aethe.me/invoice.html) · [Evidence explorer](https://velum.aethe.me/evidence.html) · [Submission draft](docs/SUBMISSION.md)
 
-An invoice can persuade a payment agent to change a wallet. Velum treats the agent's output as a proposal: a separate accounting record and deterministic private policy decide whether that exact payment is eligible. The model cannot supply its own approval, policy, budget or invoice identity.
+![Velum work-order review](evidence/site-payments-desktop.png)
 
-![Velum guided payment result](evidence/site-payments-desktop.png)
+## Review, settle, and retain the result
 
-## Live payment review
+The first submitted delivery has the correct wallet and amount, and a genuinely successful GitHub workflow—but for an earlier revision. Click **Verify & release test payment**. The actual CRE confidential handler retrieves GitHub evidence and denies the mismatched work; local Solidity transfers zero tokens.
 
-Select an invoice and click **Run review**. The model proposes a wallet and amount; the server runs the actual Chainlink CRE CLI confidential handler and uses its returned report to drive Solidity settlement in a local test treasury. The result pane shows the proposed payment, transferred tokens, wallet mismatch and balance change. Download the current run's actual CRE log and report directly from the result.
+Choose **Use accepted revision & retry**. CRE verifies the configured revision and workflow definition, then its exact report drives a 2,400-token transfer. The same workspace retains its contract operations, payment history and remaining budget. Reload and **Check duplicate protection**: a new request cannot pay that work order again.
 
-For a denial, **Use vendor record & retry** explicitly corrects the proposal on the server and launches another CRE execution. The combined trace preserves both attempts. No model output can define the private policy or authorize its own payment.
+SQLite reservations prevent concurrent reviews from claiming the same work. A journal reconstructs the local treasury across executions and retains results until the backend acknowledges them. Failed or uncertain jobs retain reservations for reconciliation. [Architecture, trust boundaries and reproduction](docs/WORK-ORDERS.md).
 
-This is live CLI simulation, not deployed TEE attestation. Contracts run in fresh server-local EVMs; no network payment is sent. [Live architecture and operational bounds](docs/LIVE-CRE.md).
+Commercial terms and acceptance are synthetic and configured by the demo team. GitHub evidence is live from a public repository. A green build is not proof of software quality or customer acceptance. This is real CLI simulation and journal-backed local Solidity with mock identity, not a network payment or deployed TEE attestation.
+
+## Separate live invoice-agent experiment
+
+At `/invoice.html`, a live model proposes a wallet and amount from an invoice. CRE checks a separate canonical record and the actual report drives an independent local treasury. Operator correction launches another CRE execution. These older invoice-agent attempts do not share the work-order journal. [Invoice-agent execution architecture](docs/LIVE-CRE.md).
 
 ## Demonstrated result
 
@@ -52,7 +56,8 @@ flowchart LR
 
 | Surface | What runs | What it does not prove |
 |---|---|---|
-| Live payment console | Actual Workers AI inference → authenticated CRE CLI job → returned report → compiled Solidity | CLI simulator, mock identity, fresh VM-local treasury; no TEE attestation or network payment |
+| Work-order console | Live GitHub retrieval inside CRE → exact report → journal-backed local Solidity | Synthetic acceptance, mock identity, no network payment or TEE attestation |
+| Invoice-agent experiment | Actual Workers AI inference → CRE → compiled Solidity | Independent local treasury per attempt |
 | Agent evidence runner | Captured model output → real CRE CLI simulation → actual local EVM settlement attempt | No deployed enclave, DON signature verification or testnet transaction |
 | Existing Sepolia batch | Actual CRE CLI broadcast and two successful test-token payments totaling 5,800 | Separate batch fixture; mock forwarder and owner-pinned report adapter, not production oracle authentication |
 | Browser contract lab | Actual Solidity bytecode executes for nine attack/control cases | Local policy evaluation and mock identity |
@@ -110,4 +115,4 @@ The shared navigation contains Payments, Accounting, Controls and Evidence. Acco
 
 `public/site.css` defines the shared colors, type, layout and controls. `bun run build:site` generates every page's header and footer from one source; CI checks the committed output for drift. `bun run test:site` checks navigation, active states, mobile layouts, evidence rendering and browser errors across all four product pages.
 
-The primary review console is a compact three-pane interface: invoice inputs, source document and decision. The current execution path is documented in `docs/LIVE-CRE.md`; earlier browser-only execution records remain historical fixtures.
+The primary work-order console uses two spacious panes for terms/evidence and the payment decision. Its current execution path is documented in `docs/WORK-ORDERS.md`. The separate invoice-agent experiment is documented in `docs/LIVE-CRE.md`.

@@ -22,6 +22,7 @@
     "worker-configuration.d.ts",
     "test/ledger.test.ts",
     "test/agent.test.ts",
-    "test/cre-jobs.test.ts"
+    "test/cre-jobs.test.ts",
+    "test/work-order.test.ts"
   ]
 }

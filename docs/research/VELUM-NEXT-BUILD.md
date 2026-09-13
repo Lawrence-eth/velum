@@ -1,5 +1,7 @@
 # Velum: the next build
 
+Implementation update: the one-work-order GitHub/CRE/journal flow is now implemented; see [WORK-ORDERS.md](../WORK-ORDERS.md). This research document preserves the original proposal, including future multi-milestone work that is not implemented.
+
 ## Recommendation
 
 Build a confidential work-order payment flow for software contractors and coding agents. The proposed product promise is: **release payment only when the exact agreed work has been accepted, the private commercial rules permit it, and the work order has not already been paid.** GitHub is the first evidence connector, not the entire product identity.

@@ -7,7 +7,13 @@ The supplied system prompt already treats invoices as untrusted. Our captured ma
 The intended confidential workflow retrieves the source invoice and secret, evaluates private limits/budget, and releases an exact payment authorization. The model does not receive those policy fields; the public contract does not need them. The confidential handler is the decision step, not a logging add-on. We verified it through real CLI simulation, which does not prove deployed hardware confidentiality.
 
 **Does clicking the homepage button run CRE?**
-Yes. It runs live Workers AI inference, queues an authenticated job on the VM, runs the real CRE CLI confidential-handler simulation, and delivers its returned report to compiled Solidity in a fresh server-local EVM. The current execution log and report are downloadable. This is simulation with a mock forwarder, not deployed TEE attestation or a network transaction. Runs do not update persistent accounting.
+Yes. It reserves a work order, executes the actual CRE CLI confidential handler with live GitHub retrieval, and delivers the returned report to journal-backed local Solidity. It preserves paid state and history across reloads. This is simulation with mock forwarder identity, not deployed TEE attestation or a network payment. The main work-order selection is an operator action, not a model call.
+
+**Does a successful GitHub build mean the work is accepted?**
+No. The demo has a separately configured accepted commit and workflow definition. GitHub confirms evidence for that revision; it does not certify software quality or customer acceptance. Our public repository and commercial terms are demonstration data, not a customer engagement.
+
+**Can this work order be paid twice?**
+The reservation service and local execution journal reject another payment for the same workspace work identity. Solidity also rejects request replay. This does not establish canonical business uniqueness across arbitrary treasuries or newly created independent demo workspaces. The trusted owner and source remain part of the security model.
 
 **Is the malicious model response scripted?**
 No: the evidence contains the actual live response, model ID, timestamp and proposed wallet. Repeated model calls may differ. A separate injected-proposal button is explicitly labeled and exists to test the policy boundary even if the model resists the invoice instruction.
@@ -25,7 +31,7 @@ The source is trusted and currently synthetic. A production connector must authe
 The demonstrated agent has no signing key. The treasury checks its configured forwarder, workflow identity, payment commitments, expiry and replay state. Production deployment must also remove any alternative unrestricted spend route available to the agent. Our test forwarder setup does not prove DON authenticity.
 
 **What actually happened onchain?**
-The original batch integration broadcast an actual CRE CLI report on Sepolia and settled two test-token transfers totaling 5,800. It uses a public simulation forwarder and owner-pinned report adapter with artificial metadata. The new agent scenarios ran in local EVMs; they are not those Sepolia transactions.
+The original batch integration broadcast an actual CRE CLI report on Sepolia and settled two test-token transfers totaling 5,800. It uses a public simulation forwarder and owner-pinned report adapter with artificial metadata. The invoice-agent and work-order scenarios use local EVMs; they are not those Sepolia transactions.
 
 **Why maintain the payment desk and contract lab?**
 They support the two sides of the gate. The desk demonstrates durable source reservations, shared-budget safety, duplicate identity and reconciliation. The lab lets judges exercise actual contract bytecode against nine conditions. The agent preview is not yet wired into the persistent desk lifecycle.
