@@ -85,3 +85,7 @@ The homepage now invokes actual CRE CLI execution, closing the earlier integrati
 Next, put shared private-budget enforcement into that same journey: two valid invoices pass individually but exceed their shared budget together. The batch evaluator already demonstrates this in supporting tools; the primary review does not. This would make private policy central to the user's decision. A broader adversarial evaluation should distinguish model resistance from policy enforcement and cover changed amounts, duplicates, stale records and replay. Neither is implemented by the readability revision.
 
 These are engineering priorities, not prize predictions. The official confidential-workflow criteria require meaningful core integration and successful CLI or deployment evidence, which are documented separately. Independent operator feedback and human narration remain valuable uncompleted work.
+
+## Deeper competitor and implementation review
+
+See [Velum: the next build](research/VELUM-NEXT-BUILD.md) for the current recommendation, primary-source competitor comparison, exact-revision work-order concept, state model, acceptance tests and live GitHub feasibility evidence. It supersedes the earlier suggestion that persistence alone would provide sufficient differentiation. The proposed work-order integration is not implemented in the deployed product.

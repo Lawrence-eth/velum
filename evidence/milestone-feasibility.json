@@ -1,0 +1,87 @@
+{
+  "checkedAt": "2026-09-13T02:58:10.239Z",
+  "purpose": "Read-only feasibility probe for a proposed work-evidence connector",
+  "creExecution": false,
+  "paymentAuthorization": false,
+  "settlement": false,
+  "policy": {
+    "repositoryId": 1366413547,
+    "workflowId": 355961046,
+    "headSha": "f80c506fbd178750b58c4791d751bdde47545824",
+    "branch": "main",
+    "event": "push"
+  },
+  "matching": {
+    "id": 34734168531,
+    "repositoryId": 1366413547,
+    "workflowId": 355961046,
+    "headSha": "f80c506fbd178750b58c4791d751bdde47545824",
+    "branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "url": "https://github.com/Lawrence-eth/velum/actions/runs/34734168531",
+    "updatedAt": "2026-09-13T02:54:29Z"
+  },
+  "earlier": {
+    "id": 34733699456,
+    "repositoryId": 1366413547,
+    "workflowId": 355961046,
+    "headSha": "67f538a1f334a573d6a1a93f6a3481988120619b",
+    "branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "url": "https://github.com/Lawrence-eth/velum/actions/runs/34733699456",
+    "updatedAt": "2026-09-13T02:42:43Z"
+  },
+  "checks": [
+    {
+      "case": "actual successful run for pinned revision",
+      "source": "live GitHub API",
+      "accepted": true
+    },
+    {
+      "case": "actual successful run for an earlier revision",
+      "source": "live GitHub API",
+      "accepted": false
+    },
+    {
+      "case": "different repository",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    },
+    {
+      "case": "different workflow",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    },
+    {
+      "case": "failed conclusion",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    },
+    {
+      "case": "unfinished run",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    },
+    {
+      "case": "different branch",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    },
+    {
+      "case": "different event",
+      "source": "explicitly mutated test fixture",
+      "accepted": false
+    }
+  ],
+  "limitations": [
+    "The repository is public and controlled by the demo team.",
+    "A successful workflow does not prove code quality or commercial acceptance.",
+    "Trusted workflow content, required jobs, maintainer acceptance, freshness, reservations and payout binding are not implemented by this probe."
+  ]
+}
