@@ -116,3 +116,7 @@ Current Worker version `1da1928f-a96b-4359-8a1d-cab4bfbb39d0` replaces the prima
 The user service `velum-cre-runner` is enabled, with lingering enabled to survive SSH logout. Credentials are held in a restricted environment file and the matching Worker secret, never browser code. See `LIVE-CRE.md` and `scripts/velum-cre-runner.service.example` for operation, bounded quotas and simulation limitations. Existing accounting remains separate.
 
 Validation: 44 unit tests, TypeScript, four actual browser-triggered CRE jobs, 14 deployed accounting checks, and six deployed access/idempotency checks. Site screenshots and route checks cover desktop, tablet and mobile.
+
+## Readability revision — September 13, 2026
+
+Worker `cedd0f1e-f2c0-4b82-867a-58cab99d41fe` increases the console reading scale, pane spacing, decision-column width and primary control height. Shared navigation and evidence tables are larger. Smaller screens switch layouts sooner and include a direct review link. CRE execution and accounting behavior are unchanged.

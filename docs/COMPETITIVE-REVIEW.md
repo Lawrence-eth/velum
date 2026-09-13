@@ -77,3 +77,11 @@ The live model is fallible and the source fixture is deliberately separate from 
 Against the current Chainlink criteria, the strongest evidence remains the actual confidential handler simulation and report-driven contract outcomes. The prize accepts successful CLI simulations, but requires the confidential component to contribute meaningfully to the application's core. The integrated interaction helps explain that architecture; it is not itself a live CRE run. [Official criteria](https://ethglobal.com/events/ethonline2026/prizes/chainlink)
 
 Competitive gaps remain: no independent treasury-operator validation, no production accounting connector, no deployed confidential attestation, and no broad attack evaluation. There is no basis to estimate winning probability or claim these examples establish universal security. The presentation should lead with one verifiable payment failure and recovery, not a feature count.
+
+## September 13: next product improvements
+
+The homepage now invokes actual CRE CLI execution, closing the earlier integration gap. The strongest remaining product improvement is connecting it to persistent accounting: reserve the canonical invoice and budget, execute the report, reconcile the outcome and reject a second payment after reload. This requires explicit failure recovery; local treasury experiments must not be relabeled as real settled invoices.
+
+Next, put shared private-budget enforcement into that same journey: two valid invoices pass individually but exceed their shared budget together. The batch evaluator already demonstrates this in supporting tools; the primary review does not. This would make private policy central to the user's decision. A broader adversarial evaluation should distinguish model resistance from policy enforcement and cover changed amounts, duplicates, stale records and replay. Neither is implemented by the readability revision.
+
+These are engineering priorities, not prize predictions. The official confidential-workflow criteria require meaningful core integration and successful CLI or deployment evidence, which are documented separately. Independent operator feedback and human narration remain valuable uncompleted work.

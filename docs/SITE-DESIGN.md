@@ -14,3 +14,7 @@ Neutral gray surfaces, IBM Plex Sans and Mono, compact navigation, document typo
 All routes share navigation, type, background and control styles. `scripts/build-site.mjs` generates the shared static header/footer and CI checks for drift. Accounting storage and existing feature controls remain intact. The primary review uses fresh test treasuries, not the persistent accounting lifecycle; consistent styling does not imply that integration is complete.
 
 Validation covers desktop, tablet and mobile routes, active navigation, internal anchors, overflow, live CRE decisions, correction and trace downloads. No external user study is claimed.
+
+## Readability revision — September 13
+
+The compact edition used labels as small as 8–11px. The revision raises main copy to 16px, supporting text to 13–14px, and uses 48px primary controls. Document and decision panes have larger padding, the decision column is wider, and the layout drops columns sooner. Mobile includes a direct link to the payment review to avoid scrolling through the full document before acting. Supporting routes share larger navigation, introductions and evidence tables.
