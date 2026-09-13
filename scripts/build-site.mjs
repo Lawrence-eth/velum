@@ -1,5 +1,5 @@
 import {readFileSync,writeFileSync} from 'node:fs';
-const pages=[['index.html','agent'],['invoice.html','agent'],['desk.html','accounting'],['lab.html','contract'],['evidence.html','evidence'],['examples.html','evidence']];
+const pages=[['demo.html','demo'],['index.html','agent'],['invoice.html','agent'],['desk.html','accounting'],['lab.html','contract'],['evidence.html','evidence'],['examples.html','evidence']];
 const links=[['agent','/','Payments'],['accounting','/desk.html','Accounting'],['contract','/lab.html','Controls'],['evidence','/evidence.html','Evidence']];
 for(const [file,active] of pages){
  let html=readFileSync(`public/${file}`,'utf8');

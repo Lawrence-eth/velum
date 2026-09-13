@@ -128,3 +128,9 @@ Worker `6381872c-c5e0-46d3-9348-a6518a305943` deploys the work-order homepage, l
 The VM runner now maintains protected journals outside Git and redelivers unacknowledged results after restart. Work-order Solidity state is reconstructed from its recorded operations. The UI labels this journal-backed local execution, synthetic acceptance and mock forwarding. No new network payment or deployed enclave is claimed.
 
 Validation includes 58 unit tests; real CRE denial and settlement; 11 deployed work-order browser checks; same-job recovery from a labeled injected executor failure; actual service restart/result redelivery; the existing eight invoice-agent, 14 accounting and nine contract-control checks; and desktop/tablet/mobile site checks. See `WORK-ORDERS.md` for limits and remaining production work.
+
+## Submission demo page — September 13, 2026
+
+Worker `43925bca-9391-4d9e-be17-880cf9b9e240` adds `/demo.html`: a spacious introduction, hosted 3:36 silent walkthrough, chapter controls, three-step live workspace guide, source and evidence links, and explicit simulation boundaries. The homepage links to the demo. Human narration remains pending.
+
+The video loads on demand. Chapter navigation buffers the same-origin MP4 into a local Blob because hosted asset range requests did not support seeking reliably. CSP permits Blob media only; script restrictions are unchanged. Deployed browser checks passed for video playback at 01:52 (1440px, 215.96 seconds), desktop/mobile overflow, the live workspace link, and absence of page errors. Wrangler dry run and JavaScript syntax checks passed.

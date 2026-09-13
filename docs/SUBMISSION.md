@@ -26,7 +26,8 @@ Target: **Best Confidential Workflow**. The confidential handler performs the co
 Published work-order evidence includes two browser-triggered real CRE executions, held and paid outcomes in a saved workspace, concurrent reservation rejection, reload recovery, duplicate protection and capability-free downloads. Unit coverage includes wrong revision, repository, workflow definition, branch, trigger, incomplete/failing runs, observation freshness and request binding. An isolated executor test also checks journal reconstruction, cached retry and rejection of a new job for paid work.
 
 ## Links
-- Demo: https://velum.aethe.me
+- Demo walkthrough: https://velum.aethe.me/demo.html
+- Live workspace: https://velum.aethe.me
 - Source: https://github.com/Lawrence-eth/velum
 - Browser-triggered work-order evidence: https://velum.aethe.me/work-browser.json
 - Actual CRE and journal execution checks: https://velum.aethe.me/work-order-execution.json
