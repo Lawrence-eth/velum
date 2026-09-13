@@ -1,6 +1,6 @@
 # Guided payment recording
 
-The current recorder follows one payment journey: suspicious invoice → live model proposal → actual local contract result → explicit verified correction → recorded Chainlink evidence. It does not require a tour through every product page.
+The current recorder follows one payment journey: suspicious invoice → live model proposal → live CRE CLI → server-local contract result → explicit verified correction → execution evidence. It does not require a tour through every product page.
 
 ```sh
 VELUM_TEST_IP=104.21.32.18 node --no-addons scripts/record-demo.mjs
@@ -16,4 +16,4 @@ Artifacts:
 
 Add your own human narration using `DEMO-SCRIPT.md`, review the execution claims, and verify 2–4 minutes and at least 720p before submission. Silent footage is not a finished submission video. Earlier `velum-demo-footage.*` and `velum-agent-demo-footage.*` files show superseded flows.
 
-The interactive payment attempts execute real Solidity locally with fresh test treasuries. They do not send network transactions, call CRE, or update persistent accounting. The linked CLI simulation and Sepolia receipts are separate recorded evidence. Preserve those distinctions in narration.
+The interactive attempts invoke the actual CRE CLI and execute its returned report in server-local Solidity with fresh test treasuries. They do not send network transactions or update persistent accounting. The separate Sepolia receipts use a simulation adapter. No deployed TEE attestation is claimed. Regenerate footage after interface changes; existing recordings may show an earlier version.

@@ -2,7 +2,7 @@ import { fixture, scenarios, type Scenario } from './fixtures';
 import { bundleSchema, evaluate, paymentCommitment } from './policy';
 import { batchFixture, evaluateBatch } from './batch';
 
-type WorkerEnv = { ACCOUNTING?: DurableObjectNamespace<import('./accounting-object').AccountingLedger>; ASSETS: { fetch(request: Request): Promise<Response> }; INVOICE_API_TOKEN?: string };
+type WorkerEnv = { ACCOUNTING?: DurableObjectNamespace<import('./accounting-object').AccountingLedger>; ASSETS: { fetch(request: Request): Promise<Response> }; INVOICE_API_TOKEN?: string; CRE_RUNNER_TOKEN?: string };
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 async function authorized(request: Request, token?: string): Promise<boolean> {
   if (!token) return false;
@@ -35,13 +35,30 @@ async function boundedText(request: Request, limit = 1024) {
 export default {
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/agent/job/') && request.method==='GET') {
+      if(!env.ACCOUNTING)return json({error:'Runner unavailable'},503);
+      const access=request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1]||'';
+      const result=await env.ACCOUNTING.get(env.ACCOUNTING.idFromName('velum-agent-global-v1')).jobView(url.pathname.split('/').at(-1)!,access);
+      return json(result,result.ok?200:404);
+    }
     if (url.pathname === '/api/agent' && request.method === 'POST') {
       if(request.headers.get('Origin') && request.headers.get('Origin')!==url.origin)return json({error:'Origin mismatch'},403);
       if(!env.ACCOUNTING)return json({error:'Live inference requires the deployed Worker'},503);
       try {
-        const input=JSON.parse(await boundedText(request));
-        if(!input || !['clean','malicious'].includes(input.scenario) || !['live','injected'].includes(input.mode))return json({error:'Choose a supplied synthetic scenario'},400);
+        const runner=await authorized(request,env.CRE_RUNNER_TOKEN);
+        const input=JSON.parse(await boundedText(request,runner?90000:1024));
+        if(!input||typeof input!=='object'||Array.isArray(input))return json({error:'Invalid request'},400);
         const stub=env.ACCOUNTING.get(env.ACCOUNTING.idFromName('velum-agent-global-v1'));
+        if(input.action==='runner-claim'||input.action==='runner-result'){
+          if(!runner)return json({error:'Unauthorized'},401);
+          return json(input.action==='runner-claim'?await stub.claimJob():await stub.completeJob(String(input.id||''),input.execution,input.failed===true));
+        }
+        if(input.action==='execute'||input.action==='correct'){
+          const access=request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1]||'';
+          const result=input.action==='execute'?await stub.enqueueJob(String(input.id||''),access):await stub.correctCapture(String(input.id||''),access);
+          return json(result,result.ok?200:409);
+        }
+        if(!['clean','malicious'].includes(input.scenario)||!['live','injected'].includes(input.mode))return json({error:'Choose a supplied synthetic scenario'},400);
         const result=await stub.runAgent(input.scenario,input.mode==='injected');
         return json(result,result.ok?200:503);
       }catch{return json({error:'Invalid agent request'},400);}

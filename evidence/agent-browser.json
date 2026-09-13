@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-09-12T11:55:37.614Z",
+  "checkedAt": "2026-09-12T12:32:02.591Z",
   "site": "https://velum.aethe.me",
-  "mode": "Actual deployed live model and browser-local EVM; no CRE run triggered",
+  "mode": "Actual deployed live model → live CRE CLI → server-local Solidity",
   "checks": [
     "suspicious invoice is the guided starting point",
-    "one live model call automatically reaches actual local Solidity using identical payment fields",
+    "live model proposal runs through actual CRE CLI and its report drives Solidity with identical payment fields",
     "explicit compromised proposal is denied and settlement actually reverts",
-    "explicit source correction settles in a fresh treasury and retains denied attempt in downloaded trace",
+    "verified source correction runs CRE again, settles, and retains both actual execution logs",
     "next action changes scenario and clears stale payment outcome",
     "clean live proposal transfers exactly 2400 local test tokens",
     "completed flow fits mobile viewport",

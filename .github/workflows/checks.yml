@@ -22,6 +22,7 @@ jobs:
       - run: bun test
       - run: bun run test:contract
       - run: bun run test:adapter
+      - run: bun run build:runner
       - run: bun run build:site
       - run: git diff --exit-code -- public/index.html public/desk.html public/lab.html public/evidence.html public/examples.html
       - run: bun run build:lab

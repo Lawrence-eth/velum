@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-13T02:41:42.154272+00:00",
+  "site": "https://velum.aethe.me",
+  "checks": [
+    "runner-claim requires runner credential",
+    "runner-result requires runner credential",
+    "wrong run capability cannot read result",
+    "wrong run capability cannot execute",
+    "arbitrary execution input rejected",
+    "completed execution retry is idempotent"
+  ]
+}

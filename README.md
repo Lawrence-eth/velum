@@ -6,13 +6,15 @@
 
 An invoice can persuade a payment agent to change a wallet. Velum treats the agent's output as a proposal: a separate accounting record and deterministic private policy decide whether that exact payment is eligible. The model cannot supply its own approval, policy, budget or invoice identity.
 
-![Velum guided payment result](evidence/site-agent-desktop.png)
+![Velum guided payment result](evidence/site-payments-desktop.png)
 
-## Try the complete flow
+## Live payment review
 
-Start with the suspicious invoice and click **Run this payment check**. The live model proposes a payment; that exact recipient and amount are automatically checked and submitted to the compiled treasury in your browser. The result compares the proposed amount with actual tokens transferred and shows the treasury balance.
+Select an invoice and click **Run review**. The model proposes a wallet and amount; the server runs the actual Chainlink CRE CLI confidential handler and uses its returned report to drive Solidity settlement in a local test treasury. The result pane shows the proposed payment, transferred tokens, wallet mismatch and balance change. Download the current run's actual CRE log and report directly from the result.
 
-If denied, **Use verified details & retry** explicitly replaces the proposed payment with the canonical synthetic record. The correction is labeled as the operator's action, not another model response. Its fresh local treasury pays only after the independent policy approves. Download one trace containing both attempts. No wallet or navigation between demos is required.
+For a denial, **Use vendor record & retry** explicitly corrects the proposal on the server and launches another CRE execution. The combined trace preserves both attempts. No model output can define the private policy or authorize its own payment.
+
+This is live CLI simulation, not deployed TEE attestation. Contracts run in fresh server-local EVMs; no network payment is sent. [Live architecture and operational bounds](docs/LIVE-CRE.md).
 
 ## Demonstrated result
 
@@ -50,7 +52,7 @@ flowchart LR
 
 | Surface | What runs | What it does not prove |
 |---|---|---|
-| Live homepage | Actual Workers AI inference → independent policy → compiled Solidity in a browser-local treasury | No CRE execution, TEE privacy, persistent reservation or network payment; test-token transfers are local |
+| Live payment console | Actual Workers AI inference → authenticated CRE CLI job → returned report → compiled Solidity | CLI simulator, mock identity, fresh VM-local treasury; no TEE attestation or network payment |
 | Agent evidence runner | Captured model output → real CRE CLI simulation → actual local EVM settlement attempt | No deployed enclave, DON signature verification or testnet transaction |
 | Existing Sepolia batch | Actual CRE CLI broadcast and two successful test-token payments totaling 5,800 | Separate batch fixture; mock forwarder and owner-pinned report adapter, not production oracle authentication |
 | Browser contract lab | Actual Solidity bytecode executes for nine attack/control cases | Local policy evaluation and mock identity |
@@ -104,6 +106,8 @@ Production still requires an authenticated accounting connector, exclusive reser
 
 ## Site structure
 
-The shared navigation contains Agent, Accounting, Contract lab and Evidence. Accounting is the persistent workspace; recorded CLI and Sepolia results live on the Evidence page. Earlier batch/single-invoice fixtures are retained at `/examples.html`, under the evidence page's technical references.
+The shared navigation contains Payments, Accounting, Controls and Evidence. Accounting is the persistent workspace; recorded CLI and Sepolia results live on the Evidence page. Earlier batch/single-invoice fixtures are retained at `/examples.html`, under the evidence page's technical references.
 
 `public/site.css` defines the shared colors, type, layout and controls. `bun run build:site` generates every page's header and footer from one source; CI checks the committed output for drift. `bun run test:site` checks navigation, active states, mobile layouts, evidence rendering and browser errors across all four product pages.
+
+The primary review console is a compact three-pane interface: invoice inputs, source document and decision. The current execution path is documented in `docs/LIVE-CRE.md`; earlier browser-only execution records remain historical fixtures.

@@ -6,19 +6,17 @@
 <meta content="Velum: private invoice authorization with Chainlink Confidential Workflows. ETHOnline 2026 prototype." name="description"/>
 <title>Reference examples — Velum</title>
 <link href="/style.css" rel="stylesheet"/>
-<link rel="stylesheet" href="/site.css"></head>
+<link href="/site.css" rel="stylesheet"/></head>
 <body><a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/" aria-label="Velum home"><span aria-hidden="true">v</span>velum</a><nav aria-label="Main navigation"><a href="/">Agent</a><a href="/desk.html">Accounting</a><a href="/lab.html">Contract lab</a><a href="/evidence.html" aria-current="page">Evidence</a></nav><span class="site-edition">ETHONLINE 2026</span></header>
+<header class="site-header"><a class="site-brand" href="/" aria-label="Velum home"><span aria-hidden="true">v</span>velum</a><nav aria-label="Main navigation"><a href="/">Payments</a><a href="/desk.html">Accounting</a><a href="/lab.html">Controls</a><a href="/evidence.html" aria-current="page">Evidence</a></nav><span class="site-edition">ETHONLINE 2026</span></header>
 <main id="main-content">
-<section class="page-heading"><p class="eyebrow">EVIDENCE / REFERENCE EXAMPLES</p><h1>Explore the policy.</h1><p class="page-intro">Earlier synthetic batch and single-invoice examples, retained for inspecting policy behavior. For the current product, start with the Agent or Accounting pages.</p><a class="text-button" href="/evidence.html">← Back to evidence</a></section>
-
+<section class="page-heading"><p class="eyebrow">EVIDENCE / REFERENCE EXAMPLES</p><h1>Policy reference</h1><p class="page-intro">Earlier synthetic batch and single-invoice examples, retained for inspecting policy behavior. For the current product, start with the Agent or Accounting pages.</p><a class="text-button" href="/evidence.html">← Back to evidence</a></section>
 <section class="settlement-section" hidden="" id="sepolia-proof">
 <div class="section-heading"><div><p class="eyebrow">ONCHAIN EVIDENCE · SEPOLIA</p><h2>Two payments. Public receipts.</h2></div></div>
 <p id="sepolia-summary">Loading recorded testnet settlement…</p>
 <div class="evidence-links" id="sepolia-links"></div>
 <p class="boundary">Recorded CRE CLI broadcast through a mock forwarder, with an owner-authorized report hash. Test tokens only; no DON signature verification or deployed TEE attestation. The interactive preview above does not send payments.</p>
 </section>
-
 <section class="batch-section" id="batch">
 <div class="section-heading"><div><p class="eyebrow">01 / THE PRIVATE PAYMENT RUN</p><h2>Five invoices. One shared budget.</h2></div><span class="pill">Interactive synthetic preview</span></div>
 <p class="section-note">Two invoices can pass on their own and still overspend a purchase order together. Velum checks the whole batch, reserves its budget in order, and rejects duplicate invoice references.</p>
@@ -29,7 +27,6 @@
 <div class="disclosure"><div><p class="eyebrow">THE DISCLOSURE BOUNDARY</p><h3>Show the decision.<br/>Keep the rationale private.</h3><p>Switch perspectives to see what the confidential handler deliberately shares. Settlement still reveals recipients and amounts.</p><div aria-label="Receipt perspective" class="view-switch" role="group"><button aria-pressed="true" id="operator-view">Operator view</button><button aria-pressed="false" id="public-view">Public report</button></div><button class="text-button" disabled="" id="download-preview">Download preview receipt ↓</button></div><div class="disclosure-panel"><span class="panel-label" id="disclosure-label">SYNTHETIC OPERATOR VIEW</span><pre id="disclosure-content">Evaluate a batch to inspect the privacy boundary.</pre></div></div>
 <p class="boundary">Reservations apply within this ordered batch. A real accounting system must exclusively reserve and reconcile budgets across batches. The demo is not a confidential data store.</p>
 </section>
-
 <section class="privacy-matrix batch-section" id="privacy">
 <div class="section-heading"><div><p class="eyebrow">THE REASON FOR CONFIDENTIAL EXECUTION</p><h2>Reveal only what payment requires.</h2></div></div>
 <div class="batch-table-wrap"><table class="batch-table"><thead><tr><th>Information</th><th>Operator / accounting source</th><th>CRE public report</th><th>Onchain payment</th></tr></thead><tbody>
@@ -59,8 +56,7 @@
 </details>
 <section class="architecture" id="architecture"><div class="section-heading"><div><p class="eyebrow">03 / UNDER THE HOOD</p><h2>Privacy with a clear boundary.</h2></div><span class="muted">Built with Chainlink CRE</span></div><div class="steps"><article><span class="step-number">01</span><h3>Retrieve privately</h3><p>The confidential handler retrieves an API credential, invoice and purchase-order policy.</p><span class="step-foot">Vault secret → HTTPClient</span></article><article class="highlight"><span class="step-number">02</span><h3>Check inside the enclave</h3><p>Match the vendor and recipient. Check limits, remaining budget, duplicates and expiry.</p><span class="step-foot">handlerInTee · AWS Nitro target</span></article><article><span class="step-number">03</span><h3>Release the authorization</h3><p>CRE generates a report. A receiver can authenticate it and record one approval per request.</p><span class="step-foot">usingTheDons → report → receiver</span></article></div><p class="boundary">Payment amounts and recipients become public when used onchain. Source code is public. Local simulation offers no TEE protection. The batch treasury transfers test tokens on Sepolia through a simulation adapter. Live confidential-network deployment and real asset movement are not claimed.</p></section>
 <section class="evidence" id="evidence"><div><p class="eyebrow">04 / SHOW YOUR WORK</p><h2>Execution you can inspect.</h2><p>Real CRE CLI runs are recorded separately from the interactive preview. Check the logs, code and limitations.</p><div class="evidence-links"><a href="https://github.com/Lawrence-eth/velum" rel="noreferrer" target="_blank">Source code ↗</a><a href="/evidence.json" target="_blank">Evidence manifest ↗</a></div></div><div class="terminal"><div class="terminal-bar"><i></i><i></i><i></i><span>CRE CLI · recorded results</span></div><pre id="execution-status">Loading execution evidence…</pre><p>Simulation ≠ network deployment or hardware attestation.</p></div></section>
-</main><footer class="site-footer"><a class="site-brand" href="/"><span aria-hidden="true">v</span>velum</a><p>Give agents a task. Keep the authority.</p><a href="https://github.com/Lawrence-eth/velum">Source code ↗</a></footer>
+</main><footer class="site-footer"><a class="site-brand" href="/"><span aria-hidden="true">v</span>velum</a><p>Synthetic treasury workspace</p><a href="https://github.com/Lawrence-eth/velum">Source code ↗</a></footer>
 <script src="/app.js" type="module"></script>
 <script src="/batch-app.js" type="module"></script>
-
 </body></html>

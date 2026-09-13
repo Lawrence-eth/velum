@@ -1,0 +1,12 @@
+import {expect,test} from 'bun:test';
+import {checkJobResult} from '../src/cre-jobs';
+import {agentBatch} from '../src/agent';
+import {evaluateBatch} from '../src/batch';
+const proposal={invoiceRef:'NS-101' as const,recipient:'0x2222222222222222222222222222222222222222' as `0x${string}`,amount:'2400.00'};
+const decision=evaluateBatch(agentBatch(proposal,1000,'job-test'),1000);
+const result={creExecution:true,proposal,policyApproved:true,policyReasons:[],deliveryAccepted:true,settlementAccepted:true,treasuryBefore:'20000000000',treasuryAfter:'17600000000',paid:'2400000000',requestStatus:4,requestId:decision.decisions[0].requestId,commitment:decision.decisions[0].commitment,encodedPayload:decision.encodedPayload,reportBytes:(decision.encodedPayload.length-2)/2,deliveryGas:'100',settlementGas:'100',compiler:'test',sourceSha256:{},treasury:'test',token:'test',workflowMode:'CRE CLI confidential-handler simulation',settlementMode:'VM-local Solidity execution with mock forwarder',creLog:'synthetic validation fixture',executedAt:'test'};
+test('runner result binds proposal, actual encoded decision and balance delta',()=>expect(checkJobResult(result,proposal).paid).toBe('2400000000'));
+test('runner cannot substitute the proposed recipient',()=>expect(()=>checkJobResult({...result,proposal:{...proposal,recipient:'0x4444444444444444444444444444444444444444'}},proposal)).toThrow());
+test('runner cannot contradict the encoded report decision',()=>expect(()=>checkJobResult({...result,policyApproved:false,settlementAccepted:false},proposal)).toThrow());
+test('runner cannot claim transfer without the matching debit',()=>expect(()=>checkJobResult({...result,treasuryAfter:'20000000000'},proposal)).toThrow());
+test('runner cannot substitute another request or commitment',()=>{for(const field of ['requestId','commitment'])expect(()=>checkJobResult({...result,[field]:'0x'+'00'.repeat(32)},proposal)).toThrow()});

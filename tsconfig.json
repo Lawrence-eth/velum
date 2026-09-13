@@ -21,6 +21,7 @@
     "test/batch.test.ts",
     "worker-configuration.d.ts",
     "test/ledger.test.ts",
-    "test/agent.test.ts"
+    "test/agent.test.ts",
+    "test/cre-jobs.test.ts"
   ]
 }
